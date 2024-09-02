@@ -6,7 +6,7 @@
 /*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 09:52:41 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/09/02 12:11:49 by mhummel          ###   ########.fr       */
+/*   Updated: 2024/09/02 12:24:22 by mhummel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,11 +85,11 @@ int	parse_command(char *input, char *args[])
 	return (arg_count);
 }
 
-int	execute_command(char *args[])
+int	execute_command(char *args[], int arg_count)
 {
 	if (strcmp(args[0], "pwd") == 0 || strcmp(args[0], "PWD") == 0)
 	{
-		return (pwd());
+		return (pwd(arg_count));
 	}
 	// Add other built-in commands here
 	// If not a built-in command, you can add logic to execute external commands
@@ -116,7 +116,7 @@ int	main(void)
 		arg_count = parse_command(input, args);
 		if (arg_count > 0)
 		{
-			execute_command(args);
+			execute_command(args, arg_count);
 		}
 	}
 	return (0);
