@@ -1,0 +1,7 @@
+{
+	"files.associations": {
+		"errno.h": "c",
+		"history.h": "c",
+		"minishell.h": "c"
+	}
+}

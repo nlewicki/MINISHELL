@@ -6,7 +6,7 @@
 /*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 09:52:41 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/09/02 12:30:48 by mhummel          ###   ########.fr       */
+/*   Updated: 2024/09/02 12:53:11 by mhummel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,16 +17,27 @@
 
 void	strip_quotes(char *str)
 {
-	int	len;
+	char	*end;
+	char	*src;
+	char	*dst;
 
-	len = strlen(str);
-	if (len >= 2)
+	end = str;
+	while (*end)
+		end++; // Find the end of the string
+	end--;     // Move back to the last character
+	if (end > str) // Ensure the string has at least 2 characters
 	{
-		if ((str[0] == '"' && str[len - 1] == '"') || (str[0] == '\'' && str[len
-				- 1] == '\''))
+		if ((str[0] == '"' && *end == '"') || (str[0] == '\'' && *end == '\''))
 		{
-			memmove(str, str + 1, len - 2);
-			str[len - 2] = '\0';
+			src = str + 1;
+			dst = str;
+			while (src < end)
+			{
+				*dst = *src;
+				dst++;
+				src++;
+			}
+			*dst = '\0';
 		}
 	}
 }
@@ -49,13 +60,13 @@ int	parse_command(char *input, char *args[])
 		{
 			in_quotes = 1;
 			quote_char = *input;
-			token_start = input;
+			token_start = input + 1; // Start token after the opening quote
 		}
 		else if (*input == quote_char && in_quotes)
 		{
 			in_quotes = 0;
-			args[arg_count] = token_start;
-			arg_count++;
+			*input = '\0'; // Null-terminate the argument
+			args[arg_count++] = token_start;
 			token_start = input + 1;
 		}
 		else if (isspace(*input) && !in_quotes)
@@ -63,17 +74,16 @@ int	parse_command(char *input, char *args[])
 			if (token_start != input)
 			{
 				*input = '\0';
-				args[arg_count] = token_start;
-				arg_count++;
+				args[arg_count++] = token_start;
 			}
 			token_start = input + 1;
 		}
 		input++;
 	}
+	// Handle the last argument if it exists
 	if (token_start != input && arg_count < MAX_ARGS)
 	{
-		args[arg_count] = token_start;
-		arg_count++;
+		args[arg_count++] = token_start;
 	}
 	// Strip quotes from all arguments
 	i = 0;
@@ -101,6 +111,11 @@ int	execute_command(char *args[], int arg_count)
 {
 	if (strcasecmp_custom(args[0], "pwd") == 0)
 	{
+		if (arg_count > 1)
+		{
+			fprintf(stderr, "pwd: too many arguments\n");
+			return (1);
+		}
 		return (pwd(arg_count));
 	}
 	// Add other built-in commands here
@@ -111,25 +126,39 @@ int	execute_command(char *args[], int arg_count)
 
 int	main(void)
 {
-	char	input[MAX_COMMAND_LENGTH];
+	char	*input;
 	char	*args[MAX_ARGS];
 	int		arg_count;
 
 	while (1)
 	{
-		printf("minishell> ");
-		if (fgets(input, MAX_COMMAND_LENGTH, stdin) == NULL)
+		input = readline("minishell> ");
+		if (input == NULL)
 		{
 			printf("\nExiting minishell\n");
 			break ;
 		}
-		// Remove the newline character from the end of the input
-		input[strcspn(input, "\n")] = '\0';
+		// Add input to history if it's not empty
+		if (strlen(input) > 0)
+		{
+			add_history(input);
+		}
 		arg_count = parse_command(input, args);
 		if (arg_count > 0)
 		{
-			execute_command(args, arg_count);
+			if (strcasecmp_custom(args[0], "history-clear") == 0)
+			{
+				rl_clear_history();
+			}
+			else
+			{
+				execute_command(args, arg_count);
+			}
 		}
+		// Free the memory allocated by readline
+		free(input);
 	}
+	// Clear the history when exiting
+	rl_clear_history();
 	return (0);
 }

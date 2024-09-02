@@ -1,14 +1,16 @@
 CFILES = 	src/main.c \
-			src/builtins/pwd.c
+			src/builtins/pwd.c \
+			src/builtins/history.c
 
 NAME = minishell
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -I./include -g
+LDFLAGS = -lreadline
 OBJ_DIR = Obj
 OFILES = $(addprefix $(OBJ_DIR)/,$(notdir $(CFILES:.c=.o)))
 
 $(NAME): $(OBJ_DIR) $(OFILES)
-	@$(CC) $(OFILES) -o $(NAME)
+	@$(CC) $(OFILES) $(LDFLAGS) -o $(NAME)
 	clear
 	@$(MAKE)	loading
 	clear
