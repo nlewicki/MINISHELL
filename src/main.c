@@ -6,14 +6,13 @@
 /*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 09:52:41 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/09/02 12:53:11 by mhummel          ###   ########.fr       */
+/*   Updated: 2024/09/02 13:42:13 by mhummel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-#define MAX_COMMAND_LENGTH 100
-#define MAX_ARGS 10
+int g_signal = 0;
 
 void	strip_quotes(char *str)
 {
@@ -129,15 +128,15 @@ int	main(void)
 	char	*input;
 	char	*args[MAX_ARGS];
 	int		arg_count;
+	int	signal_status;
 
 	while (1)
 	{
 		input = readline("minishell> ");
-		if (input == NULL)
-		{
-			printf("\nExiting minishell\n");
-			break ;
-		}
+		signal_status = handle_signals(input);
+		if (signal_status == 0)
+			break;
+
 		// Add input to history if it's not empty
 		if (strlen(input) > 0)
 		{

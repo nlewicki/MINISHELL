@@ -6,7 +6,7 @@
 /*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 09:08:07 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/09/02 12:46:19 by mhummel          ###   ########.fr       */
+/*   Updated: 2024/09/02 13:32:16 by mhummel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,22 @@
 # include <string.h>
 # include <unistd.h>
 
-int		pwd(int argc);
+#define MAX_ARGS 100  // Stellen Sie sicher, dass diese Konstante definiert ist
+#define MAX_COMMAND_LENGTH 1000  // Stellen Sie sicher, dass diese Konstante definiert ist
 
-void	initialize_history(void);
-char	*get_input(const char *prompt);
-void	clear_shell_history(void);
+// Existierende Funktionsprototypen
+int pwd(int argc);
+// ... andere Funktionsprototypen ...
+
+// Signalbehandlung und Eingabe
+void setup_signal_handlers(void);
+int handle_signals(char *input);
+
+// Befehlsverarbeitung
+int parse_command(char *input, char *args[]);
+int strcasecmp_custom(const char *s1, const char *s2);
+int execute_command(char *args[], int arg_count);
+
+// Wenn Sie weitere Funktionen haben, fügen Sie ihre Deklarationen hier hinzu
 
 #endif
