@@ -3,28 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 09:08:07 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/09/02 10:15:54 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/09/02 12:10:50 by mhummel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
+# include <ctype.h>
+# include <errno.h>
+# include <signal.h>
 # include <stdio.h>
 # include <stdlib.h>
-# include <readline/readline.h>
-# include <readline/history.h>
-# include <signal.h>
-# include <fcntl.h>
-# include <dirent.h>
+# include <string.h>
 # include <unistd.h>
-# include <sys/types.h>
-# include <sys/wait.h>
-# include <sys/stat.h>
 
-
+int	pwd(void);
 
 #endif

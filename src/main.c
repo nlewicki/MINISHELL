@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 09:52:41 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/09/02 10:26:02 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/09/02 12:11:49 by mhummel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,47 +15,109 @@
 #define MAX_COMMAND_LENGTH 100
 #define MAX_ARGS 10
 
-int	parse_command(char *input, char *args[])
+void	strip_quotes(char *str)
 {
-	char *token;
-	int arg_count = 0;
+	int	len;
 
-	// Split the input string into tokens
-	token = strtok(input, " ");
-	while (token != NULL && arg_count < MAX_ARGS) {
-		args[arg_count++] = token;
-		token = strtok(NULL, " ");
+	len = strlen(str);
+	if (len >= 2)
+	{
+		if ((str[0] == '"' && str[len - 1] == '"') || (str[0] == '\'' && str[len
+				- 1] == '\''))
+		{
+			memmove(str, str + 1, len - 2);
+			str[len - 2] = '\0';
+		}
 	}
-
-	return arg_count;
 }
 
-int main()
+int	parse_command(char *input, char *args[])
 {
-	char input[MAX_COMMAND_LENGTH];
-	char *args[MAX_ARGS];
-	int arg_count;
-	int i;
+	int		arg_count;
+	char	*token_start;
+	int		in_quotes;
+	char	quote_char;
+	int		i;
+
+	arg_count = 0;
+	token_start = input;
+	in_quotes = 0;
+	quote_char = 0;
+	while (*input != '\0' && arg_count < MAX_ARGS)
+	{
+		if ((*input == '"' || *input == '\'') && !in_quotes)
+		{
+			in_quotes = 1;
+			quote_char = *input;
+			token_start = input;
+		}
+		else if (*input == quote_char && in_quotes)
+		{
+			in_quotes = 0;
+			args[arg_count] = token_start;
+			arg_count++;
+			token_start = input + 1;
+		}
+		else if (isspace(*input) && !in_quotes)
+		{
+			if (token_start != input)
+			{
+				*input = '\0';
+				args[arg_count] = token_start;
+				arg_count++;
+			}
+			token_start = input + 1;
+		}
+		input++;
+	}
+	if (token_start != input && arg_count < MAX_ARGS)
+	{
+		args[arg_count] = token_start;
+		arg_count++;
+	}
+	// Strip quotes from all arguments
+	i = 0;
+	while (i < arg_count)
+	{
+		strip_quotes(args[i]);
+		i++;
+	}
+	return (arg_count);
+}
+
+int	execute_command(char *args[])
+{
+	if (strcmp(args[0], "pwd") == 0 || strcmp(args[0], "PWD") == 0)
+	{
+		return (pwd());
+	}
+	// Add other built-in commands here
+	// If not a built-in command, you can add logic to execute external commands
+	printf("Command not found: %s\n", args[0]);
+	return (1);
+}
+
+int	main(void)
+{
+	char	input[MAX_COMMAND_LENGTH];
+	char	*args[MAX_ARGS];
+	int		arg_count;
 
 	while (1)
 	{
 		printf("minishell> ");
-		fgets(input, MAX_COMMAND_LENGTH, stdin);
-
+		if (fgets(input, MAX_COMMAND_LENGTH, stdin) == NULL)
+		{
+			printf("\nExiting minishell\n");
+			break ;
+		}
 		// Remove the newline character from the end of the input
 		input[strcspn(input, "\n")] = '\0';
-
 		arg_count = parse_command(input, args);
-
-		printf("\nCommand: %s\n", args[0]);
-		printf("\nArguments:\n");
-		i = 1;
-		while (i < arg_count)
+		if (arg_count > 0)
 		{
-			printf("• %s\n", args[i]);
-			i++;
+			execute_command(args);
 		}
-		printf("\n");
 	}
-	return 0;
+	return (0);
 }

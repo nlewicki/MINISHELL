@@ -1,4 +1,5 @@
-CFILES = src/main.c \
+CFILES = 	src/main.c \
+			src/builtins/pwd.c
 
 NAME = minishell
 CC = cc
@@ -16,6 +17,9 @@ $(NAME): $(OBJ_DIR) $(OFILES)
 
 
 $(OBJ_DIR)/%.o: src/%.c
+	@$(CC) -c $(CFLAGS) $< -o $@
+
+$(OBJ_DIR)/%.o: src/builtins/%.c
 	@$(CC) -c $(CFLAGS) $< -o $@
 
 $(OBJ_DIR):
@@ -57,4 +61,4 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all, clean, fclean, re, loading
+.PHONY: all, clean, fclean, re, loading, banner
