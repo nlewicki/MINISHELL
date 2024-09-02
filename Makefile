@@ -1,6 +1,6 @@
 CFILES = 	src/main.c \
 			src/builtins/pwd.c \
-			src/builtins/history.c
+			src/history.c
 
 NAME = minishell
 CC = cc
