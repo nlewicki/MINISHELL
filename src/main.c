@@ -6,7 +6,7 @@
 /*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 09:52:41 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/09/02 12:24:22 by mhummel          ###   ########.fr       */
+/*   Updated: 2024/09/02 12:30:48 by mhummel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,9 +85,21 @@ int	parse_command(char *input, char *args[])
 	return (arg_count);
 }
 
+int	strcasecmp_custom(const char *s1, const char *s2)
+{
+	while (*s1 && *s2)
+	{
+		if (tolower((unsigned char)*s1) != tolower((unsigned char)*s2))
+			return (tolower((unsigned char)*s1) - tolower((unsigned char)*s2));
+		s1++;
+		s2++;
+	}
+	return (tolower((unsigned char)*s1) - tolower((unsigned char)*s2));
+}
+
 int	execute_command(char *args[], int arg_count)
 {
-	if (strcmp(args[0], "pwd") == 0 || strcmp(args[0], "PWD") == 0)
+	if (strcasecmp_custom(args[0], "pwd") == 0)
 	{
 		return (pwd(arg_count));
 	}
