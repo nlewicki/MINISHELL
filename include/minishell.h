@@ -6,7 +6,7 @@
 /*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 09:08:07 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/09/02 12:10:50 by mhummel          ###   ########.fr       */
+/*   Updated: 2024/09/02 12:21:22 by mhummel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,6 @@
 # include <string.h>
 # include <unistd.h>
 
-int	pwd(void);
+int	pwd(int argc);
 
 #endif
