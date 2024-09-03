@@ -6,7 +6,7 @@
 /*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 09:52:41 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/09/03 10:55:56 by mhummel          ###   ########.fr       */
+/*   Updated: 2024/09/03 11:20:34 by mhummel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,11 +122,16 @@ int	execute_command(char *args[], int arg_count)
 		*exit_status() = 1;
 		exit(0);
 	}
+	if (strcasecmp_custom(args[0], "env") == 0)
+	{
+		return (env());
+	}
 	// Add other built-in commands here
 	// If not a built-in command, you can add logic to execute external commands
 	printf("Command not found: %s\n", args[0]);
 	return (1);
 }
+
 void	main_loop(void)
 {
 	char	*input;
@@ -159,8 +164,11 @@ void	main_loop(void)
 	rl_clear_history();
 }
 
-int	main(void)
+int	main(int argc, char **argv, char **envp)
 {
+	(void)argc;
+	(void)argv;
+	set_env_vars(envp);
 	handle_signals();
 	main_loop();
 	return (*exit_status());

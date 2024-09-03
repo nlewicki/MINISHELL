@@ -1,32 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fake_globals.c                                     :+:      :+:    :+:   */
+/*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/03 10:09:25 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/09/03 11:11:25 by mhummel          ###   ########.fr       */
+/*   Created: 2024/09/03 11:01:10 by mhummel           #+#    #+#             */
+/*   Updated: 2024/09/03 11:19:33 by mhummel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	*exit_status(void)
+int	env(void)
 {
-	static int	status = 0;
+	char	**envp;
+	int		i;
 
-	return (&status);
-}
-
-char	***env_vars(void)
-{
-	static char	**env = NULL;
-
-	return (&env);
-}
-
-void	set_env_vars(char **envp)
-{
-	*env_vars() = envp;
+	envp = *env_vars();
+	i = 0;
+	if (!envp)
+	{
+		fprintf(stderr, "env: environment not set\n");
+		return (1);
+	}
+	while (envp[i])
+	{
+		printf("%s\n", envp[i]);
+		i++;
+	}
+	return (0);
 }
