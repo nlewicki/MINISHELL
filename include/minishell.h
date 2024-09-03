@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 09:08:07 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/09/02 13:32:16 by mhummel          ###   ########.fr       */
+/*   Updated: 2024/09/03 09:57:59 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,22 +23,23 @@
 # include <string.h>
 # include <unistd.h>
 
-#define MAX_ARGS 100  // Stellen Sie sicher, dass diese Konstante definiert ist
-#define MAX_COMMAND_LENGTH 1000  // Stellen Sie sicher, dass diese Konstante definiert ist
+#define MAX_ARGS 100
+#define MAX_COMMAND_LENGTH 1000
 
-// Existierende Funktionsprototypen
+extern volatile sig_atomic_t	g_signal;
+
+// builtins
 int pwd(int argc);
-// ... andere Funktionsprototypen ...
 
-// Signalbehandlung und Eingabe
-void setup_signal_handlers(void);
-int handle_signals(char *input);
 
-// Befehlsverarbeitung
+// signals
+void sigint_handler(int sig);
+void handle_signals(void);
+int *exit_status(void);
+
+// parsing
 int parse_command(char *input, char *args[]);
 int strcasecmp_custom(const char *s1, const char *s2);
 int execute_command(char *args[], int arg_count);
-
-// Wenn Sie weitere Funktionen haben, fügen Sie ihre Deklarationen hier hinzu
 
 #endif

@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 09:52:41 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/09/02 13:42:13 by mhummel          ###   ########.fr       */
+/*   Updated: 2024/09/03 09:56:19 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int g_signal = 0;
+volatile sig_atomic_t g_signal = 0;
 
 void	strip_quotes(char *str)
 {
@@ -22,9 +22,9 @@ void	strip_quotes(char *str)
 
 	end = str;
 	while (*end)
-		end++; // Find the end of the string
-	end--;     // Move back to the last character
-	if (end > str) // Ensure the string has at least 2 characters
+		end++;
+	end--;
+	if (end > str)
 	{
 		if ((str[0] == '"' && *end == '"') || (str[0] == '\'' && *end == '\''))
 		{
@@ -122,42 +122,50 @@ int	execute_command(char *args[], int arg_count)
 	printf("Command not found: %s\n", args[0]);
 	return (1);
 }
-
-int	main(void)
+void	main_loop(void)
 {
 	char	*input;
-	char	*args[MAX_ARGS];
-	int		arg_count;
-	int	signal_status;
+	char	*argv[MAX_ARGS];
+	int		argc;
 
 	while (1)
 	{
+		g_signal = 0;
 		input = readline("minishell> ");
-		signal_status = handle_signals(input);
-		if (signal_status == 0)
-			break;
-
-		// Add input to history if it's not empty
+		if (!input)
+		{
+			printf("\nexit\n");
+			break ;
+		}
+		 if (g_signal)
+		{
+			free(input);
+			continue;
+		}
 		if (strlen(input) > 0)
-		{
 			add_history(input);
-		}
-		arg_count = parse_command(input, args);
-		if (arg_count > 0)
+		argc = parse_command(input, argv);
+		if (argc > 0)
 		{
-			if (strcasecmp_custom(args[0], "history-clear") == 0)
+			if (strcasecmp_custom(argv[0], "exit") == 0)
 			{
+				free(input);
+				break ;
+			}
+			else if (strcasecmp_custom(argv[0], "history-clear") == 0)
 				rl_clear_history();
-			}
 			else
-			{
-				execute_command(args, arg_count);
-			}
+				execute_command(argv, argc);
 		}
-		// Free the memory allocated by readline
 		free(input);
 	}
-	// Clear the history when exiting
 	rl_clear_history();
-	return (0);
+}
+
+int	main(void)
+{
+	handle_signals();
+	main_loop();
+
+	return (*exit_status());
 }

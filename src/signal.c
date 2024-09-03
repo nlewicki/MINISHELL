@@ -3,30 +3,38 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 13:20:45 by mhummel           #+#    #+#             */
-/*   Updated: 2024/09/02 13:44:09 by mhummel          ###   ########.fr       */
+/*   Updated: 2024/09/03 09:57:05 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void sigint_handler(int sig)
+void sigint_handler(int sig)
 {
     (void)sig;
-    write(1, "\n", 1);
-    rl_on_new_line();
-    rl_replace_line("", 0);
-    rl_redisplay();
+    if (g_signal == 0)
+    {
+        write(1, "\n", 1);
+        rl_replace_line("", 0);
+        rl_on_new_line();
+        rl_redisplay();
+        *exit_status() = 1;
+    }
 }
 
-int handle_signals(char *input)
+void handle_signals(void)
 {
-    if (input == NULL)
-    {
-        printf("\nExiting minishell\n");
-        return 0;
-    }
-    return 1;
+    if (g_signal == 0)
+        signal(SIGINT, sigint_handler);
+    signal(SIGQUIT, SIG_IGN);
+}
+
+int *exit_status(void)
+{
+    static int status = 0;
+
+    return (&status);
 }
