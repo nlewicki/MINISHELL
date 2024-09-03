@@ -1,7 +1,8 @@
 CFILES = 	src/main.c \
 			src/builtins/pwd.c \
 			src/history.c \
-			src/signal.c
+			src/signal.c \
+			src/fake_globals.c \
 
 NAME = minishell
 CC = cc
@@ -48,7 +49,7 @@ banner:
 	@echo "                                                                                                  "
 	@echo " by mhummel & nlewicki                                                                            "
 	@echo "                                                                                                  "
-	@echo " start with ./minishell                                                                           "
+	@echo "                                                                          start with ./minishell  "
 	@echo "                                                                                                  "
 
 all: $(NAME)

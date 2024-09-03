@@ -6,7 +6,7 @@
 /*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 09:08:07 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/09/03 09:57:59 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/09/03 10:13:02 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@
 #define MAX_ARGS 100
 #define MAX_COMMAND_LENGTH 1000
 
-extern volatile sig_atomic_t	g_signal;
+extern int	g_signal;
 
 // builtins
 int pwd(int argc);
@@ -35,6 +35,8 @@ int pwd(int argc);
 // signals
 void sigint_handler(int sig);
 void handle_signals(void);
+
+// globals
 int *exit_status(void);
 
 // parsing

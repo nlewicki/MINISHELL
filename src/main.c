@@ -6,13 +6,13 @@
 /*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 09:52:41 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/09/03 09:56:19 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/09/03 10:12:56 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-volatile sig_atomic_t g_signal = 0;
+int	g_signal = 0;
 
 void	strip_quotes(char *str)
 {
@@ -147,15 +147,7 @@ void	main_loop(void)
 		argc = parse_command(input, argv);
 		if (argc > 0)
 		{
-			if (strcasecmp_custom(argv[0], "exit") == 0)
-			{
-				free(input);
-				break ;
-			}
-			else if (strcasecmp_custom(argv[0], "history-clear") == 0)
-				rl_clear_history();
-			else
-				execute_command(argv, argc);
+			execute_command(argv, argc);
 		}
 		free(input);
 	}
