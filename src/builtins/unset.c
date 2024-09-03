@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 11:36:37 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/09/03 13:17:28 by mhummel          ###   ########.fr       */
+/*   Updated: 2024/09/03 13:26:27 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,27 +24,23 @@ static int	is_valid_variable_name(const char *name)
 	return (1);
 }
 
-static void	remove_env_var(const char *name)
+static void remove_env_var(const char *name)
 {
-	char	**env;
-	int		i;
-	int		j;
+	char **env = *env_vars();
+	int i = 0;
+	size_t name_len = strlen(name);
 
-	env = *env_vars();
-	i = 0;
-	j = 0;
 	while (env[i])
 	{
-		j = 0;
-		if (strncmp(env[i], name, strlen(name)) == 0
-			&& env[i][strlen(name)] == '=')
+		if (strncmp(env[i], name, name_len) == 0 &&
+			(env[i][name_len] == '=' || env[i][name_len] == '\0'))
 		{
-			while (env[j])
+			while (env[i])
 			{
-				env[j] = env[j + 1];
-				j++;
+				env[i] = env[i + 1];
+				i++;
 			}
-			break ;
+			return;
 		}
 		i++;
 	}
