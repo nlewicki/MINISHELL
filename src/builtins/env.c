@@ -6,7 +6,7 @@
 /*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 11:01:10 by mhummel           #+#    #+#             */
-/*   Updated: 2024/09/03 11:19:33 by mhummel          ###   ########.fr       */
+/*   Updated: 2024/09/03 11:35:58 by mhummel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	env(void)
 	i = 0;
 	if (!envp)
 	{
-		fprintf(stderr, "env: environment not set\n");
+		write(2, "env: environment not set\n", 25);
 		return (1);
 	}
 	while (envp[i])
