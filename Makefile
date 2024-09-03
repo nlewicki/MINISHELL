@@ -1,5 +1,6 @@
 CFILES = 	src/main.c \
 			src/builtins/pwd.c \
+			src/builtins/env.c \
 			src/history.c \
 			src/signal.c \
 			src/fake_globals.c \

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 09:52:41 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/09/03 11:21:53 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/09/03 11:27:33 by mhummel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,6 +122,10 @@ int	execute_command(char *args[], int arg_count)
 		*exit_status() = 1;
 		exit(0);
 	}
+	if (strcasecmp_custom(args[0], "env") == 0)
+	{
+		return (env());
+	}
 	if (strcasecmp_custom(args[0], "echo") == 0)
 	{
 		return(ft_echo(args, arg_count));
@@ -131,6 +135,7 @@ int	execute_command(char *args[], int arg_count)
 	printf("Command not found: %s\n", args[0]);
 	return (1);
 }
+
 void	main_loop(void)
 {
 	char	*input;
@@ -163,8 +168,11 @@ void	main_loop(void)
 	rl_clear_history();
 }
 
-int	main(void)
+int	main(int argc, char **argv, char **envp)
 {
+	(void)argc;
+	(void)argv;
+	set_env_vars(envp);
 	handle_signals();
 	main_loop();
 	return (*exit_status());
