@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 09:52:41 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/09/03 11:27:33 by mhummel          ###   ########.fr       */
+/*   Updated: 2024/09/03 13:05:22 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,13 +123,11 @@ int	execute_command(char *args[], int arg_count)
 		exit(0);
 	}
 	if (strcasecmp_custom(args[0], "env") == 0)
-	{
 		return (env());
-	}
 	if (strcasecmp_custom(args[0], "echo") == 0)
-	{
 		return(ft_echo(args, arg_count));
-	}
+	  if (strcasecmp_custom(args[0], "unset") == 0)
+		return(ft_unset(args, arg_count));
 	// Add other built-in commands here
 	// If not a built-in command, you can add logic to execute external commands
 	printf("Command not found: %s\n", args[0]);
