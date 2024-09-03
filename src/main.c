@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 09:52:41 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/09/03 10:55:56 by mhummel          ###   ########.fr       */
+/*   Updated: 2024/09/03 11:21:53 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,7 @@ int	execute_command(char *args[], int arg_count)
 	{
 		if (arg_count > 1)
 		{
-			fprintf(stderr, "pwd: too many arguments\n");
+			write(2, "pwd: too many arguments\n", 24);
 			return (1);
 		}
 		return (pwd(arg_count));
@@ -121,6 +121,10 @@ int	execute_command(char *args[], int arg_count)
 	{
 		*exit_status() = 1;
 		exit(0);
+	}
+	if (strcasecmp_custom(args[0], "echo") == 0)
+	{
+		return(ft_echo(args, arg_count));
 	}
 	// Add other built-in commands here
 	// If not a built-in command, you can add logic to execute external commands

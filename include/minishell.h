@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 09:08:07 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/09/03 10:57:10 by mhummel          ###   ########.fr       */
+/*   Updated: 2024/09/03 11:22:15 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@
 extern int	g_signal;
 
 // builtins
-int pwd(int argc);
-
+int	pwd(int argc);
+int	ft_echo(char *argv[], int argc);
 
 // signals
 void sigint_handler(int sig);
