@@ -1,18 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   history.c                                          :+:      :+:    :+:   */
+/*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/02 12:38:54 by mhummel           #+#    #+#             */
-/*   Updated: 2024/09/03 10:21:07 by nlewicki         ###   ########.fr       */
+/*   Created: 2024/09/02 13:20:45 by mhummel           #+#    #+#             */
+/*   Updated: 2024/09/03 10:19:41 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	clear_shell_history(void)
+void	sigint_handler(int sig)
 {
-	rl_clear_history();
+	(void)sig;
+	if (g_signal == 0)
+	{
+		write(1, "\n", 1);
+		rl_replace_line("", 0);
+		rl_on_new_line();
+		rl_redisplay();
+		*exit_status() = 1;
+	}
+}
+
+void	handle_signals(void)
+{
+	if (g_signal == 0)
+		signal(SIGINT, sigint_handler);
+	signal(SIGQUIT, SIG_IGN);
 }

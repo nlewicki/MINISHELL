@@ -1,6 +1,8 @@
 CFILES = 	src/main.c \
 			src/builtins/pwd.c \
-			src/history.c
+			src/history.c \
+			src/signal.c \
+			src/fake_globals.c \
 
 NAME = minishell
 CC = cc
@@ -15,7 +17,7 @@ $(NAME): $(OBJ_DIR) $(OFILES)
 	@$(MAKE)	loading
 	clear
 	@$(MAKE)	banner
-	@./$(NAME)
+
 
 
 $(OBJ_DIR)/%.o: src/%.c
@@ -47,7 +49,8 @@ banner:
 	@echo "                                                                                                  "
 	@echo " by mhummel & nlewicki                                                                            "
 	@echo "                                                                                                  "
-
+	@echo "                                                                          start with ./minishell  "
+	@echo "                                                                                                  "
 
 all: $(NAME)
 

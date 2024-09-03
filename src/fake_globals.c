@@ -1,18 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   history.c                                          :+:      :+:    :+:   */
+/*   fake_globals.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/02 12:38:54 by mhummel           #+#    #+#             */
-/*   Updated: 2024/09/03 10:21:07 by nlewicki         ###   ########.fr       */
+/*   Created: 2024/09/03 10:09:25 by nlewicki          #+#    #+#             */
+/*   Updated: 2024/09/03 10:56:10 by mhummel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	clear_shell_history(void)
+int	*exit_status(void)
 {
-	rl_clear_history();
+	static int	status = 0;
+
+	return (&status);
 }
