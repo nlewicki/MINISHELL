@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 09:52:41 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/09/03 10:12:56 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/09/03 10:55:56 by mhummel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	g_signal = 0;
+int		g_signal = 0;
 
 void	strip_quotes(char *str)
 {
@@ -117,6 +117,11 @@ int	execute_command(char *args[], int arg_count)
 		}
 		return (pwd(arg_count));
 	}
+	if (strcmp(args[0], "exit") == 0)
+	{
+		*exit_status() = 1;
+		exit(0);
+	}
 	// Add other built-in commands here
 	// If not a built-in command, you can add logic to execute external commands
 	printf("Command not found: %s\n", args[0]);
@@ -134,13 +139,13 @@ void	main_loop(void)
 		input = readline("minishell> ");
 		if (!input)
 		{
-			printf("\nexit\n");
+			printf("exit\n");
 			break ;
 		}
-		 if (g_signal)
+		if (g_signal)
 		{
 			free(input);
-			continue;
+			continue ;
 		}
 		if (strlen(input) > 0)
 			add_history(input);
@@ -158,6 +163,5 @@ int	main(void)
 {
 	handle_signals();
 	main_loop();
-
 	return (*exit_status());
 }
