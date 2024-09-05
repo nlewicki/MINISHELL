@@ -6,7 +6,7 @@
 /*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 09:52:41 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/09/05 09:33:11 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/09/05 09:35:36 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,7 @@ int	strcasecmp_custom(const char *s1, const char *s2)
 
 int	execute_command(char *args[], int arg_count)
 {
-	char *full_path;
+	// char *full_path;
 
 	if (strcasecmp_custom(args[0], "pwd") == 0)
 	{
