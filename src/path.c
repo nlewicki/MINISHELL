@@ -6,7 +6,7 @@
 /*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 10:45:17 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/09/05 12:43:43 by mhummel          ###   ########.fr       */
+/*   Updated: 2024/09/05 12:54:04 by mhummel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,16 +48,10 @@ int	execute_external_command(char **args)
 	int		status;
 
 	command_path = search_path(args[0]);
-	if (command_path == NULL)
-	{
-		fprintf(stderr, "Command not found: %s\n", args[0]);
-		return (1);
-	}
 	pid = fork();
 	if (pid == 0)
 	{
 		execv(command_path, args);
-		perror("execv");
 		exit(1);
 	}
 	else if (pid < 0)
