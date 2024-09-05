@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 09:52:41 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/09/05 09:35:36 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/09/05 09:44:04 by mhummel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,6 +132,8 @@ int	execute_command(char *args[], int arg_count)
 		return (ft_unset(args, arg_count));
 	if (strcasecmp_custom(args[0], "cd") == 0)
 		return (ft_cd(args, arg_count));
+	if (strcasecmp_custom(args[0], "export") == 0)
+		return (ft_export(args, arg_count));
 	printf("Command not found: %s\n", args[0]);
 	return (1);
 }
