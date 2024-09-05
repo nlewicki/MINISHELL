@@ -12,14 +12,16 @@ CFILES = 	src/main.c \
 NAME = minishell
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -I./include -g
-LDFLAGS = -lreadline
+LDFLAGS = -L$(LIBFT_DIR) -lft -lreadline
 OBJ_DIR = Obj
 OFILES = $(addprefix $(OBJ_DIR)/,$(notdir $(CFILES:.c=.o)))
 
 LIBFT_DIR = src/libft
 LIBFT = $(LIBFT_DIR)/libft.a
+LIBFT_OBJ_DIR = $(LIBFT_DIR)/Obj_libft
+LIBFT_OFILES = $(addprefix $(LIBFT_OBJ_DIR)/,$(notdir $(FILES:.c=.o)))
 
-$(NAME): libft $(OBJ_DIR) $(OFILES)
+$(NAME): $(LIBFT) $(OBJ_DIR) $(OFILES)
 	@$(CC) $(OFILES) $(LDFLAGS) -o $(NAME)
 	clear
 	@$(MAKE)	loading
@@ -36,7 +38,7 @@ $(OBJ_DIR)/%.o: src/builtins/%.c
 $(OBJ_DIR):
 	@mkdir -p $(OBJ_DIR)
 
-libft:
+$(LIBFT):
 	@make -C $(LIBFT_DIR)
 
 loading:
@@ -78,4 +80,4 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all, clean, fclean, re, loading, banner
+.PHONY: all, clean, fclean, re, loading, banner, libft

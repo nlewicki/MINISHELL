@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 11:31:51 by mhummel           #+#    #+#             */
-/*   Updated: 2024/09/05 09:47:29 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/09/05 10:49:46 by mhummel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static char	*get_home_dir(void)
 	i = 0;
 	while (env[i])
 	{
-		if (strncmp(env[i], "HOME=", 5) == 0)
+		if (ft_strncmp(env[i], "HOME=", 5) == 0)
 			return (env[i] + 5);
 		i++;
 	}
@@ -33,7 +33,7 @@ int	ft_cd(char *argv[], int argc)
 	char	*path;
 	char	*home;
 
-	if (argc == 1 || (argc == 2 && strcmp(argv[1], "~") == 0))
+	if (argc == 1 || (argc == 2 && ft_strcmp(argv[1], "~") == 0))
 	{
 		home = get_home_dir();
 		if (!home)

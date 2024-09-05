@@ -6,7 +6,7 @@
 /*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 11:49:24 by mhummel           #+#    #+#             */
-/*   Updated: 2024/09/05 09:26:26 by mhummel          ###   ########.fr       */
+/*   Updated: 2024/09/05 10:41:50 by mhummel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,11 @@
 
 int	is_valid_identifier(const char *str)
 {
-	if (!isalpha(*str) && *str != '_')
+	if (!ft_isalpha(*str) && *str != '_')
 		return (0);
 	while (*++str)
 	{
-		if (!isalnum(*str) && *str != '_')
+		if (!ft_isalnum(*str) && *str != '_')
 			return (0);
 	}
 	return (1);
@@ -29,11 +29,11 @@ char	*ft_strdup(const char *s)
 	char	*new;
 	size_t	len;
 
-	len = strlen(s) + 1;
+	len = ft_strlen(s) + 1;
 	new = malloc(len);
 	if (new == NULL)
 		return (NULL);
-	return (memcpy(new, s, len));
+	return (ft_memcpy(new, s, len));
 }
 
 int	compare_env(const void *a, const void *b)
@@ -43,7 +43,7 @@ int	compare_env(const void *a, const void *b)
 
 	env_a = *(char **)a;
 	env_b = *(char **)b;
-	return (strcmp(env_a, env_b));
+	return (ft_strcmp(env_a, env_b));
 }
 
 void	bubble_sort_env(char **envp, int count)
@@ -57,7 +57,7 @@ void	bubble_sort_env(char **envp, int count)
 		j = 0;
 		while (j < count - 1 - i)
 		{
-			if (strcmp(envp[j], envp[j + 1]) > 0)
+			if (ft_strcmp(envp[j], envp[j + 1]) > 0)
 			{
 				temp = envp[j];
 				envp[j] = envp[j + 1];
@@ -121,7 +121,7 @@ int	print_sorted_env(void)
 	i = 0;
 	while (i < count)
 	{
-		eq = strchr(sorted_envp[i], '=');
+		eq = ft_strchr(sorted_envp[i], '=');
 		if (eq)
 			printf("declare -x %.*s=\"%s\"\n", (int)(eq - sorted_envp[i]),
 				sorted_envp[i], eq + 1);
@@ -138,7 +138,7 @@ int	ft_export_args(char *arg)
 	char	*name;
 	char	*equals_sign;
 
-	equals_sign = strchr(arg, '=');
+	equals_sign = ft_strchr(arg, '=');
 	if (equals_sign)
 	{
 		name = ft_strdup(arg);
@@ -147,7 +147,7 @@ int	ft_export_args(char *arg)
 			fprintf(stderr, "export: memory allocation error\n");
 			return (1);
 		}
-		equals_sign = strchr(name, '=');
+		equals_sign = ft_strchr(name, '=');
 		*equals_sign = '\0';
 		if (!is_valid_identifier(name))
 		{
@@ -199,7 +199,7 @@ int	add_new_env_var(char *name, char *value, int i)
 	char	**envp;
 	char	**new_envp;
 
-	len = strlen(name) + strlen(value) + 2;
+	len = ft_strlen(name) + strlen(value) + 2;
 	envp = *env_vars();
 	new_envp = realloc(envp, (i + 2) * sizeof(char *));
 	if (!new_envp)
@@ -225,10 +225,10 @@ int	add_or_update_env(char *name, char *value)
 	i = 0;
 	while (envp && envp[i])
 	{
-		if (strncmp(envp[i], name, strlen(name)) == 0
-			&& envp[i][strlen(name)] == '=')
+		if (ft_strncmp(envp[i], name, ft_strlen(name)) == 0
+			&& envp[i][ft_strlen(name)] == '=')
 		{
-			len = strlen(name) + strlen(value) + 2;
+			len = ft_strlen(name) + ft_strlen(value) + 2;
 			new_var = malloc(len);
 			if (!new_var)
 				return (1);
