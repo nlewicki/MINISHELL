@@ -6,7 +6,7 @@
 /*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 09:08:07 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/09/03 13:15:14 by mhummel          ###   ########.fr       */
+/*   Updated: 2024/09/05 09:20:32 by mhummel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,9 @@ int			ft_echo(char *argv[], int argc);
 int			env(void);
 int			ft_cd(char *argv[], int argc);
 int			ft_unset(char *argv[], int argc);
+int			ft_export(char **args, int arg_count);
+
+int add_or_update_env(char *name, char *value);
 
 // signals
 void		sigint_handler(int sig);
@@ -47,5 +50,6 @@ void		set_env_vars(char **envp);
 int			parse_command(char *input, char *args[]);
 int			strcasecmp_custom(const char *s1, const char *s2);
 int			execute_command(char *args[], int arg_count);
+char		**copy_envp(char **envp);
 
 #endif

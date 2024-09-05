@@ -6,7 +6,7 @@
 /*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 09:52:41 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/09/03 13:16:16 by mhummel          ###   ########.fr       */
+/*   Updated: 2024/09/04 12:51:26 by mhummel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,6 +130,8 @@ int	execute_command(char *args[], int arg_count)
 		return (ft_unset(args, arg_count));
 	if (strcasecmp_custom(args[0], "cd") == 0)
 		return (ft_cd(args, arg_count));
+	if (strcasecmp_custom(args[0], "export") == 0)
+		return (ft_export(args, arg_count));
 	// Add other built-in commands here
 	// If not a built-in command, you can add logic to execute external commands
 	printf("Command not found: %s\n", args[0]);
@@ -168,12 +170,58 @@ void	main_loop(void)
 	rl_clear_history();
 }
 
+char	**copy_envp(char **envp)
+{
+	int		i;
+	char	**new_envp;
+
+	i = 0;
+	while (envp[i])
+	{
+		i++;
+	}
+	new_envp = malloc((i + 1) * sizeof(char *));
+	if (!new_envp)
+		return (NULL);
+	i = 0;
+	while (envp[i])
+	{
+		new_envp[i] = strdup(envp[i]);
+		if (!new_envp[i])
+		{
+			while (i--)
+				free(new_envp[i]);
+			free(new_envp);
+			return (NULL);
+		}
+		i++;
+	}
+	new_envp[i] = NULL;
+	return (new_envp);
+}
+
 int	main(int argc, char **argv, char **envp)
 {
+	char	**my_envp;
+	int		i;
+
 	(void)argc;
 	(void)argv;
-	set_env_vars(envp);
+	my_envp = copy_envp(envp);
+	if (!my_envp)
+	{
+		perror("Failed to copy envp");
+		return (1);
+	}
+	set_env_vars(my_envp);
 	handle_signals();
 	main_loop();
+	i = 0;
+	while (my_envp[i])
+	{
+		free(my_envp[i]);
+		i++;
+	}
+	free(my_envp);
 	return (*exit_status());
 }

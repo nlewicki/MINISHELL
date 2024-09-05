@@ -7,6 +7,7 @@ CFILES = 	src/main.c \
 			src/fake_globals.c \
 			src/builtins/echo.c \
 			src/builtins/unset.c \
+			src/builtins/export.c
 
 NAME = minishell
 CC = cc
