@@ -1,23 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strcmp.c                                        :+:      :+:    :+:   */
+/*   ft_strtok.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/05 10:48:45 by mhummel           #+#    #+#             */
-/*   Updated: 2024/09/05 12:42:55 by mhummel          ###   ########.fr       */
+/*   Created: 2024/09/05 12:38:50 by mhummel           #+#    #+#             */
+/*   Updated: 2024/09/05 12:45:46 by mhummel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_strcmp(const char *s1, const char *s2)
+char	*ft_strtok(char *str, const char *delim)
 {
-	while (*s1 && (*s1 == *s2))
+	static char	*last_token = NULL;
+	char		*token_start;
+
+	if (str == NULL)
+		str = last_token;
+	while (*str && ft_strchr(delim, *str))
+		str++;
+	if (*str == '\0')
 	{
-		s1++;
-		s2++;
+		last_token = str;
+		return (NULL);
 	}
-	return (*(unsigned char *)s1 - *(unsigned char *)s2);
+	token_start = str;
+	while (*str && !ft_strchr(delim, *str))
+		str++;
+	if (*str)
+	{
+		*str = '\0';
+		last_token = str + 1;
+	}
+	else
+		last_token = str;
+	return (token_start);
 }

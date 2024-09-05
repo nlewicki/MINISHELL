@@ -6,7 +6,7 @@
 /*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 09:08:07 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/09/05 10:59:38 by mhummel          ###   ########.fr       */
+/*   Updated: 2024/09/05 12:27:02 by mhummel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ int			strcasecmp_custom(const char *s1, const char *s2);
 int			execute_command(char *args[], int arg_count);
 char		**copy_envp(char **envp);
 
-char *search_path(const char *command);
+int			execute_external_command(char **args);
+char		*search_path(const char *file);
 
 #endif

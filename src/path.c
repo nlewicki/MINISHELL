@@ -3,32 +3,73 @@
 /*                                                        :::      ::::::::   */
 /*   path.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 10:45:17 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/09/05 09:36:11 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/09/05 12:43:43 by mhummel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include <sys/wait.h>
 
+#define MAX_PATH 1024
 
-char *search_path(const char *command)
+char	*search_path(const char *file)
 {
-	char *path = getenv("PATH");
-	char *path_copy = strdup(path);
-	char *dir = strtok(path_copy, ":");
-	char full_path[1024];
+	char	*path;
+	char	*path_copy;
+	char	*dir;
+	char	full_path[MAX_PATH];
 
-	while (dir != NULL) {
-		snprintf(full_path, sizeof(full_path), "%s/%s", dir, command);
-		if (access(full_path, X_OK) == 0) {
+	path = getenv("PATH");
+	if (!path)
+		return (NULL);
+	path_copy = ft_strdup(path);
+	dir = ft_strtok(path_copy, ":");
+	while (dir != NULL)
+	{
+		snprintf(full_path, sizeof(full_path), "%s/%s", dir, file);
+		if (access(full_path, X_OK) == 0)
+		{
 			free(path_copy);
-			return strdup(full_path);
+			return (ft_strdup(full_path));
 		}
-		dir = strtok(NULL, ":");
+		dir = ft_strtok(NULL, ":");
 	}
-
 	free(path_copy);
-	return NULL;
+	return (NULL);
+}
+
+int	execute_external_command(char **args)
+{
+	char	*command_path;
+	pid_t	pid;
+	int		status;
+
+	command_path = search_path(args[0]);
+	if (command_path == NULL)
+	{
+		fprintf(stderr, "Command not found: %s\n", args[0]);
+		return (1);
+	}
+	pid = fork();
+	if (pid == 0)
+	{
+		execv(command_path, args);
+		perror("execv");
+		exit(1);
+	}
+	else if (pid < 0)
+	{
+		perror("fork");
+		free(command_path);
+		return (1);
+	}
+	else
+	{
+		waitpid(pid, &status, 0);
+		free(command_path);
+		return (WEXITSTATUS(status));
+	}
 }

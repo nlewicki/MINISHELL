@@ -6,7 +6,7 @@
 /*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 09:52:41 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/09/05 10:37:59 by mhummel          ###   ########.fr       */
+/*   Updated: 2024/09/05 12:44:24 by mhummel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,16 +59,16 @@ int	parse_command(char *input, char *args[])
 		{
 			in_quotes = 1;
 			quote_char = *input;
-			token_start = input + 1; // Start token after the opening quote
+			token_start = input + 1;
 		}
 		else if (*input == quote_char && in_quotes)
 		{
 			in_quotes = 0;
-			*input = '\0'; // Null-terminate the argument
+			*input = '\0';
 			args[arg_count++] = token_start;
 			token_start = input + 1;
 		}
-		else if (isspace(*input) && !in_quotes)
+		else if (ft_isspace(*input) && !in_quotes)
 		{
 			if (token_start != input)
 			{
@@ -79,12 +79,13 @@ int	parse_command(char *input, char *args[])
 		}
 		input++;
 	}
-	// Handle the last argument if it exists
 	if (token_start != input && arg_count < MAX_ARGS)
 	{
+		if (in_quotes)
+			*(input - 1) = '\0';
 		args[arg_count++] = token_start;
 	}
-	// Strip quotes from all arguments
+	args[arg_count] = NULL;
 	i = 0;
 	while (i < arg_count)
 	{
@@ -108,7 +109,7 @@ int	strcasecmp_custom(const char *s1, const char *s2)
 
 int	execute_command(char *args[], int arg_count)
 {
-	// char *full_path;
+	int	result;
 
 	if (strcasecmp_custom(args[0], "pwd") == 0)
 	{
@@ -119,27 +120,33 @@ int	execute_command(char *args[], int arg_count)
 		}
 		return (pwd(arg_count));
 	}
-	if (strcmp(args[0], "exit") == 0)
+	else if (strcmp(args[0], "exit") == 0)
 	{
 		*exit_status() = 1;
 		exit(0);
 	}
-	if (strcasecmp_custom(args[0], "env") == 0)
+	else if (strcasecmp_custom(args[0], "env") == 0)
 	{
 		if (arg_count > 1)
 			return (1);
 		return (env());
 	}
-	if (strcasecmp_custom(args[0], "echo") == 0)
+	else if (strcasecmp_custom(args[0], "echo") == 0)
 		return (ft_echo(args, arg_count));
-	if (strcasecmp_custom(args[0], "unset") == 0)
+	else if (strcasecmp_custom(args[0], "unset") == 0)
 		return (ft_unset(args, arg_count));
-	if (strcasecmp_custom(args[0], "cd") == 0)
+	else if (strcasecmp_custom(args[0], "cd") == 0)
 		return (ft_cd(args, arg_count));
-	if (strcasecmp_custom(args[0], "export") == 0)
+	else if (strcasecmp_custom(args[0], "export") == 0)
 		return (ft_export(args, arg_count));
-	printf("Command not found: %s\n", args[0]);
-	return (1);
+	else
+	{
+		result = execute_external_command(args);
+		if (result != 0)
+			printf("Command not found: %s\n", args[0]);
+		return (result);
+	}
+	return (0);
 }
 
 void	main_loop(void)
