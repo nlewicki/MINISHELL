@@ -6,7 +6,7 @@
 /*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 11:01:10 by mhummel           #+#    #+#             */
-/*   Updated: 2024/09/05 09:40:55 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/09/05 10:40:06 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	set_env_vars(char **envp)
 	j = -1;
 	while (++j < i)
 	{
-		(*env)[j] = strdup(envp[j]);
+		(*env)[j] = ft_strdup(envp[j]);
 		if (!(*env)[j])
 		{
 			perror("strdup");
