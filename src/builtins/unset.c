@@ -6,7 +6,7 @@
 /*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 11:36:37 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/09/05 09:51:36 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/09/05 10:39:43 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,11 @@
 
 static int	is_valid_variable_name(const char *name)
 {
-	if (!isalpha(*name) && *name != '_')
+	if (!ft_isalpha(*name) && *name != '_')
 		return (0);
 	while (*++name)
 	{
-		if (!isalnum(*name) && *name != '_')
+		if (!ft_isalnum(*name) && *name != '_')
 			return (0);
 	}
 	return (1);
@@ -32,10 +32,10 @@ static void	remove_env_var(const char *name)
 
 	env = *env_vars();
 	i = 0;
-	name_len = strlen(name);
+	name_len = ft_strlen(name);
 	while (env[i])
 	{
-		if (strncmp(env[i], name, name_len) == 0 && (env[i][name_len] == '='
+		if (ft_strncmp(env[i], name, name_len) == 0 && (env[i][name_len] == '='
 				|| env[i][name_len] == '\0'))
 		{
 			while (env[i])
