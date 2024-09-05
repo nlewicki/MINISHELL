@@ -1,42 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   echo.c                                             :+:      :+:    :+:   */
+/*   ft_isalpha.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/03 11:02:29 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/09/05 09:38:43 by nlewicki         ###   ########.fr       */
+/*   Created: 2024/03/05 09:29:20 by nlewicki          #+#    #+#             */
+/*   Updated: 2024/03/18 13:15:34 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
-int	ft_echo(char *argv[], int argc)
+int	ft_isalpha(int c)
 {
-	int	i;
-	int	j;
-	int	n_flag;
-
-	i = 0;
-	n_flag = 0;
-	while (++i < argc && argv[i][0] == '-' && argv[i][1] == 'n')
-	{
-		j = 1;
-		while (argv[i][j] == 'n')
-			j++;
-		if (argv[i][j] != '\0')
-			break;
-		n_flag = 1;
-	}
-	while (i < argc)
-	{
-		printf("%s", argv[i]);
-		if (i < argc - 1)
-			printf(" ");
-		i++;
-	}
-	if (!n_flag)
-		printf("\n");
+	if ((c >= 65 && c <= 90) || (c >= 97 && c <= 122))
+		return (1);
 	return (0);
 }
+// int	main(void)
+// {
+// 	char c = 'Z';
+// 	printf("%d\n", isalpha(c));
+// 	printf("%d\n", ft_isalpha(c));
+// 	return (0);
+// }

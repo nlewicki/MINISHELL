@@ -6,7 +6,7 @@
 /*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 09:52:41 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/09/05 09:44:04 by mhummel          ###   ########.fr       */
+/*   Updated: 2024/09/05 10:37:59 by mhummel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,11 @@ int	execute_command(char *args[], int arg_count)
 		exit(0);
 	}
 	if (strcasecmp_custom(args[0], "env") == 0)
+	{
+		if (arg_count > 1)
+			return (1);
 		return (env());
+	}
 	if (strcasecmp_custom(args[0], "echo") == 0)
 		return (ft_echo(args, arg_count));
 	if (strcasecmp_custom(args[0], "unset") == 0)

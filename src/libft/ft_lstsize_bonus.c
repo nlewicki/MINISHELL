@@ -1,42 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   echo.c                                             :+:      :+:    :+:   */
+/*   ft_lstsize_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/03 11:02:29 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/09/05 09:38:43 by nlewicki         ###   ########.fr       */
+/*   Created: 2024/03/18 10:18:47 by nlewicki          #+#    #+#             */
+/*   Updated: 2024/03/18 11:18:55 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
-int	ft_echo(char *argv[], int argc)
+int	ft_lstsize(t_list *lst)
 {
-	int	i;
-	int	j;
-	int	n_flag;
+	int	size;
 
-	i = 0;
-	n_flag = 0;
-	while (++i < argc && argv[i][0] == '-' && argv[i][1] == 'n')
+	size = 0;
+	while (lst != NULL)
 	{
-		j = 1;
-		while (argv[i][j] == 'n')
-			j++;
-		if (argv[i][j] != '\0')
-			break;
-		n_flag = 1;
+		lst = lst->next;
+		size++;
 	}
-	while (i < argc)
-	{
-		printf("%s", argv[i]);
-		if (i < argc - 1)
-			printf(" ");
-		i++;
-	}
-	if (!n_flag)
-		printf("\n");
-	return (0);
+	return (size);
 }

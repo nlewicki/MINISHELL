@@ -1,42 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   echo.c                                             :+:      :+:    :+:   */
+/*   ft_memset.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/03 11:02:29 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/09/05 09:38:43 by nlewicki         ###   ########.fr       */
+/*   Created: 2024/03/05 09:58:30 by nlewicki          #+#    #+#             */
+/*   Updated: 2024/03/12 12:18:32 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
-int	ft_echo(char *argv[], int argc)
+void	*ft_memset(void *str, int value, size_t num)
 {
-	int	i;
-	int	j;
-	int	n_flag;
+	size_t			i;
+	unsigned char	*ptr;
 
+	ptr = str;
 	i = 0;
-	n_flag = 0;
-	while (++i < argc && argv[i][0] == '-' && argv[i][1] == 'n')
+	while (i < num)
 	{
-		j = 1;
-		while (argv[i][j] == 'n')
-			j++;
-		if (argv[i][j] != '\0')
-			break;
-		n_flag = 1;
-	}
-	while (i < argc)
-	{
-		printf("%s", argv[i]);
-		if (i < argc - 1)
-			printf(" ");
+		ptr[i] = (unsigned char)value;
 		i++;
 	}
-	if (!n_flag)
-		printf("\n");
-	return (0);
+	return (str);
 }
+
+// int	main(void)
+// {
+// 	char str[] = "Hello, world!";
+// 	size_t num = 5;
+// 	int value = 'A';
+// 	printf("%s\n", str);
+// 	ft_memset(str, value, num);
+// 	printf("%s\n", str);
+
+// 	return 0;
+// }
