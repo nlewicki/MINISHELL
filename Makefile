@@ -1,13 +1,13 @@
-CFILES = 	src/main.c \
-			src/builtins/pwd.c \
+CFILES =	src/builtins/pwd.c \
 			src/builtins/env.c \
 			src/builtins/cd.c \
-			src/history.c \
-			src/signal.c \
 			src/fake_globals.c \
 			src/builtins/echo.c \
 			src/builtins/unset.c \
-			src/builtins/export.c
+			src/builtins/export.c \
+			src/main.c \
+			src/signal.c \
+			src/history.c \
 
 NAME = minishell
 CC = cc
@@ -18,8 +18,6 @@ OFILES = $(addprefix $(OBJ_DIR)/,$(notdir $(CFILES:.c=.o)))
 
 LIBFT_DIR = src/libft
 LIBFT = $(LIBFT_DIR)/libft.a
-LIBFT_OBJ_DIR = $(LIBFT_DIR)/Obj_libft
-LIBFT_OFILES = $(addprefix $(LIBFT_OBJ_DIR)/,$(notdir $(FILES:.c=.o)))
 
 $(NAME): $(LIBFT) $(OBJ_DIR) $(OFILES)
 	@$(CC) $(OFILES) $(LDFLAGS) -o $(NAME)
@@ -42,7 +40,7 @@ $(LIBFT):
 	@make -C $(LIBFT_DIR)
 
 loading:
-	@for i in {1..42}; do \
+	@for i in {1..50}; do \
 		printf '%s' "██"; \
 		sleep 0.01; \
 	done
@@ -59,9 +57,9 @@ banner:
 	@echo "  ▀█   ███   █▀  █▀    ▀█   █▀  █▀    ▄████████▀    ███    █▀      ██████████ █████▄▄██ █████▄▄██ "
 	@echo "                                                                              ▀         ▀         "
 	@echo "                                                                                                  "
-	@echo " by mhummel & nlewicki                                                                            "
+	@echo " \033[90mby mhummel & nlewicki\033[0m                                                                            "
 	@echo "                                                                                                  "
-	@echo "                                                                          start with ./minishell  "
+	@echo "                                                                          \033[36mstart with ./minishell\033[0m  "
 	@echo "                                                                                                  "
 
 all: $(NAME)
@@ -70,13 +68,13 @@ clean:
 	@rm -rf $(OBJ_DIR)
 	@rm -f $(OFILES)
 	@make -C $(LIBFT_DIR) clean
-	@echo "\033[33mclean\033[0m"
+	@echo "\033[90mclean\033[0m"
 
 fclean: clean
 	@rm -f $(NAME)
 	@rm -f $(LIBFT)
-	@echo "\033[33mand\033[0m"
-	@echo "\033[33mfclean\033[0m"
+	@echo "\033[90mand\033[0m"
+	@echo "\033[90mfclean\033[0m"
 
 re: fclean all
 

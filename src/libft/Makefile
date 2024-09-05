@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+         #
+#    By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/12 11:07:18 by nlewicki          #+#    #+#              #
-#    Updated: 2024/09/05 10:49:30 by mhummel          ###   ########.fr        #
+#    Updated: 2024/09/05 12:02:27 by nlewicki         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -69,6 +69,7 @@ $(OBJ_DIR)/%.o: %.c
 	@$(CC) -c $(CFLAGS) $< -o $@
 
 $(OBJ_DIR):
+	@echo "\033[35mCompiling $(NAME)\033[0m"
 	@mkdir -p $(OBJ_DIR)
 
 all: $(NAME)
