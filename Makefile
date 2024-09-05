@@ -7,6 +7,7 @@ CFILES = 	src/main.c \
 			src/fake_globals.c \
 			src/builtins/echo.c \
 			src/builtins/unset.c \
+			src/path.c \
 
 NAME = minishell
 CC = cc
@@ -21,7 +22,6 @@ $(NAME): $(OBJ_DIR) $(OFILES)
 	@$(MAKE)	loading
 	clear
 	@$(MAKE)	banner
-
 
 
 $(OBJ_DIR)/%.o: src/%.c

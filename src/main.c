@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 09:52:41 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/09/03 13:16:16 by mhummel          ###   ########.fr       */
+/*   Updated: 2024/09/04 12:09:48 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,8 @@ int	strcasecmp_custom(const char *s1, const char *s2)
 
 int	execute_command(char *args[], int arg_count)
 {
+	char *full_path;
+
 	if (strcasecmp_custom(args[0], "pwd") == 0)
 	{
 		if (arg_count > 1)
@@ -130,8 +132,6 @@ int	execute_command(char *args[], int arg_count)
 		return (ft_unset(args, arg_count));
 	if (strcasecmp_custom(args[0], "cd") == 0)
 		return (ft_cd(args, arg_count));
-	// Add other built-in commands here
-	// If not a built-in command, you can add logic to execute external commands
 	printf("Command not found: %s\n", args[0]);
 	return (1);
 }

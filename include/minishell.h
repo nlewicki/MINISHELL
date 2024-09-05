@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 09:08:07 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/09/03 13:15:14 by mhummel          ###   ########.fr       */
+/*   Updated: 2024/09/04 11:00:08 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,5 +47,7 @@ void		set_env_vars(char **envp);
 int			parse_command(char *input, char *args[]);
 int			strcasecmp_custom(const char *s1, const char *s2);
 int			execute_command(char *args[], int arg_count);
+
+char *search_path(const char *command);
 
 #endif
