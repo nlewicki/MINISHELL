@@ -16,7 +16,10 @@ LDFLAGS = -lreadline
 OBJ_DIR = Obj
 OFILES = $(addprefix $(OBJ_DIR)/,$(notdir $(CFILES:.c=.o)))
 
-$(NAME): $(OBJ_DIR) $(OFILES)
+LIBFT_DIR = src/libft
+LIBFT = $(LIBFT_DIR)/libft.a
+
+$(NAME): libft $(OBJ_DIR) $(OFILES)
 	@$(CC) $(OFILES) $(LDFLAGS) -o $(NAME)
 	clear
 	@$(MAKE)	loading
@@ -32,6 +35,9 @@ $(OBJ_DIR)/%.o: src/builtins/%.c
 
 $(OBJ_DIR):
 	@mkdir -p $(OBJ_DIR)
+
+libft:
+	@make -C $(LIBFT_DIR)
 
 loading:
 	@for i in {1..42}; do \
@@ -61,10 +67,12 @@ all: $(NAME)
 clean:
 	@rm -rf $(OBJ_DIR)
 	@rm -f $(OFILES)
+	@make -C $(LIBFT_DIR) clean
 	@echo "\033[33mclean\033[0m"
 
 fclean: clean
 	@rm -f $(NAME)
+	@rm -f $(LIBFT)
 	@echo "\033[33mand\033[0m"
 	@echo "\033[33mfclean\033[0m"
 

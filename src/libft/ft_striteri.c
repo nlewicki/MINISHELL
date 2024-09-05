@@ -1,42 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   echo.c                                             :+:      :+:    :+:   */
+/*   ft_striteri.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/03 11:02:29 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/09/05 09:38:43 by nlewicki         ###   ########.fr       */
+/*   Created: 2024/03/14 14:27:51 by nlewicki          #+#    #+#             */
+/*   Updated: 2024/03/14 14:33:34 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
-int	ft_echo(char *argv[], int argc)
+void	ft_striteri(char *s, void (*f)(unsigned int, char*))
 {
 	int	i;
-	int	j;
-	int	n_flag;
 
 	i = 0;
-	n_flag = 0;
-	while (++i < argc && argv[i][0] == '-' && argv[i][1] == 'n')
+	while (s[i] != '\0')
 	{
-		j = 1;
-		while (argv[i][j] == 'n')
-			j++;
-		if (argv[i][j] != '\0')
-			break;
-		n_flag = 1;
-	}
-	while (i < argc)
-	{
-		printf("%s", argv[i]);
-		if (i < argc - 1)
-			printf(" ");
+		f(i, &s[i]);
 		i++;
 	}
-	if (!n_flag)
-		printf("\n");
-	return (0);
 }

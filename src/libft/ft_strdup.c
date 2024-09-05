@@ -1,42 +1,44 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   echo.c                                             :+:      :+:    :+:   */
+/*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/03 11:02:29 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/09/05 09:38:43 by nlewicki         ###   ########.fr       */
+/*   Created: 2024/03/11 11:31:37 by nlewicki          #+#    #+#             */
+/*   Updated: 2024/03/12 12:18:26 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
-int	ft_echo(char *argv[], int argc)
+char	*ft_strdup(const char *s1)
 {
-	int	i;
-	int	j;
-	int	n_flag;
+	size_t	len;
+	size_t	i;
+	char	*dup;
 
+	len = 0;
+	while (s1[len] != '\0')
+		len++;
+	dup = (char *)malloc((len + 1) * sizeof(char));
+	if (dup == NULL)
+		return (NULL);
 	i = 0;
-	n_flag = 0;
-	while (++i < argc && argv[i][0] == '-' && argv[i][1] == 'n')
+	while (i < len)
 	{
-		j = 1;
-		while (argv[i][j] == 'n')
-			j++;
-		if (argv[i][j] != '\0')
-			break;
-		n_flag = 1;
-	}
-	while (i < argc)
-	{
-		printf("%s", argv[i]);
-		if (i < argc - 1)
-			printf(" ");
+		dup[i] = s1[i];
 		i++;
 	}
-	if (!n_flag)
-		printf("\n");
-	return (0);
+	dup[len] = '\0';
+	return (dup);
 }
+
+// int	main(void)
+// {
+// 	char	str[] = "hallowerlt";
+
+// 	printf("%s\n", strdup(str));
+// 	printf("%s\n", ft_strdup(str));
+// 	return (0);
+// }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 11:01:10 by mhummel           #+#    #+#             */
-/*   Updated: 2024/09/04 12:53:09 by mhummel          ###   ########.fr       */
+/*   Updated: 2024/09/05 09:40:55 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,8 @@ void	set_env_vars(char **envp)
 		perror("malloc");
 		exit(1);
 	}
-	j = 0;
-	while (j < i)
+	j = -1;
+	while (++j < i)
 	{
 		(*env)[j] = strdup(envp[j]);
 		if (!(*env)[j])
@@ -57,7 +57,6 @@ void	set_env_vars(char **envp)
 			perror("strdup");
 			exit(1);
 		}
-		j++;
 	}
 	(*env)[i] = NULL;
 }

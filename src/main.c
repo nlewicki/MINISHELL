@@ -6,7 +6,7 @@
 /*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 09:52:41 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/09/05 09:35:36 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/09/05 09:43:42 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,13 +125,19 @@ int	execute_command(char *args[], int arg_count)
 		exit(0);
 	}
 	if (strcasecmp_custom(args[0], "env") == 0)
+	{
+		if (arg_count > 1)
+			return (1);
 		return (env());
+	}
 	if (strcasecmp_custom(args[0], "echo") == 0)
 		return (ft_echo(args, arg_count));
 	if (strcasecmp_custom(args[0], "unset") == 0)
 		return (ft_unset(args, arg_count));
 	if (strcasecmp_custom(args[0], "cd") == 0)
 		return (ft_cd(args, arg_count));
+	if (strcasecmp_custom(args[0], "export") == 0)
+		return (ft_export(args, arg_count));
 	printf("Command not found: %s\n", args[0]);
 	return (1);
 }

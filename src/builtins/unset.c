@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 11:36:37 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/09/05 09:26:34 by mhummel          ###   ########.fr       */
+/*   Updated: 2024/09/05 09:51:36 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,19 +57,19 @@ int	ft_unset(char *argv[], int argc)
 	status = 0;
 	if (argc < 2)
 	{
-		fprintf(stderr, "unset: not enough arguments\n");
+		write (2, "unset: not enough arguments\n", 28);
 		return (1);
 	}
 	i = 1;
 	while (i < argc)
 	{
 		if (is_valid_variable_name(argv[i]))
-		{
 			remove_env_var(argv[i]);
-		}
 		else
 		{
-			fprintf(stderr, "unset: '%s': not a valid identifier\n", argv[i]);
+			write(2, "unset: '", 8);
+			write(2, argv[i], strlen(argv[i]));
+			write(2, "': not a valid identifier\n", 27);
 			status = 1;
 		}
 		i++;
