@@ -6,7 +6,7 @@
 /*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 11:01:10 by mhummel           #+#    #+#             */
-/*   Updated: 2024/09/03 11:35:58 by mhummel          ###   ########.fr       */
+/*   Updated: 2024/09/04 12:53:09 by mhummel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,4 +30,34 @@ int	env(void)
 		i++;
 	}
 	return (0);
+}
+
+void	set_env_vars(char **envp)
+{
+	char	***env;
+	size_t	i;
+	size_t	j;
+
+	env = env_vars();
+	i = 0;
+	while (envp[i])
+		i++;
+	*env = malloc((i + 1) * sizeof(char *));
+	if (!*env)
+	{
+		perror("malloc");
+		exit(1);
+	}
+	j = 0;
+	while (j < i)
+	{
+		(*env)[j] = strdup(envp[j]);
+		if (!(*env)[j])
+		{
+			perror("strdup");
+			exit(1);
+		}
+		j++;
+	}
+	(*env)[i] = NULL;
 }
