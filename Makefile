@@ -5,6 +5,7 @@ CFILES =	src/builtins/pwd.c \
 			src/builtins/echo.c \
 			src/builtins/unset.c \
 			src/builtins/export.c \
+			src/builtins/export_utils.c \
 			src/main.c \
 			src/signal.c \
 			src/history.c \

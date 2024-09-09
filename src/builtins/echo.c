@@ -6,7 +6,7 @@
 /*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 11:02:29 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/09/05 09:38:43 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/09/09 11:23:10 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	ft_echo(char *argv[], int argc)
 		while (argv[i][j] == 'n')
 			j++;
 		if (argv[i][j] != '\0')
-			break;
+			break ;
 		n_flag = 1;
 	}
 	while (i < argc)

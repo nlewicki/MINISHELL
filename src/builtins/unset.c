@@ -6,7 +6,7 @@
 /*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 11:36:37 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/09/05 10:39:43 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/09/09 11:23:29 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static void	remove_env_var(const char *name)
 	while (env[i])
 	{
 		if (ft_strncmp(env[i], name, name_len) == 0 && (env[i][name_len] == '='
-				|| env[i][name_len] == '\0'))
+			|| env[i][name_len] == '\0'))
 		{
 			while (env[i])
 			{

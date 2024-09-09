@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 09:52:41 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/09/05 12:44:24 by mhummel          ###   ########.fr       */
+/*   Updated: 2024/09/09 10:47:45 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,17 +112,10 @@ int	execute_command(char *args[], int arg_count)
 	int	result;
 
 	if (strcasecmp_custom(args[0], "pwd") == 0)
-	{
-		if (arg_count > 1)
-		{
-			write(2, "pwd: too many arguments\n", 24);
-			return (1);
-		}
-		return (pwd(arg_count));
-	}
+		return (pwd());
 	else if (strcmp(args[0], "exit") == 0)
 	{
-		*exit_status() = 1;
+		// *exit_status() = 1;
 		exit(0);
 	}
 	else if (strcasecmp_custom(args[0], "env") == 0)
@@ -143,7 +136,7 @@ int	execute_command(char *args[], int arg_count)
 	{
 		result = execute_external_command(args);
 		if (result != 0)
-			printf("Command not found: %s\n", args[0]);
+			printf("%s: command not found\n", args[0]);
 		return (result);
 	}
 	return (0);
@@ -207,8 +200,7 @@ char	**copy_envp(char **envp)
 		}
 		i++;
 	}
-	new_envp[i] = NULL;
-	return (new_envp);
+	return (new_envp[i] = NULL, new_envp);
 }
 
 int	main(int argc, char **argv, char **envp)

@@ -6,21 +6,16 @@
 /*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:45:57 by mhummel           #+#    #+#             */
-/*   Updated: 2024/09/03 10:28:37 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/09/09 10:46:20 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	pwd(int argc)
+int	pwd(void)
 {
 	char	*cwd;
 
-	if (argc > 1)
-	{
-		write(2, "pwd: too many arguments\n", 24);
-		return (1);
-	}
 	cwd = getcwd(NULL, 0);
 	if (!cwd)
 	{

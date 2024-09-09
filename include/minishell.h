@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 09:08:07 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/09/05 12:27:02 by mhummel          ###   ########.fr       */
+/*   Updated: 2024/09/09 11:21:43 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,14 +30,19 @@
 extern int	g_signal;
 
 // builtins
-int			pwd(int argc);
+int			pwd(void);
 int			ft_echo(char *argv[], int argc);
 int			env(void);
 int			ft_cd(char *argv[], int argc);
 int			ft_unset(char *argv[], int argc);
 int			ft_export(char **args, int arg_count);
 
-int add_or_update_env(char *name, char *value);
+int			compare_env(const void *a, const void *b);
+void		bubble_sort_env(char **envp, int count);
+int			count_env_vars(char **envp);
+char		**copy_env(char **envp, int count);
+int			is_valid_identifier(const char *str);
+int			add_or_update_env(char *name, char *value);
 
 // signals
 void		sigint_handler(int sig);
