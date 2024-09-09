@@ -18,7 +18,7 @@ LDFLAGS = -L$(LIBFT_DIR) -lft -lreadline
 OBJ_DIR = Obj
 OFILES = $(addprefix $(OBJ_DIR)/,$(notdir $(CFILES:.c=.o)))
 
-LIBFT_DIR = src/libft
+LIBFT_DIR = lib/libft
 LIBFT = $(LIBFT_DIR)/libft.a
 
 $(NAME): $(LIBFT) $(OBJ_DIR) $(OFILES)

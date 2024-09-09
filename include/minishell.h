@@ -6,14 +6,14 @@
 /*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 09:08:07 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/09/09 11:21:43 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/09/09 14:01:04 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-# include "../src/libft/libft.h"
+# include "../lib/libft/libft.h"
 # include <ctype.h>
 # include <errno.h>
 # include <stdio.h>
@@ -23,7 +23,6 @@
 # include <stdlib.h>
 # include <string.h>
 # include <unistd.h>
-# include "../src/libft/libft.h"
 
 # define MAX_ARGS 100
 
