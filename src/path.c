@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   path.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 10:45:17 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/09/05 12:54:04 by mhummel          ###   ########.fr       */
+/*   Updated: 2024/09/09 12:08:51 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,26 @@ char	*search_path(const char *file)
 	char	*path_copy;
 	char	*dir;
 	char	full_path[MAX_PATH];
+	char	**envp;
 
-	path = getenv("PATH");
+	path = NULL;
+	envp = *env_vars();
+	if (!envp)
+		return (NULL);
+	while (*envp)
+	{
+		if (ft_strncmp(*envp, "PATH=", 5) == 0)
+		{
+			path = *envp + 5;
+			break ;
+		}
+		envp++;
+	}
 	if (!path)
 		return (NULL);
 	path_copy = ft_strdup(path);
+	if (!path_copy)
+		return (NULL);
 	dir = ft_strtok(path_copy, ":");
 	while (dir != NULL)
 	{

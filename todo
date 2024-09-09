@@ -1,0 +1,8 @@
+unset PATH -> ls geht nicht mehr
+/bin/ls muss tortzdem gehen
+-----------------
+PATH.c darf nicht getenv machen, sondern muss unser env benutzten, damit des geht
+
+export hi -> hi in export (hi="" bei uns)
+env muss alphabetisch sortiert sein
+

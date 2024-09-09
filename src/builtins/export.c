@@ -6,7 +6,7 @@
 /*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 11:49:24 by mhummel           #+#    #+#             */
-/*   Updated: 2024/09/09 11:21:29 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/09/09 12:11:50 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,10 +55,7 @@ int	ft_export_args(char *arg)
 	{
 		name = ft_strdup(arg);
 		if (!name)
-		{
-			fprintf(stderr, "export: memory allocation error\n");
 			return (1);
-		}
 		equals_sign = ft_strchr(name, '=');
 		*equals_sign = '\0';
 		if (!is_valid_identifier(name))
