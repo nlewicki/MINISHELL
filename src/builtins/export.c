@@ -6,7 +6,7 @@
 /*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 11:49:24 by mhummel           #+#    #+#             */
-/*   Updated: 2024/09/09 12:11:50 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/09/12 10:40:07 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,23 @@ int	print_sorted_env(void)
 	return (free(sorted_envp), 0);
 }
 
+int	mark_for_export(const char *name)
+{
+	char	**envp;
+	int		i;
+
+	i = 0;
+	envp = *env_vars();
+	while (envp && envp[i])
+	{
+		if (ft_strncmp(envp[i], name, ft_strlen(name)) == 0
+			&& (envp[i][ft_strlen(name)] == '=' || envp[i][ft_strlen(name)] == '\0'))
+			return (0);
+		i++;
+	}
+	return (add_new_env_var(name, NULL, i));
+}
+
 int	ft_export_args(char *arg)
 {
 	char	*name;
@@ -72,15 +89,18 @@ int	ft_export_args(char *arg)
 		}
 		free(name);
 	}
-	else if (!is_valid_identifier(arg))
+	else
 	{
-		fprintf(stderr, "export: '%s': not a valid identifier\n", arg);
-		return (1);
-	}
-	else if (add_or_update_env(arg, "") != 0)
-	{
-		fprintf(stderr, "export: failed to set variable '%s'\n", arg);
-		return (1);
+		if (!is_valid_identifier(arg))
+		{
+			fprintf(stderr, "export: '%s': not a valid identifier\n", arg);
+			return (1);
+		}
+		if (mark_for_export(arg) != 0)
+		{
+			fprintf(stderr, "export: failed to mark variable '%s' for export\n", arg);
+			return (1);
+		}
 	}
 	return (0);
 }
@@ -101,22 +121,33 @@ int	ft_export(char **args, int arg_count)
 	return (0);
 }
 
-int	add_new_env_var(char *name, char *value, int i)
+int	add_new_env_var(const char *name, char *value, int i)
 {
 	char	*new_var;
 	size_t	len;
 	char	**envp;
 	char	**new_envp;
 
-	len = ft_strlen(name) + strlen(value) + 2;
 	envp = *env_vars();
 	new_envp = realloc(envp, (i + 2) * sizeof(char *));
 	if (!new_envp)
 		return (1);
-	new_var = malloc(len);
-	if (!new_var)
-		return (1);
-	snprintf(new_var, len, "%s=%s", name, value);
+	if (value && *value)
+	{
+		len = ft_strlen(name) + ft_strlen(value) + 2;
+		new_var = malloc(len);
+		if (!new_var)
+			return (1);
+		snprintf(new_var, len, "%s=%s", name, value);
+	}
+	else
+	{
+		len = ft_strlen(name) + 1;
+		new_var = malloc(len);
+		if (!new_var)
+			return (1);
+		snprintf(new_var, len, "%s", name);
+	}
 	new_envp[i] = new_var;
 	new_envp[i + 1] = NULL;
 	*env_vars() = new_envp;

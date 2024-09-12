@@ -6,7 +6,7 @@
 /*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 09:52:41 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/09/09 10:47:45 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/09/12 10:39:22 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@ void	strip_quotes(char *str)
 	end--;
 	if (end > str)
 	{
-		if ((str[0] == '"' && *end == '"') || (str[0] == '\'' && *end == '\''))
+		if ((str[0] == '"' && *end == '"')
+			|| (str[0] == '\'' && *end == '\''))
 		{
 			src = str + 1;
 			dst = str;

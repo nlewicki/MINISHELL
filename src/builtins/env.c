@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 11:01:10 by mhummel           #+#    #+#             */
-/*   Updated: 2024/09/05 10:59:55 by mhummel          ###   ########.fr       */
+/*   Updated: 2024/09/12 10:33:46 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ int	env(void)
 {
 	char	**envp;
 	int		i;
+	char	*equals_sign;
 
 	envp = *env_vars();
 	i = 0;
@@ -26,7 +27,9 @@ int	env(void)
 	}
 	while (envp[i])
 	{
-		printf("%s\n", envp[i]);
+		equals_sign = ft_strchr(envp[i], '=');
+		if (equals_sign && *(equals_sign + 1) != '\0')
+			printf("%s\n", envp[i]);
 		i++;
 	}
 	return (0);

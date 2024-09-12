@@ -6,7 +6,7 @@
 /*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 09:08:07 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/09/09 14:01:04 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/09/12 10:38:49 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ int			ft_cd(char *argv[], int argc);
 int			ft_unset(char *argv[], int argc);
 int			ft_export(char **args, int arg_count);
 
+int			add_new_env_var(const char *name, char *value, int i);
+int			mark_for_export(const char *name);
 int			compare_env(const void *a, const void *b);
 void		bubble_sort_env(char **envp, int count);
 int			count_env_vars(char **envp);
