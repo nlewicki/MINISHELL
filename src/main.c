@@ -6,41 +6,13 @@
 /*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 09:52:41 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/09/12 10:39:22 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/09/12 13:37:59 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 int		g_signal = 0;
-
-void	strip_quotes(char *str)
-{
-	char	*end;
-	char	*src;
-	char	*dst;
-
-	end = str;
-	while (*end)
-		end++;
-	end--;
-	if (end > str)
-	{
-		if ((str[0] == '"' && *end == '"')
-			|| (str[0] == '\'' && *end == '\''))
-		{
-			src = str + 1;
-			dst = str;
-			while (src < end)
-			{
-				*dst = *src;
-				dst++;
-				src++;
-			}
-			*dst = '\0';
-		}
-	}
-}
 
 int	parse_command(char *input, char *args[])
 {
@@ -94,18 +66,6 @@ int	parse_command(char *input, char *args[])
 		i++;
 	}
 	return (arg_count);
-}
-
-int	strcasecmp_custom(const char *s1, const char *s2)
-{
-	while (*s1 && *s2)
-	{
-		if (tolower((unsigned char)*s1) != tolower((unsigned char)*s2))
-			return (tolower((unsigned char)*s1) - tolower((unsigned char)*s2));
-		s1++;
-		s2++;
-	}
-	return (tolower((unsigned char)*s1) - tolower((unsigned char)*s2));
 }
 
 int	execute_command(char *args[], int arg_count)
@@ -175,57 +135,18 @@ void	main_loop(void)
 	rl_clear_history();
 }
 
-char	**copy_envp(char **envp)
-{
-	int		i;
-	char	**new_envp;
-
-	i = 0;
-	while (envp[i])
-	{
-		i++;
-	}
-	new_envp = malloc((i + 1) * sizeof(char *));
-	if (!new_envp)
-		return (NULL);
-	i = 0;
-	while (envp[i])
-	{
-		new_envp[i] = strdup(envp[i]);
-		if (!new_envp[i])
-		{
-			while (i--)
-				free(new_envp[i]);
-			free(new_envp);
-			return (NULL);
-		}
-		i++;
-	}
-	return (new_envp[i] = NULL, new_envp);
-}
-
 int	main(int argc, char **argv, char **envp)
 {
 	char	**my_envp;
-	int		i;
 
 	(void)argc;
 	(void)argv;
 	my_envp = copy_envp(envp);
 	if (!my_envp)
-	{
-		perror("Failed to copy envp");
-		return (1);
-	}
+		return (perror("Failed to copy envp"), 1);
 	set_env_vars(my_envp);
 	handle_signals();
 	main_loop();
-	i = 0;
-	while (my_envp[i])
-	{
-		free(my_envp[i]);
-		i++;
-	}
-	free(my_envp);
+	free_env(my_envp);
 	return (*exit_status());
 }
