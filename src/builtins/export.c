@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 11:49:24 by mhummel           #+#    #+#             */
-/*   Updated: 2024/09/12 10:40:07 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/09/12 11:07:29 by mhummel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,8 @@ int	mark_for_export(const char *name)
 	while (envp && envp[i])
 	{
 		if (ft_strncmp(envp[i], name, ft_strlen(name)) == 0
-			&& (envp[i][ft_strlen(name)] == '=' || envp[i][ft_strlen(name)] == '\0'))
+			&& (envp[i][ft_strlen(name)] == '='
+				|| envp[i][ft_strlen(name)] == '\0'))
 			return (0);
 		i++;
 	}
@@ -98,7 +99,8 @@ int	ft_export_args(char *arg)
 		}
 		if (mark_for_export(arg) != 0)
 		{
-			fprintf(stderr, "export: failed to mark variable '%s' for export\n", arg);
+			fprintf(stderr, "export: failed to mark variable '%s' for export\n",
+				arg);
 			return (1);
 		}
 	}
@@ -166,17 +168,17 @@ int	add_or_update_env(char *name, char *value)
 	while (envp && envp[i])
 	{
 		if (ft_strncmp(envp[i], name, ft_strlen(name)) == 0
-			&& envp[i][ft_strlen(name)] == '=')
+			&& (envp[i][ft_strlen(name)] == '='
+				|| envp[i][ft_strlen(name)] == '\0'))
 		{
 			len = ft_strlen(name) + ft_strlen(value) + 2;
 			new_var = malloc(len);
 			if (!new_var)
 				return (1);
-			new_var[0] = '\0';
-			ft_strlcat(new_var, name, len);
-			ft_strlcat(new_var, "=", len);
-			ft_strlcat(new_var, value, len);
-			return (free(envp[i]), envp[i] = new_var, 0);
+			snprintf(new_var, len, "%s=%s", name, value);
+			free(envp[i]);
+			envp[i] = new_var;
+			return (0);
 		}
 		i++;
 	}
