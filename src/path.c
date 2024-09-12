@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   path.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 10:45:17 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/09/09 12:08:51 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/09/12 11:36:13 by mhummel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,23 +62,31 @@ int	execute_external_command(char **args)
 	pid_t	pid;
 	int		status;
 
-	command_path = search_path(args[0]);
+	if (args[0][0] == '/' || args[0][0] == '.')
+		command_path = args[0];
+	else
+		command_path = search_path(args[0]);
+	if (!command_path)
+		return (1);
 	pid = fork();
 	if (pid == 0)
 	{
 		execv(command_path, args);
+		perror("execv");
 		exit(1);
 	}
 	else if (pid < 0)
 	{
 		perror("fork");
-		free(command_path);
+		if (command_path != args[0])
+			free(command_path);
 		return (1);
 	}
 	else
 	{
 		waitpid(pid, &status, 0);
-		free(command_path);
+		if (command_path != args[0])
+			free(command_path);
 		return (WEXITSTATUS(status));
 	}
 }
