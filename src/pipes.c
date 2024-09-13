@@ -6,7 +6,7 @@
 /*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/13 09:47:35 by mhummel           #+#    #+#             */
-/*   Updated: 2024/09/13 09:58:57 by mhummel          ###   ########.fr       */
+/*   Updated: 2024/09/13 10:07:14 by mhummel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,10 @@
 int	execute_piped_commands(char *commands[], int num_commands)
 {
 	pid_t	pid;
-	int		in_fd;
 	int		i;
 	char	*args[MAX_ARGS];
-	int		arg_count;
 
-	int status, pipefd[2];
-	in_fd = STDIN_FILENO;
+	int status, pipefd[2], prev_pipe[2] = {-1, -1};
 	i = 0;
 	while (i < num_commands)
 	{
@@ -41,10 +38,11 @@ int	execute_piped_commands(char *commands[], int num_commands)
 		}
 		else if (pid == 0)
 		{
-			if (in_fd != STDIN_FILENO)
+			if (i > 0)
 			{
-				dup2(in_fd, STDIN_FILENO);
-				close(in_fd);
+				dup2(prev_pipe[0], STDIN_FILENO);
+				close(prev_pipe[0]);
+				close(prev_pipe[1]);
 			}
 			if (i < num_commands - 1)
 			{
@@ -52,21 +50,27 @@ int	execute_piped_commands(char *commands[], int num_commands)
 				dup2(pipefd[1], STDOUT_FILENO);
 				close(pipefd[1]);
 			}
-			arg_count = parse_command(commands[i], args);
-			execute_command(args, arg_count);
+			parse_command(commands[i], args);
+			execvp(args[0], args);
+			perror("execvp");
 			exit(EXIT_FAILURE);
 		}
 		else
 		{
-			if (in_fd != STDIN_FILENO)
-				close(in_fd);
+			if (i > 0)
+			{
+				close(prev_pipe[0]);
+				close(prev_pipe[1]);
+			}
 			if (i < num_commands - 1)
 			{
-				close(pipefd[1]);
-				in_fd = pipefd[0];
+				prev_pipe[0] = pipefd[0];
+				prev_pipe[1] = pipefd[1];
 			}
 			else
+			{
 				waitpid(pid, &status, 0);
+			}
 		}
 		i++;
 	}
