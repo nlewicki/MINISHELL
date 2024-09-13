@@ -10,7 +10,8 @@ CFILES =	src/builtins/pwd.c \
 			src/signal.c \
 			src/history.c \
 			src/path.c \
-			arc/utils.c
+			arc/utils.c \
+			src/pipes.c
 
 NAME = minishell
 CC = cc

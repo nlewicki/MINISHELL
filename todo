@@ -1,9 +1,3 @@
-unset PATH -> ls geht nicht mehr
-/bin/ls muss tortzdem gehen
------------------
-
-export lines anpassen
-
 pipes einbauen
 
 ------------------------------------------------------------

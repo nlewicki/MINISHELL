@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 09:52:41 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/09/12 13:37:59 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/09/13 09:50:50 by mhummel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,8 @@ int	execute_command(char *args[], int arg_count)
 void	main_loop(void)
 {
 	char	*input;
+	char	*commands[MAX_ARGS];
+	int		num_commands;
 	char	*argv[MAX_ARGS];
 	int		argc;
 
@@ -125,10 +127,22 @@ void	main_loop(void)
 		}
 		if (strlen(input) > 0)
 			add_history(input);
-		argc = parse_command(input, argv);
-		if (argc > 0)
+		num_commands = 0;
+		commands[num_commands] = strtok(input, "|");
+		while (commands[num_commands] != NULL && num_commands < MAX_ARGS - 1)
 		{
-			execute_command(argv, argc);
+			num_commands++;
+			commands[num_commands] = strtok(NULL, "|");
+		}
+		if (num_commands > 1)
+		{
+			execute_piped_commands(commands, num_commands);
+		}
+		else if (num_commands == 1)
+		{
+			argc = parse_command(commands[0], argv);
+			if (argc > 0)
+				execute_command(argv, argc);
 		}
 		free(input);
 	}
