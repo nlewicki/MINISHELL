@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipes.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/13 09:47:35 by mhummel           #+#    #+#             */
-/*   Updated: 2024/09/13 10:07:14 by mhummel          ###   ########.fr       */
+/*   Updated: 2024/09/13 10:09:58 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,17 +25,11 @@ int	execute_piped_commands(char *commands[], int num_commands)
 		if (i < num_commands - 1)
 		{
 			if (pipe(pipefd) == -1)
-			{
-				perror("pipe");
-				return (1);
-			}
+				return (perror("pipe"), 1);
 		}
 		pid = fork();
 		if (pid == -1)
-		{
-			perror("fork");
-			return (1);
-		}
+			return (perror("fork"), 1);
 		else if (pid == 0)
 		{
 			if (i > 0)
@@ -68,9 +62,7 @@ int	execute_piped_commands(char *commands[], int num_commands)
 				prev_pipe[1] = pipefd[1];
 			}
 			else
-			{
 				waitpid(pid, &status, 0);
-			}
 		}
 		i++;
 	}
