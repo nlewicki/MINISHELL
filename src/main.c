@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 09:52:41 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/09/13 09:50:50 by mhummel          ###   ########.fr       */
+/*   Updated: 2024/09/13 10:04:47 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,19 +72,15 @@ int	execute_command(char *args[], int arg_count)
 {
 	int	result;
 
-	if (strcasecmp_custom(args[0], "pwd") == 0)
-		return (pwd());
-	else if (strcmp(args[0], "exit") == 0)
+	if (strcmp(args[0], "exit") == 0)
 	{
 		// *exit_status() = 1;
 		exit(0);
 	}
+	else if (strcasecmp_custom(args[0], "pwd") == 0)
+		return (pwd());
 	else if (strcasecmp_custom(args[0], "env") == 0)
-	{
-		if (arg_count > 1)
-			return (1);
 		return (env());
-	}
 	else if (strcasecmp_custom(args[0], "echo") == 0)
 		return (ft_echo(args, arg_count));
 	else if (strcasecmp_custom(args[0], "unset") == 0)
