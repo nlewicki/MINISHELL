@@ -3,16 +3,66 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 09:52:41 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/09/13 10:04:47 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/09/16 10:56:31 by mhummel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 int		g_signal = 0;
+
+char	*expand_env_variables(char *input, int in_single_quotes)
+{
+	char	*result;
+	char	*src;
+	char	*dest;
+	char	status_str[16];
+	char	var_name[256] = {0};
+	int		i;
+	char	*var_value;
+
+	result = malloc(strlen(input) * 2);
+	src = input;
+	dest = result;
+	while (*src)
+	{
+		if (*src == '$' && !in_single_quotes)
+		{
+			src++;
+			if (*src == '?')
+			{
+				sprintf(status_str, "%d", *exit_status());
+				strcpy(dest, status_str);
+				dest += strlen(status_str);
+				src++;
+			}
+			else
+			{
+				i = 0;
+				while (*src && ((*src >= 'A' && *src <= 'Z') || (*src >= 'a'
+							&& *src <= 'z') || *src == '_'))
+				{
+					var_name[i++] = *src++;
+				}
+				var_value = getenv(var_name);
+				if (var_value)
+				{
+					strcpy(dest, var_value);
+					dest += strlen(var_value);
+				}
+			}
+		}
+		else
+		{
+			*dest++ = *src++;
+		}
+	}
+	*dest = '\0';
+	return (result);
+}
 
 int	parse_command(char *input, char *args[])
 {
@@ -21,6 +71,8 @@ int	parse_command(char *input, char *args[])
 	int		in_quotes;
 	char	quote_char;
 	int		i;
+	int		in_single_quotes;
+	char	*expanded;
 
 	arg_count = 0;
 	token_start = input;
@@ -32,37 +84,55 @@ int	parse_command(char *input, char *args[])
 		{
 			in_quotes = 1;
 			quote_char = *input;
-			token_start = input + 1;
+			token_start = input;
 		}
 		else if (*input == quote_char && in_quotes)
 		{
 			in_quotes = 0;
-			*input = '\0';
-			args[arg_count++] = token_start;
-			token_start = input + 1;
+			input++;
+			args[arg_count++] = ft_strndup(token_start, input - token_start);
+			token_start = input;
 		}
 		else if (ft_isspace(*input) && !in_quotes)
 		{
 			if (token_start != input)
 			{
-				*input = '\0';
-				args[arg_count++] = token_start;
+				args[arg_count++] = ft_strndup(token_start, input
+						- token_start);
 			}
 			token_start = input + 1;
 		}
-		input++;
+		if (*input != '\0')
+			input++;
 	}
 	if (token_start != input && arg_count < MAX_ARGS)
 	{
 		if (in_quotes)
-			*(input - 1) = '\0';
-		args[arg_count++] = token_start;
+			args[arg_count++] = ft_strndup(token_start, input - token_start);
+		else
+			args[arg_count++] = ft_strdup(token_start);
 	}
 	args[arg_count] = NULL;
 	i = 0;
 	while (i < arg_count)
 	{
-		strip_quotes(args[i]);
+		if (args[i][0] == '\'' && args[i][strlen(args[i]) - 1] == '\'')
+		{
+			memmove(args[i], args[i] + 1, strlen(args[i]) - 2);
+			args[i][strlen(args[i]) - 2] = '\0';
+		}
+		else
+		{
+			in_single_quotes = 0;
+			if (args[i][0] == '"' && args[i][strlen(args[i]) - 1] == '"')
+			{
+				memmove(args[i], args[i] + 1, strlen(args[i]) - 2);
+				args[i][strlen(args[i]) - 2] = '\0';
+			}
+			expanded = expand_env_variables(args[i], in_single_quotes);
+			free(args[i]);
+			args[i] = expanded;
+		}
 		i++;
 	}
 	return (arg_count);
@@ -73,10 +143,7 @@ int	execute_command(char *args[], int arg_count)
 	int	result;
 
 	if (strcmp(args[0], "exit") == 0)
-	{
-		// *exit_status() = 1;
-		exit(0);
-	}
+		exit(*exit_status());
 	else if (strcasecmp_custom(args[0], "pwd") == 0)
 		return (pwd());
 	else if (strcasecmp_custom(args[0], "env") == 0)
@@ -92,6 +159,7 @@ int	execute_command(char *args[], int arg_count)
 	else
 	{
 		result = execute_external_command(args);
+		*exit_status() = result;
 		if (result != 0)
 			printf("%s: command not found\n", args[0]);
 		return (result);
@@ -106,6 +174,7 @@ void	main_loop(void)
 	int		num_commands;
 	char	*argv[MAX_ARGS];
 	int		argc;
+	int		i;
 
 	while (1)
 	{
@@ -132,13 +201,21 @@ void	main_loop(void)
 		}
 		if (num_commands > 1)
 		{
-			execute_piped_commands(commands, num_commands);
+			*exit_status() = execute_piped_commands(commands, num_commands);
 		}
 		else if (num_commands == 1)
 		{
 			argc = parse_command(commands[0], argv);
 			if (argc > 0)
-				execute_command(argv, argc);
+			{
+				*exit_status() = execute_command(argv, argc);
+			}
+		}
+		i = 0;
+		while (i < argc)
+		{
+			free(argv[i]);
+			i++;
 		}
 		free(input);
 	}
