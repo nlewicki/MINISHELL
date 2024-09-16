@@ -11,7 +11,8 @@ CFILES =	src/builtins/pwd.c \
 			src/history.c \
 			src/path.c \
 			arc/utils.c \
-			src/pipes.c
+			src/pipes.c \
+			src/expand.c \
 
 NAME = minishell
 CC = cc

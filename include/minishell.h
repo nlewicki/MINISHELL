@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 09:08:07 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/09/16 10:53:16 by mhummel          ###   ########.fr       */
+/*   Updated: 2024/09/16 12:38:59 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,10 @@ void		bubble_sort_env(char **envp, int count);
 int			count_env_vars(char **envp);
 int			is_valid_identifier(const char *str);
 int			add_or_update_env(char *name, char *value);
+
+// expand
+char		*expand_env_variables(char *src, int in_single_quotes);
+char 		*get_our_env(char *var_name);
 
 // signals
 void		sigint_handler(int sig);
