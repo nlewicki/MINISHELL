@@ -6,7 +6,7 @@
 /*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 12:37:27 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/09/16 13:37:32 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/09/16 13:39:57 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ char	*expand_env_variables(char *src, int in_single_quotes)
 				src++;
 				ft_strcpy(dest, ft_itoa(*exit_status()));
 				dest += ft_strlen(ft_itoa(*exit_status()));
+				continue ;
 			}
 			while (*src && ((*src >= 'A' && *src <= 'Z') || (*src >= 'a'
 						&& *src <= 'z') || *src == '_'))
