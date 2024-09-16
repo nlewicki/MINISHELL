@@ -6,7 +6,7 @@
 /*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 09:08:07 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/09/13 09:50:02 by mhummel          ###   ########.fr       */
+/*   Updated: 2024/09/16 10:53:16 by mhummel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ void		strip_quotes(char *str);
 int			execute_external_command(char **args);
 char		*search_path(const char *file);
 
-int execute_piped_commands(char *commands[], int num_commands);
+int			execute_piped_commands(char *commands[], int num_commands);
+char *expand_env_variables(char *input, int in_single_quotes);
 
 #endif

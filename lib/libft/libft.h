@@ -6,7 +6,7 @@
 /*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 13:13:20 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/09/05 12:46:07 by mhummel          ###   ########.fr       */
+/*   Updated: 2024/09/16 10:54:20 by mhummel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ char	**ft_split(char const *s, char c);
 int		ft_strcmp(const char *s1, const char *s2);
 char	*ft_strtok(char *str, const char *delim);
 bool	ft_isspace(int c);
+char	*ft_strndup(const char *s, size_t n);
 
 typedef struct s_list
 {
