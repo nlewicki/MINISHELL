@@ -6,7 +6,7 @@
 /*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 12:37:27 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/09/16 13:39:57 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/09/17 10:33:14 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,44 @@ char *get_our_env(char *var_name)
 	return (NULL);
 }
 
+size_t calculate_expanded_length(const char *src, int in_single_quotes)
+{
+	size_t length = 0;
+	char var_name[256] = {0};
+	int i;
+	char *var_value;
+
+	while (*src)
+	{
+		if (*src == '$' && !in_single_quotes)
+		{
+			src++;
+			i = 0;
+			if (*src == '?')
+			{
+				src++;
+				length += ft_strlen(ft_itoa(*exit_status()));
+				continue;
+			}
+			while (*src && ((*src >= 'A' && *src <= 'Z') || (*src >= 'a'
+						&& *src <= 'z') || *src == '_'))
+				var_name[i++] = *src++;
+			var_name[i] = '\0';
+			var_value = get_our_env(var_name);
+			if (var_value)
+				length += ft_strlen(var_value);
+			else
+				length += i + 1; // +1 for the '$'
+		}
+		else
+		{
+			length++;
+			src++;
+		}
+	}
+	return (length);
+}
+
 char	*expand_env_variables(char *src, int in_single_quotes)
 {
 	char	*result;
@@ -46,7 +84,7 @@ char	*expand_env_variables(char *src, int in_single_quotes)
 	int		i;
 	char	*var_value;
 
-	result = malloc(ft_strlen(src) * 10);
+	result = malloc(ft_strlen(src) * calculate_expanded_length(src, in_single_quotes));
 	dest = result;
 	while (*src)
 	{
