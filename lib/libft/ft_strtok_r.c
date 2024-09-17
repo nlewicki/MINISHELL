@@ -1,26 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strndup.c                                       :+:      :+:    :+:   */
+/*   ft_strtok_r.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/12 13:24:17 by mhummel           #+#    #+#             */
-/*   Updated: 2024/09/17 13:07:20 by mhummel          ###   ########.fr       */
+/*   Created: 2024/09/17 13:02:45 by mhummel           #+#    #+#             */
+/*   Updated: 2024/09/17 13:10:41 by mhummel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strndup(const char *s, size_t n)
+char	*ft_strtok_r(char *str, const char *delim, char **saveptr)
 {
-	char	*result;
-	size_t	len;
+	char	*start;
+	char	*end;
 
-	len = strnlen(s, n);
-	result = (char *)malloc(len + 1);
-	if (!result)
+	if (str == NULL)
+		str = *saveptr;
+	start = str + ft_strspn(str, delim);
+	if (*start == '\0')
+	{
+		*saveptr = start;
 		return (NULL);
-	result[len] = '\0';
-	return ((char *)memcpy(result, s, len));
+	}
+	end = start + ft_strcspn(start, delim);
+	if (*end != '\0')
+	{
+		*end = '\0';
+		*saveptr = end + 1;
+	}
+	else
+	{
+		*saveptr = end;
+	}
+	return (start);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 09:08:07 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/09/16 12:38:59 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/09/17 12:53:52 by mhummel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,17 @@
 # include <stdlib.h>
 # include <string.h>
 # include <unistd.h>
+# include <fcntl.h>
 
 # define MAX_ARGS 100
+# define MAX_REDIRECTIONS 10
 
 extern int	g_signal;
+
+typedef struct s_redirection {
+	int type;  // 0: <, 1: >, 2: <<, 3: >>
+	char *file;
+} t_redirection;
 
 // builtins
 int			pwd(void);
@@ -62,7 +69,6 @@ void		free_env(char **my_envp);
 // parsing
 int			parse_command(char *input, char *args[]);
 int			strcasecmp_custom(const char *s1, const char *s2);
-int			execute_command(char *args[], int arg_count);
 char		**copy_envp(char **envp);
 void		strip_quotes(char *str);
 
@@ -70,6 +76,12 @@ int			execute_external_command(char **args);
 char		*search_path(const char *file);
 
 int			execute_piped_commands(char *commands[], int num_commands);
-char *expand_env_variables(char *input, int in_single_quotes);
+char		*expand_env_variables(char *input, int in_single_quotes);
+
+
+int			execute_command(char *args[], int arg_count, t_redirection *redirections, int redirection_count);
+
+int			parse_redirections(char *input, t_redirection *redirections, int *redirection_count);
+int			apply_redirections(t_redirection *redirections, int redirection_count);
 
 #endif

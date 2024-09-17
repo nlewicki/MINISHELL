@@ -6,7 +6,7 @@
 #    By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/12 11:07:18 by nlewicki          #+#    #+#              #
-#    Updated: 2024/09/16 12:25:25 by mhummel          ###   ########.fr        #
+#    Updated: 2024/09/17 13:09:22 by mhummel          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -58,7 +58,10 @@ FILES = ft_bzero.c \
 		ft_strtok.c \
 		ft_isspace.c \
 		ft_strndup.c \
-		ft_strcpy.c
+		ft_strcpy.c \
+		ft_strtok_r.c \
+		ft_strspn.c \
+		ft_strcspn.c
 
 CC		= cc
 CFLAGS	= -Wall -Wextra -Werror

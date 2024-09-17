@@ -1,26 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strndup.c                                       :+:      :+:    :+:   */
+/*   ft_strcspn.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/12 13:24:17 by mhummel           #+#    #+#             */
-/*   Updated: 2024/09/17 13:07:20 by mhummel          ###   ########.fr       */
+/*   Created: 2024/09/17 13:07:50 by mhummel           #+#    #+#             */
+/*   Updated: 2024/09/17 13:08:42 by mhummel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strndup(const char *s, size_t n)
+size_t	ft_strcspn(const char *str, const char *reject)
 {
-	char	*result;
-	size_t	len;
+	const char	*s = str;
+	const char	*r;
 
-	len = strnlen(s, n);
-	result = (char *)malloc(len + 1);
-	if (!result)
-		return (NULL);
-	result[len] = '\0';
-	return ((char *)memcpy(result, s, len));
+	while (*s)
+	{
+		r = reject;
+		while (*r)
+		{
+			if (*s == *r)
+			{
+				return (s - str);
+			}
+			r++;
+		}
+		s++;
+	}
+	return (s - str);
 }
