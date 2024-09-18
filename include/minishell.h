@@ -6,7 +6,7 @@
 /*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 09:08:07 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/09/18 10:19:20 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/09/18 13:00:46 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ int			add_or_update_env(char *name, char *value);
 // expand
 char		*expand_env_variables(char *src, int in_single_quotes);
 char 		*get_our_env(char *var_name);
+char	*create_new_var(char *new_var, const char *name, char *value);
 
 // signals
 void		sigint_handler(int sig);
@@ -70,6 +71,7 @@ int			*exit_status(void);
 char		***env_vars(void);
 void		set_env_vars(char **envp);
 void		free_env(char **my_envp);
+int			*our_shlvl(void);
 
 // parsing
 int			parse_command(char *input, char *args[]);
@@ -83,6 +85,7 @@ char		*search_path(const char *file);
 int			execute_piped_commands(char *commands[], int num_commands);
 char		*expand_env_variables(char *input, int in_single_quotes);
 
+void		handle_shlvl(void);
 
 int			execute_command(char *args[], int arg_count, t_redirection *redirections, int redirection_count);
 

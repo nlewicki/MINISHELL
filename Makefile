@@ -1,16 +1,16 @@
 CFILES =	src/builtins/pwd.c \
 			src/builtins/env.c \
 			src/builtins/cd.c \
-			src/fake_globals.c \
 			src/builtins/echo.c \
 			src/builtins/unset.c \
 			src/builtins/export.c \
 			src/builtins/export_utils.c \
 			src/main.c \
+			src/fake_globals.c \
 			src/signal.c \
 			src/history.c \
 			src/path.c \
-			arc/utils.c \
+			src/utils.c \
 			src/pipes.c \
 			src/expand.c \
 			src/redirection.c \

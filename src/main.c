@@ -6,7 +6,7 @@
 /*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 09:52:41 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/09/18 10:41:57 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/09/18 11:27:30 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -200,34 +200,27 @@ void	main_loop(void)
 	rl_clear_history();
 }
 
-void	handle_shlvl(char **env)
-{
-	int		i;
-	int		value;
-	char	*lvl;
-	char	*value_str;
-	size_t	lvl_size;
 
-	i = 0;
-	while (env[i])
-	{
-		if (ft_strncmp(env[i], "SHLVL=", ft_strlen("SHLVL=")) == 0)
-		{
-			value = ft_atoi(env[i] + ft_strlen("SHLVL=")) + 1;
-			value = ft_atoi(get_our_env("SHLVL"));
-			value_str = ft_itoa(value);
-			lvl_size = ft_strlen("SHLVL=") + ft_strlen(value_str) + 1;
-			lvl = malloc(lvl_size);
-			if (lvl)
-			{
-				ft_strlcpy(lvl, "SHLVL=", lvl_size);
-				ft_strlcat(lvl, value_str, lvl_size);
-				env[i] = lvl;
-			}
-			free(value_str);
-		}
-		i++;
-	}
+void handle_shlvl(void)
+{
+    char *shlvl_str = get_our_env("SHLVL");
+    int shlvl = shlvl_str ? atoi(shlvl_str) : 0;
+    shlvl++;  // Increment SHLVL
+    *our_shlvl() = shlvl;  // Update our static variable
+
+    char *new_shlvl_str = ft_itoa(shlvl);
+    if (!new_shlvl_str)
+    {
+        perror("Failed to allocate memory for new SHLVL");
+        return;
+    }
+
+    if (add_or_update_env("SHLVL", new_shlvl_str) != 0)
+        perror("Failed to update SHLVL");
+    else
+        printf("Updated SHLVL to %d\n", shlvl);
+
+    free(new_shlvl_str);  // Don't forget to free the allocated string
 }
 
 int	main(int argc, char **argv, char **envp)
@@ -238,7 +231,9 @@ int	main(int argc, char **argv, char **envp)
 	if (!env_vars())
 		return (perror("Failed to copy envp"), 1);
 	set_env_vars(*env_vars());
-	handle_shlvl(*env_vars());
+	handle_shlvl();
+	char *current_shlvl = get_our_env("SHLVL");
+    printf("Current SHLVL: %s\n", current_shlvl ? current_shlvl : "Not set");
 	handle_signals();
 	main_loop();
 	free_env(*env_vars());
