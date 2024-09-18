@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 09:08:07 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/09/17 12:53:52 by mhummel          ###   ########.fr       */
+/*   Updated: 2024/09/18 10:19:20 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,11 @@ char 		*get_our_env(char *var_name);
 // signals
 void		sigint_handler(int sig);
 void		handle_signals(void);
+
+// redirection
+int			parse_redirections(char *input, t_redirection *redirections,
+				int *redirection_count);
+int			apply_redirections(t_redirection *redirections, int redirection_count);
 
 // globals
 int			*exit_status(void);

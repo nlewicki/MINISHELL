@@ -13,6 +13,7 @@ CFILES =	src/builtins/pwd.c \
 			arc/utils.c \
 			src/pipes.c \
 			src/expand.c \
+			src/redirection.c \
 
 NAME = minishell
 CC = cc
