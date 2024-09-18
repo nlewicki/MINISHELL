@@ -6,7 +6,7 @@
 /*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 09:08:07 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/09/18 13:00:46 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/09/18 13:33:10 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int			add_or_update_env(char *name, char *value);
 
 // expand
 char		*expand_env_variables(char *src, int in_single_quotes);
-char 		*get_our_env(char *var_name);
+char 		*get_our_env(const char *var_name);
 char	*create_new_var(char *new_var, const char *name, char *value);
 
 // signals

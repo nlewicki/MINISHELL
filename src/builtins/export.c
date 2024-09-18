@@ -6,7 +6,7 @@
 /*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 11:49:24 by mhummel           #+#    #+#             */
-/*   Updated: 2024/09/18 13:14:05 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/09/18 13:34:43 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -184,7 +184,7 @@ int	add_or_update_env(char *name, char *value)
 			&& (envp[i][ft_strlen(name)] == '='
 				|| envp[i][ft_strlen(name)] == '\0'))
 		{
-			new_var = create_new_var(new_var, name, value);
+			new_var = create_new_var(NULL, name, value);
 			if (!new_var)
 				return (1);
 			free(envp[i]);

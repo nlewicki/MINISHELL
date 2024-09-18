@@ -6,37 +6,29 @@
 /*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 12:37:27 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/09/17 10:33:14 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/09/18 13:32:48 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// Helper function to get the value of a variable from our env
-char *get_our_env(char *var_name)
+char *get_our_env(const char *name)
 {
-	char	**envp;
-	int		i;
-	size_t	var_name_len;
+	char **envp = *env_vars();
+	int i = 0;
 
-	envp = *env_vars();
-	i = 0;
-	var_name_len = ft_strlen(var_name);
-	if (!envp)
-		return (NULL);
-	while (envp[i])
+	while (envp && envp[i])
 	{
-		char *equals_sign = ft_strchr(envp[i], '=');
-		if (equals_sign)
+		if (ft_strncmp(envp[i], name, ft_strlen(name)) == 0 &&
+			envp[i][ft_strlen(name)] == '=')
 		{
-			size_t name_len = equals_sign - envp[i];
-			if (name_len == var_name_len && ft_strncmp(envp[i], var_name, var_name_len) == 0)
-				return equals_sign + 1;
+			return (envp[i] + ft_strlen(name) + 1);
 		}
 		i++;
 	}
 	return (NULL);
 }
+
 
 size_t calculate_expanded_length(const char *src, int in_single_quotes)
 {

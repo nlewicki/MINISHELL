@@ -6,7 +6,7 @@
 /*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 09:52:41 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/09/18 11:27:30 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/09/18 13:33:53 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -205,9 +205,14 @@ void handle_shlvl(void)
 {
     char *shlvl_str = get_our_env("SHLVL");
     int shlvl = shlvl_str ? atoi(shlvl_str) : 0;
-    shlvl++;  // Increment SHLVL
-    *our_shlvl() = shlvl;  // Update our static variable
 
+    // Increment SHLVL
+    shlvl++;
+
+    // Update the static variable if needed
+    *our_shlvl() = shlvl;
+
+    // Convert updated SHLVL to string
     char *new_shlvl_str = ft_itoa(shlvl);
     if (!new_shlvl_str)
     {
@@ -215,19 +220,30 @@ void handle_shlvl(void)
         return;
     }
 
+    // Update or add SHLVL to custom env
     if (add_or_update_env("SHLVL", new_shlvl_str) != 0)
+    {
         perror("Failed to update SHLVL");
+    }
     else
+    {
         printf("Updated SHLVL to %d\n", shlvl);
+    }
 
-    free(new_shlvl_str);  // Don't forget to free the allocated string
+    // Free dynamically allocated SHLVL string
+    free(new_shlvl_str);
 }
+
 
 int	main(int argc, char **argv, char **envp)
 {
 	(void)argc;
 	(void)argv;
-	*env_vars() = copy_envp(envp);
+	if (*env_vars() == NULL)
+	{
+		*env_vars() = copy_envp(envp);
+		printf("Copied envp to env_vars\n");
+	}
 	if (!env_vars())
 		return (perror("Failed to copy envp"), 1);
 	set_env_vars(*env_vars());
