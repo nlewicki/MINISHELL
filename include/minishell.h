@@ -6,7 +6,7 @@
 /*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 09:08:07 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/09/19 11:23:58 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/09/19 12:17:16 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,11 @@
 
 extern int	g_signal;
 
-typedef struct s_redirection {
-	int type;  // 0: <, 1: >, 2: <<, 3: >>
-	char *file;
-} t_redirection;
+typedef struct s_redirection
+{
+	int		type;
+	char	*file;
+}	t_redirection;
 
 // builtins
 int			pwd(void);
@@ -55,8 +56,8 @@ int			add_or_update_env(char *name, char *value);
 
 // expand
 char		*expand_env_variables(char *src, int in_single_quotes);
-char 		*get_our_env(const char *var_name);
-char	*create_new_var(char *new_var, const char *name, char *value);
+char		*get_our_env(const char *var_name);
+char		*create_new_var(char *new_var, const char *name, char *value);
 
 // signals
 void		sigint_handler(int sig);
@@ -65,7 +66,8 @@ void		handle_signals(void);
 // redirection
 int			parse_redirections(char *input, t_redirection *redirections,
 				int *redirection_count);
-int			apply_redirections(t_redirection *redirections, int redirection_count);
+int			apply_redirections(t_redirection *redirections,
+				int redirection_count);
 
 // globals
 int			*exit_status(void);
@@ -88,9 +90,11 @@ char		*expand_env_variables(char *input, int in_single_quotes);
 
 void		handle_shlvl(void);
 
-int			execute_command(char *args[], int arg_count, t_redirection *redirections, int redirection_count);
-
-int			parse_redirections(char *input, t_redirection *redirections, int *redirection_count);
-int			apply_redirections(t_redirection *redirections, int redirection_count);
+int			execute_command(char *args[], int arg_count,
+				t_redirection *redirections, int redirection_count);
+int			parse_redirections(char *input,
+				t_redirection *redirections, int *redirection_count);
+int			apply_redirections(t_redirection *redirections,
+				int redirection_count);
 
 #endif
