@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 10:16:29 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/09/18 10:17:01 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/09/19 13:06:07 by mhummel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,9 +60,9 @@ int	apply_redirections(t_redirection *redirections, int redirection_count)
 	i = 0;
 	while (i < redirection_count)
 	{
-		switch (redirections[i].type) // switch und case ersetzen
+		switch (redirections[i].type)
 		{
-		case 0: // <
+		case 0:
 		{
 			fd = open(redirections[i].file, O_RDONLY);
 			if (fd < 0)
@@ -79,7 +79,7 @@ int	apply_redirections(t_redirection *redirections, int redirection_count)
 			close(fd);
 		}
 		break ;
-		case 1: // >
+		case 1:
 		{
 			fd = open(redirections[i].file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 			if (fd < 0)
@@ -91,7 +91,7 @@ int	apply_redirections(t_redirection *redirections, int redirection_count)
 			close(fd);
 		}
 		break ;
-		case 2: // <<
+		case 2:
 		{
 			if (pipe(pipe_fd) < 0)
 			{
@@ -101,7 +101,6 @@ int	apply_redirections(t_redirection *redirections, int redirection_count)
 			line = NULL;
 			len = 0;
 			while ((read = getline(&line, &len, stdin)) != -1)
-				// getline ersetzen
 			{
 				if (ft_strcmp(line, redirections[i].file) == 0)
 				{
@@ -115,7 +114,7 @@ int	apply_redirections(t_redirection *redirections, int redirection_count)
 			close(pipe_fd[0]);
 		}
 		break ;
-		case 3: // >>
+		case 3:
 		{
 			fd = open(redirections[i].file, O_WRONLY | O_CREAT | O_APPEND,
 					0644);
