@@ -5,6 +5,7 @@ CFILES =	src/builtins/pwd.c \
 			src/builtins/unset.c \
 			src/builtins/export.c \
 			src/builtins/export_utils.c \
+			src/builtins/export_utils2.c \
 			src/main.c \
 			src/fake_globals.c \
 			src/signal.c \

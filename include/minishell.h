@@ -6,7 +6,7 @@
 /*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 09:08:07 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/09/18 13:33:10 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/09/19 11:23:58 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ char		**copy_env(char **envp, int count);
 int			ft_cd(char *argv[], int argc);
 int			ft_unset(char *argv[], int argc);
 int			ft_export(char **args, int arg_count);
+int			set_export_error(char *name, char *value);
 
 int			add_new_env_var(const char *name, char *value, int i);
 int			mark_for_export(const char *name);

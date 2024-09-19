@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 13:13:20 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/09/17 13:09:06 by mhummel          ###   ########.fr       */
+/*   Updated: 2024/09/19 11:13:47 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,8 @@ size_t	ft_strcpy(char *dst, const char *src);
 char	*ft_strtok_r(char *str, const char *delim, char **saveptr);
 size_t	ft_strspn(const char *str, const char *accept);
 size_t	ft_strcspn(const char *str, const char *reject);
+void	*ft_realloc(void *ptr, size_t size);
+void	ft_err(char *s1, char *s2, char *s3);
 
 typedef struct s_list
 {
