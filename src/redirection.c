@@ -6,7 +6,7 @@
 /*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 10:16:29 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/09/19 13:29:27 by mhummel          ###   ########.fr       */
+/*   Updated: 2024/09/19 13:43:18 by mhummel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,17 +82,20 @@ int	handle_heredoc(char *delimiter)
 	int		pipe_fd[2];
 	char	*line;
 	size_t	len;
-	ssize_t	read;
 
 	line = NULL;
 	len = 0;
 	if (pipe(pipe_fd) < 0)
 		return (perror("Error creating pipe"), 1);
-	while ((read = getline(&line, &len, stdin)) != -1)
+	while ((line = get_next_line(STDIN_FILENO)) != NULL)
 	{
 		if (ft_strcmp(line, delimiter) == 0)
+		{
+			free(line);
 			break ;
-		write(pipe_fd[1], line, read);
+		}
+		write(pipe_fd[1], line, ft_strlen(line));
+		free(line);
 	}
 	free(line);
 	close(pipe_fd[1]);

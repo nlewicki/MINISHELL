@@ -6,7 +6,7 @@
 /*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 09:08:07 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/09/19 13:23:44 by mhummel          ###   ########.fr       */
+/*   Updated: 2024/09/19 13:42:55 by mhummel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define MINISHELL_H
 
 # include "../lib/libft/libft.h"
+# include "../lib/libft/get_next_line.h"
 # include <ctype.h>
 # include <errno.h>
 # include <stdio.h>

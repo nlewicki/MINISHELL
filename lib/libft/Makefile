@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+         #
+#    By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/12 11:07:18 by nlewicki          #+#    #+#              #
-#    Updated: 2024/09/19 11:13:54 by nlewicki         ###   ########.fr        #
+#    Updated: 2024/09/19 13:41:05 by mhummel          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -64,6 +64,8 @@ FILES = ft_bzero.c \
 		ft_strcspn.c \
 		ft_realloc.c \
 		ft_err.c \
+		get_next_line.c \
+		get_next_line_utils.c
 
 CC		= cc
 CFLAGS	= -Wall -Wextra -Werror
