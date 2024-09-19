@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 09:08:07 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/09/19 12:17:16 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/09/19 13:23:44 by mhummel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,19 @@ int			execute_command(char *args[], int arg_count,
 				t_redirection *redirections, int redirection_count);
 int			parse_redirections(char *input,
 				t_redirection *redirections, int *redirection_count);
-int			apply_redirections(t_redirection *redirections,
-				int redirection_count);
+// int			apply_redirections(t_redirection *redirections,
+// 				int redirection_count);
+
+
+
+// test redirect
+
+int	redirect_input(char *file);
+int	redirect_output(char *file, int flags);
+int	handle_heredoc(char *delimiter);
+int	apply_redirection(t_redirection *redirection);
+int	apply_redirections(t_redirection *redirections, int count);
+
+
 
 #endif
