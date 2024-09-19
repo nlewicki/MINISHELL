@@ -6,7 +6,7 @@
 /*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 11:01:10 by mhummel           #+#    #+#             */
-/*   Updated: 2024/09/12 13:36:39 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/09/19 10:17:20 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,9 +71,7 @@ char	**copy_envp(char **envp)
 
 	i = 0;
 	while (envp[i])
-	{
 		i++;
-	}
 	new_envp = malloc((i + 1) * sizeof(char *));
 	if (!new_envp)
 		return (NULL);

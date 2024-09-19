@@ -6,7 +6,7 @@
 /*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 09:52:41 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/09/18 13:33:53 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/09/19 10:43:51 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,31 @@ int	parse_command(char *input, char *args[])
 	return (arg_count);
 }
 
+int exec_new_shell(char **argv)
+{
+	pid_t	pid = fork();
+	int		status;
+
+	if (pid == 0)
+	{
+		execve("./minishell", argv, *env_vars());
+		perror("execve failed");
+		exit(1);
+	}
+	else if (pid > 0)
+	{
+		waitpid(pid, &status, 0);
+		return (status);
+	}
+	else
+	{
+		perror("fork failed");
+		return (1);
+	}
+}
+
+
+
 int	execute_command(char *args[], int arg_count, t_redirection *redirections,
 		int redirection_count)
 {
@@ -112,6 +137,8 @@ int	execute_command(char *args[], int arg_count, t_redirection *redirections,
 		result = ft_cd(args, arg_count);
 	else if (strcasecmp_custom(args[0], "export") == 0)
 		result = ft_export(args, arg_count);
+	else if (strcasecmp_custom(args[0], "./minishell") == 0)
+		result = exec_new_shell(args);
 	else
 	{
 		result = execute_external_command(args);
@@ -203,35 +230,15 @@ void	main_loop(void)
 
 void handle_shlvl(void)
 {
-    char *shlvl_str = get_our_env("SHLVL");
-    int shlvl = shlvl_str ? atoi(shlvl_str) : 0;
-
-    // Increment SHLVL
-    shlvl++;
-
-    // Update the static variable if needed
-    *our_shlvl() = shlvl;
-
-    // Convert updated SHLVL to string
-    char *new_shlvl_str = ft_itoa(shlvl);
-    if (!new_shlvl_str)
-    {
-        perror("Failed to allocate memory for new SHLVL");
-        return;
-    }
-
-    // Update or add SHLVL to custom env
-    if (add_or_update_env("SHLVL", new_shlvl_str) != 0)
-    {
-        perror("Failed to update SHLVL");
-    }
-    else
-    {
-        printf("Updated SHLVL to %d\n", shlvl);
-    }
-
-    // Free dynamically allocated SHLVL string
-    free(new_shlvl_str);
+	char *shlvl_str = get_our_env("SHLVL");
+	int shlvl;
+	if (!shlvl_str)
+		shlvl = 0;
+	else
+		shlvl = atoi(shlvl_str);
+	shlvl += 1;
+	add_or_update_env("SHLVL", ft_itoa(shlvl));
+	printf("Updated SHLVL to %d\n", shlvl);
 }
 
 
@@ -249,7 +256,7 @@ int	main(int argc, char **argv, char **envp)
 	set_env_vars(*env_vars());
 	handle_shlvl();
 	char *current_shlvl = get_our_env("SHLVL");
-    printf("Current SHLVL: %s\n", current_shlvl ? current_shlvl : "Not set");
+	printf("Current SHLVL: %s\n", current_shlvl ? current_shlvl : "Not set");
 	handle_signals();
 	main_loop();
 	free_env(*env_vars());
