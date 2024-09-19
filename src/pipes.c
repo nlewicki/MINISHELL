@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipes.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/13 09:47:35 by mhummel           #+#    #+#             */
-/*   Updated: 2024/09/13 10:09:58 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/09/19 12:45:11 by mhummel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ int	execute_piped_commands(char *commands[], int num_commands)
 {
 	pid_t	pid;
 	int		i;
+	int 	j;
 	char	*args[MAX_ARGS];
 
 	int status, pipefd[2], prev_pipe[2] = {-1, -1};
@@ -47,6 +48,12 @@ int	execute_piped_commands(char *commands[], int num_commands)
 			parse_command(commands[i], args);
 			execvp(args[0], args);
 			perror("execvp");
+			j = 0;
+			while (args[j] != NULL)
+			{
+				free(args[j]);
+				j++;
+			}
 			exit(EXIT_FAILURE);
 		}
 		else

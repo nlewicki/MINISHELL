@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 09:52:41 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/09/19 10:43:51 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/09/19 12:56:42 by mhummel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,8 @@ int	parse_command(char *input, char *args[])
 		if (token_start != input)
 		{
 			args[arg_count] = ft_strndup(token_start, input - token_start);
+			if (!args[arg_count])
+				return -1;
 			if (args[arg_count][0] == quote_char
 				&& args[arg_count][ft_strlen(args[arg_count])
 				- 1] == quote_char)
@@ -67,6 +69,11 @@ int	parse_command(char *input, char *args[])
 			{
 				expanded = expand_env_variables(args[arg_count],
 						in_single_quotes);
+				if (!expanded)
+				{
+					free(args[arg_count]);
+					return -1;
+				}
 				free(args[arg_count]);
 				args[arg_count] = expanded;
 			}
@@ -219,7 +226,11 @@ void	main_loop(void)
 		i = 0;
 		while (i < argc)
 		{
-			free(argv[i]);
+			if (argv[i] != NULL)
+			{
+				free(argv[i]);
+				argv[i] = NULL;
+			}
 			i++;
 		}
 		free(input);
