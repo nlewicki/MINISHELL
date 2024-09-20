@@ -6,7 +6,7 @@
 /*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 10:16:29 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/09/19 13:43:18 by mhummel          ###   ########.fr       */
+/*   Updated: 2024/09/19 13:51:07 by mhummel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,36 +77,41 @@ int	redirect_output(char *file, int flags)
 	return (0);
 }
 
-int	handle_heredoc(char *delimiter)
+int handle_heredoc(char *delimiter)
 {
-	int		pipe_fd[2];
-	char	*line;
-	size_t	len;
+    int pipe_fd[2];
+    char *line;
 
-	line = NULL;
-	len = 0;
-	if (pipe(pipe_fd) < 0)
-		return (perror("Error creating pipe"), 1);
-	while ((line = get_next_line(STDIN_FILENO)) != NULL)
-	{
-		if (ft_strcmp(line, delimiter) == 0)
-		{
-			free(line);
-			break ;
-		}
-		write(pipe_fd[1], line, ft_strlen(line));
-		free(line);
-	}
-	free(line);
-	close(pipe_fd[1]);
-	if (dup2(pipe_fd[0], STDIN_FILENO) == -1)
-	{
-		perror("Error redirecting input");
-		close(pipe_fd[0]);
-		return (1);
-	}
-	close(pipe_fd[0]);
-	return (0);
+    if (pipe(pipe_fd) < 0)
+        return (perror("Error creating pipe"), 1);
+
+    // Lies Zeilen, bis das Delimiter erreicht wird
+    while ((line = get_next_line(STDIN_FILENO)) != NULL)
+    {
+        // Überprüfen, ob die aktuelle Zeile das Delimiter ist
+        if (ft_strcmp(line, delimiter) == 0)
+        {
+            free(line);
+            break;
+        }
+
+        // Schreibe die Zeile in die Pipe ohne zusätzlichen Zeilenumbruch
+        write(pipe_fd[1], line, ft_strlen(line));
+        write(pipe_fd[1], "\n", 1);  // Zeilenumbruch hinzufügen, wenn nötig
+        free(line);
+    }
+
+    close(pipe_fd[1]);
+
+    if (dup2(pipe_fd[0], STDIN_FILENO) == -1)
+    {
+        perror("Error redirecting heredoc");
+        close(pipe_fd[0]);
+        return 1;
+    }
+
+    close(pipe_fd[0]);
+    return 0;
 }
 
 int	apply_redirection(t_redirection *redirection)

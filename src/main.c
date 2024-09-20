@@ -6,7 +6,7 @@
 /*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 09:52:41 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/09/19 13:18:21 by mhummel          ###   ########.fr       */
+/*   Updated: 2024/09/19 13:45:03 by mhummel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int	parse_command(char *input, char *args[])
 		{
 			args[arg_count] = ft_strndup(token_start, input - token_start);
 			if (!args[arg_count])
-				return -1;
+				return (-1);
 			if (args[arg_count][0] == quote_char
 				&& args[arg_count][ft_strlen(args[arg_count])
 				- 1] == quote_char)
@@ -72,7 +72,7 @@ int	parse_command(char *input, char *args[])
 				if (!expanded)
 				{
 					free(args[arg_count]);
-					return -1;
+					return (-1);
 				}
 				free(args[arg_count]);
 				args[arg_count] = expanded;
@@ -86,11 +86,12 @@ int	parse_command(char *input, char *args[])
 	return (arg_count);
 }
 
-int exec_new_shell(char **argv)
+int	exec_new_shell(char **argv)
 {
-	pid_t	pid = fork();
+	pid_t	pid;
 	int		status;
 
+	pid = fork();
 	if (pid == 0)
 	{
 		execve("./minishell", argv, *env_vars());
@@ -108,8 +109,6 @@ int exec_new_shell(char **argv)
 		return (1);
 	}
 }
-
-
 
 int	execute_command(char *args[], int arg_count, t_redirection *redirections,
 		int redirection_count)
@@ -238,11 +237,12 @@ void	main_loop(void)
 	rl_clear_history();
 }
 
-
-void handle_shlvl(void)
+void	handle_shlvl(void)
 {
-	char *shlvl_str = get_our_env("SHLVL");
-	int shlvl;
+	char	*shlvl_str;
+	int		shlvl;
+
+	shlvl_str = get_our_env("SHLVL");
 	if (!shlvl_str)
 		shlvl = 0;
 	else
@@ -251,7 +251,6 @@ void handle_shlvl(void)
 	add_or_update_env("SHLVL", ft_itoa(shlvl));
 	// printf("Updated SHLVL to %d\n", shlvl);
 }
-
 
 int	main(int argc, char **argv, char **envp)
 {

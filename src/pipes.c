@@ -6,7 +6,7 @@
 /*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/13 09:47:35 by mhummel           #+#    #+#             */
-/*   Updated: 2024/09/19 12:45:11 by mhummel          ###   ########.fr       */
+/*   Updated: 2024/09/19 13:44:53 by mhummel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	execute_piped_commands(char *commands[], int num_commands)
 {
 	pid_t	pid;
 	int		i;
-	int 	j;
+	int		j;
 	char	*args[MAX_ARGS];
 
 	int status, pipefd[2], prev_pipe[2] = {-1, -1};
