@@ -6,7 +6,7 @@
 /*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 09:52:41 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/09/19 13:45:03 by mhummel          ###   ########.fr       */
+/*   Updated: 2024/09/20 10:19:10 by mhummel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -249,7 +249,6 @@ void	handle_shlvl(void)
 		shlvl = atoi(shlvl_str);
 	shlvl += 1;
 	add_or_update_env("SHLVL", ft_itoa(shlvl));
-	// printf("Updated SHLVL to %d\n", shlvl);
 }
 
 int	main(int argc, char **argv, char **envp)
@@ -257,16 +256,11 @@ int	main(int argc, char **argv, char **envp)
 	(void)argc;
 	(void)argv;
 	if (*env_vars() == NULL)
-	{
 		*env_vars() = copy_envp(envp);
-		// printf("Copied envp to env_vars\n");
-	}
 	if (!env_vars())
 		return (perror("Failed to copy envp"), 1);
 	set_env_vars(*env_vars());
 	handle_shlvl();
-	// char *current_shlvl = get_our_env("SHLVL");
-	// printf("Current SHLVL: %s\n", current_shlvl ? current_shlvl : "Not set");
 	handle_signals();
 	main_loop();
 	free_env(*env_vars());
