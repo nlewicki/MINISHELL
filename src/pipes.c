@@ -6,7 +6,7 @@
 /*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/13 09:47:35 by mhummel           #+#    #+#             */
-/*   Updated: 2024/09/19 13:44:53 by mhummel          ###   ########.fr       */
+/*   Updated: 2024/09/23 10:40:32 by mhummel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,10 @@ int	execute_piped_commands(char *commands[], int num_commands)
 	int		i;
 	int		j;
 	char	*args[MAX_ARGS];
+	char	**custom_env;
+			char *command_path;
 
+	custom_env = *env_vars();
 	int status, pipefd[2], prev_pipe[2] = {-1, -1};
 	i = 0;
 	while (i < num_commands)
@@ -46,8 +49,21 @@ int	execute_piped_commands(char *commands[], int num_commands)
 				close(pipefd[1]);
 			}
 			parse_command(commands[i], args);
-			execvp(args[0], args);
-			perror("execvp");
+			if (args[0][0] == '/' || args[0][0] == '.')
+				command_path = args[0];
+			else
+				command_path = search_path(args[0]);
+			if (command_path)
+			{
+				execve(command_path, args, custom_env);
+				perror("execve");
+			}
+			else
+			{
+				fprintf(stderr, "Command not found: %s\n", args[0]);
+			}
+			if (command_path != args[0])
+				free(command_path);
 			j = 0;
 			while (args[j] != NULL)
 			{
