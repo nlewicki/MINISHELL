@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 12:37:27 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/09/19 12:26:12 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/09/24 13:19:06 by mhummel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,8 @@ char	*expand_env_variables(char *src, int in_single_quotes)
 	int		i;
 	char	*var_value;
 
-	result = malloc(ft_strlen(src) * calculate_expanded_length(src, in_single_quotes));
+	result = malloc(ft_strlen(src) * calculate_expanded_length(src,
+				in_single_quotes));
 	dest = result;
 	while (*src)
 	{

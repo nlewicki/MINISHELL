@@ -6,25 +6,25 @@
 /*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 09:08:07 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/09/19 13:42:55 by mhummel          ###   ########.fr       */
+/*   Updated: 2024/09/24 12:13:18 by mhummel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-# include "../lib/libft/libft.h"
 # include "../lib/libft/get_next_line.h"
+# include "../lib/libft/libft.h"
 # include <ctype.h>
 # include <errno.h>
-# include <stdio.h>
-# include <readline/readline.h>
+# include <fcntl.h>
 # include <readline/history.h>
+# include <readline/readline.h>
 # include <signal.h>
+# include <stdio.h>
 # include <stdlib.h>
 # include <string.h>
 # include <unistd.h>
-# include <fcntl.h>
 
 # define MAX_ARGS 100
 # define MAX_REDIRECTIONS 10
@@ -35,7 +35,7 @@ typedef struct s_redirection
 {
 	int		type;
 	char	*file;
-}	t_redirection;
+}			t_redirection;
 
 // builtins
 int			pwd(void);
@@ -93,21 +93,15 @@ void		handle_shlvl(void);
 
 int			execute_command(char *args[], int arg_count,
 				t_redirection *redirections, int redirection_count);
-int			parse_redirections(char *input,
-				t_redirection *redirections, int *redirection_count);
-// int			apply_redirections(t_redirection *redirections,
-// 				int redirection_count);
-
-
+int			parse_redirections(char *input, t_redirection *redirections,
+				int *redirection_count);
+int			apply_redirections(t_redirection *redirections, int count);
+int			apply_redirection(t_redirection *redirection);
 
 // test redirect
 
-int	redirect_input(char *file);
-int	redirect_output(char *file, int flags);
-int	handle_heredoc(char *delimiter);
-int	apply_redirection(t_redirection *redirection);
-int	apply_redirections(t_redirection *redirections, int count);
-
-
+int			redirect_input(char *file);
+int			redirect_output(char *file, int flags);
+int			handle_heredoc(char *delimiter);
 
 #endif
