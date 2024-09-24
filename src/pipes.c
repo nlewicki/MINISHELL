@@ -6,7 +6,7 @@
 /*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/13 09:47:35 by mhummel           #+#    #+#             */
-/*   Updated: 2024/09/23 10:40:32 by mhummel          ###   ########.fr       */
+/*   Updated: 2024/09/24 09:44:01 by mhummel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,8 @@ int	execute_piped_commands(char *commands[], int num_commands)
 	int		i;
 	int		j;
 	char	*args[MAX_ARGS];
-	char	**custom_env;
-			char *command_path;
+	char	*command_path;
 
-	custom_env = *env_vars();
 	int status, pipefd[2], prev_pipe[2] = {-1, -1};
 	i = 0;
 	while (i < num_commands)
@@ -55,7 +53,7 @@ int	execute_piped_commands(char *commands[], int num_commands)
 				command_path = search_path(args[0]);
 			if (command_path)
 			{
-				execve(command_path, args, custom_env);
+				execve(command_path, args, *env_vars());
 				perror("execve");
 			}
 			else
