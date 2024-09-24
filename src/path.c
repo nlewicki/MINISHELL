@@ -6,7 +6,7 @@
 /*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 10:45:17 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/09/19 12:38:42 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/09/24 09:42:59 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,8 +71,8 @@ int	execute_external_command(char **args)
 	pid = fork();
 	if (pid == 0)
 	{
-		execv(command_path, args);
-		perror("execv");
+		execve(command_path, args, *env_vars());
+		perror("execve");
 		exit(1);
 	}
 	else if (pid < 0)
