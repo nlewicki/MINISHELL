@@ -6,7 +6,7 @@
 /*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 10:45:17 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/09/26 13:23:34 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/09/26 14:18:16 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,9 @@ static int is_directory(const char *path)
 {
 	struct stat statbuf;
 	if (stat(path, &statbuf) != 0)
+	{
 		return 0;
+	}
 	return (S_ISDIR(statbuf.st_mode));
 }
 
@@ -73,6 +75,8 @@ int	execute_external_command(char **args)
 
 	if (args[0][0] == '$')
 	{
+		if (args[0][1] == '\0')
+			return (127);
 		char *expanded = expand_env_variables(args[0], 0);
 		if (expanded)
 		{
@@ -94,10 +98,10 @@ int	execute_external_command(char **args)
 		return (127);
 	if (is_directory(command_path))
 	{
-		printf("%s: is a directory\n", command_path);
+		ft_err(command_path, ": is a directory", "\n");
 		if (command_path != args[0])
 			free(command_path);
-		return 126;
+		return (126);
 	}
 	pid = fork();
 	if (pid == 0)

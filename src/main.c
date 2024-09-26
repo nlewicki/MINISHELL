@@ -6,7 +6,7 @@
 /*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 09:52:41 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/09/26 13:19:54 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/09/26 14:12:12 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,9 +164,7 @@ int	execute_command(char *args[], int arg_count, t_redirection *redirections,
 	original_stdin = dup(STDIN_FILENO);
 	original_stdout = dup(STDOUT_FILENO);
 	if (apply_redirections(redirections, redirection_count) != 0)
-	{
 		return (1);
-	}
 	if (ft_strcmp(args[0], "exit") == 0)
 	{
 		dup2(original_stdin, STDIN_FILENO);
@@ -193,7 +191,7 @@ int	execute_command(char *args[], int arg_count, t_redirection *redirections,
 	{
 		result = execute_external_command(args);
 		*exit_status() = result;
-		if (result == 127)
+		if (result == 127 && !ft_strnstr(args[0], "./", 2) && !ft_strnstr(args[0], "/", 1))
 			ft_err(args[0], ": command not found", "\n");
 	}
 	dup2(original_stdin, STDIN_FILENO);
