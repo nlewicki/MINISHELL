@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 09:52:41 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/09/26 11:38:02 by mhummel          ###   ########.fr       */
+/*   Updated: 2024/09/26 13:19:54 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,11 +109,55 @@ int	exec_new_shell(char **argv)
 		return (1);
 	}
 }
+#include <limits.h>
+
+int ft_exit(char *args[], int arg_count)
+{
+	long long exit_code = 0;
+	char *arg;
+	int i;
+
+	ft_putendl_fd("exit", STDOUT_FILENO);
+	if (arg_count > 2)
+	{
+		ft_putendl_fd("exit: too many arguments", STDERR_FILENO);
+		return 1;
+	}
+	if (arg_count == 2)
+	{
+		arg = args[1];
+		i = 0;
+		while (ft_isspace(arg[i])) i++;
+		int sign = 1;
+		if (arg[i] == '+' || arg[i] == '-')
+		{
+			sign = (arg[i] == '-') ? -1 : 1;
+			i++;
+		}
+		int is_valid = 1;
+		while (arg[i])
+		{
+			if (!ft_isdigit(arg[i]))
+			{
+				is_valid = 0;
+				break;
+			}
+			i++;
+		}
+		exit_code = ft_atol(args[1]);
+		if (!is_valid || (exit_code > INT_MAX || exit_code < INT_MIN))
+		{
+			ft_putendl_fd("exit: numeric argument required", STDERR_FILENO);
+			exit(255);
+		}
+	}
+	exit((int)(exit_code & 0xFF));
+}
 
 int	execute_command(char *args[], int arg_count, t_redirection *redirections,
 		int redirection_count)
 {
-	int	result;
+	int	result = 0;
 	int	original_stdin;
 	int	original_stdout;
 
@@ -129,7 +173,7 @@ int	execute_command(char *args[], int arg_count, t_redirection *redirections,
 		dup2(original_stdout, STDOUT_FILENO);
 		close(original_stdin);
 		close(original_stdout);
-		exit(*exit_status());
+		return ft_exit(args, arg_count);
 	}
 	else if (strcasecmp_custom(args[0], "pwd") == 0)
 		result = pwd();
@@ -150,7 +194,7 @@ int	execute_command(char *args[], int arg_count, t_redirection *redirections,
 		result = execute_external_command(args);
 		*exit_status() = result;
 		if (result == 127)
-			printf("%s: command not found\n", args[0]);
+			ft_err(args[0], ": command not found", "\n");
 	}
 	dup2(original_stdin, STDIN_FILENO);
 	dup2(original_stdout, STDOUT_FILENO);
@@ -187,6 +231,11 @@ void	main_loop(void)
 		}
 		if (ft_strlen(input) > 0)
 			add_history(input);
+		else
+		{
+			free(input);
+			continue ;
+		}
 		num_commands = 0;
 		commands[num_commands] = ft_strtok(input, "|");
 		while (commands[num_commands] != NULL && num_commands < MAX_ARGS - 1)

@@ -6,7 +6,7 @@
 /*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 10:45:17 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/09/24 10:50:56 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/09/26 13:23:34 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,18 +93,18 @@ int	execute_external_command(char **args)
 	if (!command_path)
 		return (127);
 	if (is_directory(command_path))
-    {
-        printf("%s: is a directory\n", command_path);
-        if (command_path != args[0])
-            free(command_path);
-        return 126;
-    }
+	{
+		printf("%s: is a directory\n", command_path);
+		if (command_path != args[0])
+			free(command_path);
+		return 126;
+	}
 	pid = fork();
 	if (pid == 0)
 	{
 		execve(command_path, args, *env_vars());
 		perror(args[0]);
-		exit(126);
+		exit(127);
 	}
 	else if (pid < 0)
 	{
