@@ -6,7 +6,7 @@
 /*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 10:16:29 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/09/20 10:18:51 by mhummel          ###   ########.fr       */
+/*   Updated: 2024/09/26 11:02:45 by mhummel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,11 +81,16 @@ int	handle_heredoc(char *delimiter)
 {
 	int		pipe_fd[2];
 	char	*line;
+	size_t delimiter_len = ft_strlen(delimiter);
 
 	if (pipe(pipe_fd) < 0)
 		return (perror("Error creating pipe"), 1);
 	while ((line = get_next_line(STDIN_FILENO)) != NULL)
 	{
+		size_t len = ft_strlen(line);
+		if (len > 0 && line[len - 1] == '\n')
+            line[len - 1] = '\0';
+
 		if (ft_strcmp(line, delimiter) == 0)
 		{
 			free(line);
@@ -122,13 +127,26 @@ int	apply_redirection(t_redirection *redirection)
 int	apply_redirections(t_redirection *redirections, int count)
 {
 	int	i;
+	int original_stdin;
+	int original_stdout;
+
+	original_stdin = dup(STDIN_FILENO);
+	original_stdout = dup(STDOUT_FILENO);
 
 	i = 0;
 	while (i < count)
 	{
 		if (apply_redirection(&redirections[i]))
+		{
+			dup2(original_stdin, STDIN_FILENO);
+			dup2(original_stdout, STDOUT_FILENO);
+			close(original_stdin);
+			close(original_stdout);
 			return (1);
+		}
 		i++;
 	}
+	close(original_stdin);
+	close(original_stdout);
 	return (0);
 }

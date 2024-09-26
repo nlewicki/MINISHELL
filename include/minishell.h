@@ -6,7 +6,7 @@
 /*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 09:08:07 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/09/24 12:13:18 by mhummel          ###   ########.fr       */
+/*   Updated: 2024/09/26 11:09:13 by mhummel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@
 # include <ctype.h>
 # include <errno.h>
 # include <fcntl.h>
-# include <readline/history.h>
 # include <readline/readline.h>
+# include <readline/history.h>
 # include <signal.h>
 # include <stdio.h>
 # include <stdlib.h>
