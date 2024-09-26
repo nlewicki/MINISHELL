@@ -6,7 +6,7 @@
 /*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 11:36:37 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/09/09 11:23:29 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/09/26 11:09:45 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,10 +56,7 @@ int	ft_unset(char *argv[], int argc)
 
 	status = 0;
 	if (argc < 2)
-	{
-		write (2, "unset: not enough arguments\n", 28);
-		return (1);
-	}
+		return (0);
 	i = 1;
 	while (i < argc)
 	{

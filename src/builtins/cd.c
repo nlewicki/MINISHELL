@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 11:31:51 by mhummel           #+#    #+#             */
-/*   Updated: 2024/09/05 10:49:46 by mhummel          ###   ########.fr       */
+/*   Updated: 2024/09/26 11:24:11 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	ft_cd(char *argv[], int argc)
 		path = home;
 	}
 	else if (argc > 2)
-		return (write(2, "cd: too many arguments\n", 24), 1);
+		return (0);
 	else
 		path = argv[1];
 	if (chdir(path) != 0)
