@@ -6,7 +6,7 @@
 /*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 12:37:27 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/09/24 13:19:06 by mhummel          ###   ########.fr       */
+/*   Updated: 2024/09/26 11:25:01 by mhummel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,32 +31,36 @@ char	*get_our_env(const char *name)
 	return (NULL);
 }
 
-void	handle_expansion(size_t *length, const char **src)
+void    handle_expansion(size_t *length, const char **src)
 {
-	char	var_name[256];
-	char	*var_value;
-	int		i;
+    char    var_name[256];
+    char    *var_value;
+    char    *status_str;
+    int     i;
 
-	i = 0;
-	(*src)++;
-	if (**src == '?')
-	{
-		(*src)++;
-		length += ft_strlen(ft_itoa(*exit_status()));
-		return ;
-	}
-	while (**src && ((**src >= 'A' && **src <= 'Z') || (**src >= 'a'
-				&& **src <= 'z') || **src == '_'))
-	{
-		var_name[i++] = **src;
-		(*src)++;
-	}
-	var_name[i] = '\0';
-	var_value = get_our_env(var_name);
-	if (var_value)
-		length += ft_strlen(var_value);
-	else
-		length += i + 1;
+    i = 0;
+    (*src)++;
+    if (**src == '?')
+    {
+        (*src)++;
+        status_str = ft_itoa(*exit_status());
+        *length += ft_strlen(status_str);
+        free(status_str);
+        return;
+    }
+    while (**src && ((**src >= 'A' && **src <= 'Z') ||
+                     (**src >= 'a' && **src <= 'z') ||
+                     **src == '_'))
+    {
+        var_name[i++] = **src;
+        (*src)++;
+    }
+    var_name[i] = '\0';
+    var_value = get_our_env(var_name);
+    if (var_value)
+        *length += ft_strlen(var_value);
+    else
+        *length += i + 1;
 }
 
 size_t	calculate_expanded_length(const char *src, int in_single_quotes)
