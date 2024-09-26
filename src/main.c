@@ -6,7 +6,7 @@
 /*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 09:52:41 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/09/26 11:13:15 by mhummel          ###   ########.fr       */
+/*   Updated: 2024/09/26 11:38:02 by mhummel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int	parse_command(char *input, char *args[])
 				&& args[arg_count][ft_strlen(args[arg_count])
 				- 1] == quote_char)
 			{
-				memmove(args[arg_count], args[arg_count] + 1,
+				ft_memmove(args[arg_count], args[arg_count] + 1,
 					ft_strlen(args[arg_count]) - 2);
 				args[arg_count][ft_strlen(args[arg_count]) - 2] = '\0';
 			}
@@ -149,7 +149,7 @@ int	execute_command(char *args[], int arg_count, t_redirection *redirections,
 	{
 		result = execute_external_command(args);
 		*exit_status() = result;
-		if (result != 0)
+		if (result == 127)
 			printf("%s: command not found\n", args[0]);
 	}
 	dup2(original_stdin, STDIN_FILENO);

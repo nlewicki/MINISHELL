@@ -6,7 +6,7 @@
 /*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 09:08:07 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/09/26 11:09:13 by mhummel          ###   ########.fr       */
+/*   Updated: 2024/09/26 11:37:52 by mhummel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,70 +38,71 @@ typedef struct s_redirection
 }			t_redirection;
 
 // builtins
-int			pwd(void);
-int			ft_echo(char *argv[], int argc);
-int			env(void);
-char		**copy_env(char **envp, int count);
+// cd
 int			ft_cd(char *argv[], int argc);
-int			ft_unset(char *argv[], int argc);
-int			ft_export(char **args, int arg_count);
-int			set_export_error(char *name, char *value);
-
-int			add_new_env_var(const char *name, char *value, int i);
+// echo
+int			ft_echo(char *argv[], int argc);
+// env
+int			env(void);
+void		set_env_vars(char **envp);
+char		**copy_envp(char **envp);
+void		free_env(char **my_envp);
+// export
+int			print_sorted_env(void);
 int			mark_for_export(const char *name);
+int			ft_export_args(char *arg);
+int			ft_export(char **args, int arg_count);
+// export_utils
 int			compare_env(const void *a, const void *b);
 void		bubble_sort_env(char **envp, int count);
 int			count_env_vars(char **envp);
+char		**copy_env(char **envp, int count);
 int			is_valid_identifier(const char *str);
-int			add_or_update_env(char *name, char *value);
-
-// expand
-char		*expand_env_variables(char *src, int in_single_quotes);
-char		*get_our_env(const char *var_name);
+// export_utils2
+int			add_new_env_var(const char *name, char *value, int i);
 char		*create_new_var(char *new_var, const char *name, char *value);
-
-// signals
-void		sigint_handler(int sig);
-void		handle_signals(void);
-
+int			add_or_update_env(char *name, char *value);
+int			set_export_error(char *name, char *value);
+// pwd
+int			pwd(void);
+// unset
+int			ft_unset(char *argv[], int argc);
+// expand
+char		*get_our_env(const char *var_name);
+void		handle_expansion(size_t *length, const char **src);
+size_t		calculate_expanded_length(const char *src, int in_single_quotes);
+char		*expand_env_variables(char *src, int in_single_quotes);
+// fake globals
+int			*exit_status(void);
+char		***env_vars(void);
+// history
+void		clear_shell_history(void);
+// path
+char		*search_path(const char *file);
+int			execute_external_command(char **args);
+// pipes
+int			execute_piped_commands(char *commands[], int num_commands);
 // redirection
 int			parse_redirections(char *input, t_redirection *redirections,
 				int *redirection_count);
-int			apply_redirections(t_redirection *redirections,
-				int redirection_count);
-
-// globals
-int			*exit_status(void);
-char		***env_vars(void);
-void		set_env_vars(char **envp);
-void		free_env(char **my_envp);
-int			*our_shlvl(void);
-
-// parsing
-int			parse_command(char *input, char *args[]);
-int			strcasecmp_custom(const char *s1, const char *s2);
-char		**copy_envp(char **envp);
-void		strip_quotes(char *str);
-
-int			execute_external_command(char **args);
-char		*search_path(const char *file);
-
-int			execute_piped_commands(char *commands[], int num_commands);
-char		*expand_env_variables(char *input, int in_single_quotes);
-
-void		handle_shlvl(void);
-
-int			execute_command(char *args[], int arg_count,
-				t_redirection *redirections, int redirection_count);
-int			parse_redirections(char *input, t_redirection *redirections,
-				int *redirection_count);
-int			apply_redirections(t_redirection *redirections, int count);
-int			apply_redirection(t_redirection *redirection);
-
-// test redirect
-
 int			redirect_input(char *file);
 int			redirect_output(char *file, int flags);
 int			handle_heredoc(char *delimiter);
+int			apply_redirections(t_redirection *redirections,
+				int redirection_count);
+// signals
+void		sigint_handler(int sig);
+void		handle_signals(void);
+// utils
+void		strip_quotes(char *str);
+int			strcasecmp_custom(const char *s1, const char *s2);
+
+// main
+int			parse_command(char *input, char *args[]);
+int			exec_new_shell(char **argv);
+int			execute_command(char *args[], int arg_count,
+				t_redirection *redirections, int redirection_count);
+void		main_loop(void);
+void		handle_shlvl(void);
 
 #endif
