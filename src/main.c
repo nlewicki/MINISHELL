@@ -6,7 +6,7 @@
 /*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 09:52:41 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/09/26 14:12:12 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/09/26 14:31:11 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -187,6 +187,12 @@ int	execute_command(char *args[], int arg_count, t_redirection *redirections,
 		result = ft_export(args, arg_count);
 	else if (strcasecmp_custom(args[0], "./minishell") == 0)
 		result = exec_new_shell(args);
+	else if (strcasecmp_custom(args[0], ".") == 0)
+	{
+		ft_err(".: filename argument required", "\n", NULL);
+		ft_err(".: usage: . filename [arguments]", "\n", NULL);
+		result = 2;
+	}
 	else
 	{
 		result = execute_external_command(args);
