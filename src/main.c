@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 09:52:41 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/09/26 14:31:11 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/09/27 09:12:25 by mhummel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,36 +111,37 @@ int	exec_new_shell(char **argv)
 }
 #include <limits.h>
 
-int ft_exit(char *args[], int arg_count)
+int	ft_exit(char *args[], int arg_count)
 {
-	long long exit_code = 0;
-	char *arg;
-	int i;
+	long long	exit_code;
+	char		*arg;
+	int			i;
+	int			is_valid;
 
+	exit_code = 0;
 	ft_putendl_fd("exit", STDOUT_FILENO);
 	if (arg_count > 2)
 	{
 		ft_putendl_fd("exit: too many arguments", STDERR_FILENO);
-		return 1;
+		return (1);
 	}
 	if (arg_count == 2)
 	{
 		arg = args[1];
 		i = 0;
-		while (ft_isspace(arg[i])) i++;
-		int sign = 1;
+		while (ft_isspace(arg[i]))
+			i++;
 		if (arg[i] == '+' || arg[i] == '-')
 		{
-			sign = (arg[i] == '-') ? -1 : 1;
 			i++;
 		}
-		int is_valid = 1;
+		is_valid = 1;
 		while (arg[i])
 		{
 			if (!ft_isdigit(arg[i]))
 			{
 				is_valid = 0;
-				break;
+				break ;
 			}
 			i++;
 		}
@@ -157,10 +158,11 @@ int ft_exit(char *args[], int arg_count)
 int	execute_command(char *args[], int arg_count, t_redirection *redirections,
 		int redirection_count)
 {
-	int	result = 0;
+	int	result;
 	int	original_stdin;
 	int	original_stdout;
 
+	result = 0;
 	original_stdin = dup(STDIN_FILENO);
 	original_stdout = dup(STDOUT_FILENO);
 	if (apply_redirections(redirections, redirection_count) != 0)
@@ -171,7 +173,7 @@ int	execute_command(char *args[], int arg_count, t_redirection *redirections,
 		dup2(original_stdout, STDOUT_FILENO);
 		close(original_stdin);
 		close(original_stdout);
-		return ft_exit(args, arg_count);
+		return (ft_exit(args, arg_count));
 	}
 	else if (strcasecmp_custom(args[0], "pwd") == 0)
 		result = pwd();
@@ -197,7 +199,8 @@ int	execute_command(char *args[], int arg_count, t_redirection *redirections,
 	{
 		result = execute_external_command(args);
 		*exit_status() = result;
-		if (result == 127 && !ft_strnstr(args[0], "./", 2) && !ft_strnstr(args[0], "/", 1))
+		if (result == 127 && !ft_strnstr(args[0], "./", 2)
+			&& !ft_strnstr(args[0], "/", 1))
 			ft_err(args[0], ": command not found", "\n");
 	}
 	dup2(original_stdin, STDIN_FILENO);
