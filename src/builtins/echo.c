@@ -6,34 +6,75 @@
 /*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 11:02:29 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/09/27 09:27:57 by mhummel          ###   ########.fr       */
+/*   Updated: 2024/09/30 10:11:25 by mhummel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+void	print_word(const char *word, bool *space_printed)
+{
+	int	single_quotes;
+	int	double_quotes;
+	int	i;
+
+	single_quotes = 0;
+	double_quotes = 0;
+	i = 0;
+	while (word[i])
+	{
+		if (word[i] == '\'')
+			single_quotes++;
+		else if (word[i] == '"')
+			double_quotes++;
+		i++;
+	}
+	i = 0;
+	while (word[i])
+	{
+		if ((word[i] == '\'' && single_quotes % 2 == 0)
+			|| (word[i] == '"' && double_quotes % 2 == 0))
+		{
+			i++;
+			continue ;
+		}
+		else
+		{
+			if (*space_printed)
+			{
+				printf(" ");
+				*space_printed = false;
+			}
+			printf("%c", word[i]);
+		}
+		i++;
+	}
+}
+
 int	ft_echo(char *argv[], int argc)
 {
-	int	i;
-	int	j;
-	int	n_flag;
+	int		i;
+	int		j;
+	bool	n_flag;
+	bool	space_printed;
 
-	i = 0;
-	n_flag = 0;
-	while (++i < argc && argv[i][0] == '-' && argv[i][1] == 'n')
+	i = 1;
+	n_flag = false;
+	space_printed = false;
+	while (i < argc && argv[i][0] == '-' && argv[i][1] == 'n')
 	{
 		j = 1;
 		while (argv[i][j] == 'n')
 			j++;
 		if (argv[i][j] != '\0')
 			break ;
-		n_flag = 1;
+		n_flag = true;
+		i++;
 	}
 	while (i < argc)
 	{
-		printf("%s", argv[i]);
-		if (i < argc - 1)
-			printf(" ");
+		print_word(argv[i], &space_printed);
+		space_printed = true;
 		i++;
 	}
 	if (!n_flag)
