@@ -6,7 +6,7 @@
 /*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 12:37:27 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/09/26 14:13:51 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/09/30 10:53:49 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,12 +31,12 @@ char	*get_our_env(const char *name)
 	return (NULL);
 }
 
-void    handle_expansion(size_t *length, const char **src)
+void	handle_expansion(size_t *length, const char **src)
 {
 	char	var_name[256];
 	char	*var_value;
 	char	*status_str;
-	int	i;
+	int		i;
 
 	i = 0;
 	(*src)++;
@@ -45,8 +45,7 @@ void    handle_expansion(size_t *length, const char **src)
 		(*src)++;
 		status_str = ft_itoa(*exit_status());
 		*length += ft_strlen(status_str);
-		free(status_str);
-		return;
+		return (free(status_str));
 	}
 	while (**src && ((**src >= 'A' && **src <= 'Z') ||
 			(**src >= 'a' && **src <= 'z') ||
@@ -59,8 +58,6 @@ void    handle_expansion(size_t *length, const char **src)
 	var_value = get_our_env(var_name);
 	if (var_value)
 		*length += ft_strlen(var_value);
-	else
-		*length += i + 1;
 }
 
 size_t	calculate_expanded_length(const char *src, int in_single_quotes)
@@ -88,9 +85,10 @@ char	*expand_env_variables(char *src, int in_single_quotes)
 	char	var_name[256] = {0};
 	int		i;
 	char	*var_value;
+	char	*status_str;
 
 	result = malloc(ft_strlen(src) * calculate_expanded_length(src,
-				in_single_quotes));
+				in_single_quotes + 1));
 	if (!result)
 		return (NULL);
 	dest = result;
@@ -102,23 +100,22 @@ char	*expand_env_variables(char *src, int in_single_quotes)
 			i = 0;
 			if (*src == '?')
 			{
+				status_str = ft_itoa(*exit_status());
+				ft_strcpy(dest, status_str);
+				dest += ft_strlen(status_str);
+				free(status_str);
 				src++;
-				ft_strcpy(dest, ft_itoa(*exit_status()));
-				dest += ft_strlen(ft_itoa(*exit_status()));
-				continue ;
+				continue;
 			}
 			while (*src && ((*src >= 'A' && *src <= 'Z') || (*src >= 'a'
 						&& *src <= 'z') || *src == '_'))
 				var_name[i++] = *src++;
+			var_name[i] = '\0';
 			var_value = get_our_env(var_name);
 			if (var_value)
 			{
 				ft_strcpy(dest, var_value);
 				dest += ft_strlen(var_value);
-			}
-			else
-			{
-				return (NULL);
 			}
 		}
 		else

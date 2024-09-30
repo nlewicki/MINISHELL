@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 09:52:41 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/09/27 09:12:25 by mhummel          ###   ########.fr       */
+/*   Updated: 2024/09/30 10:44:14 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,8 @@ int	parse_command(char *input, char *args[])
 				free(args[arg_count]);
 				args[arg_count] = expanded;
 			}
-			arg_count++;
+			if (args[arg_count] == NULL || args[arg_count][0] != '\0')
+				arg_count++;
 		}
 		if (*input != '\0')
 			input++;
