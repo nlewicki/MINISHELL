@@ -6,7 +6,7 @@
 /*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 09:08:07 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/09/30 09:59:56 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/10/02 11:22:57 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,5 +105,7 @@ int			execute_command(char *args[], int arg_count,
 				t_redirection *redirections, int redirection_count);
 void		main_loop(void);
 void		handle_shlvl(void);
+int 	parse_input(char *input);
+void handle_history(char *input);
 
 #endif
