@@ -6,7 +6,7 @@
 /*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 10:23:02 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/10/02 13:30:40 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/10/02 13:51:21 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,13 +134,19 @@ char	*trim_whitespace(char *input)
 	char	*new;
 
 	new = ft_strtrim(input, " \t\f\n\v\r");
+	if (!new)
+		return (NULL);
 	trim.len = ft_strlen(new);
 	printf("trimmed: %s\n", new);
 	trim.result = ft_calloc(sizeof(char), trim.len + 1);
 	if (!trim.result)
+	{
+		free(new);
 		return (NULL);
+	}
 	trim_str(&trim, new);
 	printf("result: %s\n", trim.result);
+	free(new);
 	return (trim.result);
 }
 
@@ -152,9 +158,12 @@ int	parse_input(char *input)
 
 	printf("input: %s\n", input);
 	new = trim_whitespace(input);
+	if (!new)
+		return (1);
 
 
 	tokens = split_space_quotes(new);
+	free(new);
 	if (!tokens)
 		return (1);
 
@@ -162,7 +171,7 @@ int	parse_input(char *input)
 	i = 0;
 	while (tokens[i])
 	{
-		printf("Token %zu: %s\n", i, tokens[i]);
+		printf("Token %zu:%s\n", i, tokens[i]);
 		i++;
 	}
 	free_token_array(tokens);
