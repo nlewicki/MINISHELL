@@ -1,18 +1,89 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/02 09:52:41 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/09/30 10:44:14 by nlewicki         ###   ########.fr       */
+/*   Created: 2024/10/02 10:23:02 by nlewicki          #+#    #+#             */
+/*   Updated: 2024/10/02 10:52:27 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int		g_signal = 0;
+int	g_signal = 0;
+
+void handle_history(char *input)
+{
+	if (g_signal == 0)
+	{
+		if (ft_strlen(input) > 0)
+			add_history(input);
+		else
+			free(input);
+	}
+}
+
+void trim_whitespace(char *input)
+{
+	input = ft_strtrim(input, " \t\f\n\v\r");
+}
+
+int	parse_input(char *input)
+{
+	trim_whitespace(input);
+	printf("input: %s\n", input);
+	return (0);
+}
+
+void	main_loop(void)
+{
+	char *input;
+
+	while (1)
+	{
+		g_signal = 0;
+		input = readline("minishell> ");
+		if (!input)
+			break ;
+		handle_history(input);
+		parse_input(input);
+	}
+	printf("exit\n");
+}
+
+int	main(int argc, char **argv, char **envp)
+{
+	(void)argc;
+	(void)argv;
+	if (*env_vars() == NULL)
+		*env_vars() = copy_envp(envp);
+	if (!env_vars())
+		return (perror("Failed to copy envp"), 1);
+	set_env_vars(*env_vars());
+	handle_shlvl();
+	handle_signals();
+	main_loop();
+	free_env(*env_vars());
+	return (*exit_status());
+}
+
+
+
+void	handle_shlvl(void)
+{
+	char	*shlvl_str;
+	int		shlvl;
+
+	shlvl_str = get_our_env("SHLVL");
+	if (!shlvl_str)
+		shlvl = 0;
+	else
+		shlvl = atoi(shlvl_str);
+	shlvl += 1;
+	add_or_update_env("SHLVL", ft_itoa(shlvl));
+}
 
 int	parse_command(char *input, char *args[])
 {
@@ -209,117 +280,4 @@ int	execute_command(char *args[], int arg_count, t_redirection *redirections,
 	close(original_stdin);
 	close(original_stdout);
 	return (result);
-}
-
-void	main_loop(void)
-{
-	char			*input;
-	char			*commands[MAX_ARGS];
-	int				num_commands;
-	char			*argv[MAX_ARGS];
-	int				argc;
-	int				i;
-	t_redirection	redirections[MAX_REDIRECTIONS];
-	int				redirection_count;
-	char			*command_copy;
-
-	while (1)
-	{
-		g_signal = 0;
-		input = readline("minishell> ");
-		if (!input)
-		{
-			printf("exit\n");
-			break ;
-		}
-		if (g_signal)
-		{
-			free(input);
-			continue ;
-		}
-		if (ft_strlen(input) > 0)
-			add_history(input);
-		else
-		{
-			free(input);
-			continue ;
-		}
-		num_commands = 0;
-		commands[num_commands] = ft_strtok(input, "|");
-		while (commands[num_commands] != NULL && num_commands < MAX_ARGS - 1)
-		{
-			num_commands++;
-			commands[num_commands] = ft_strtok(NULL, "|");
-		}
-		if (num_commands > 1)
-		{
-			*exit_status() = execute_piped_commands(commands, num_commands);
-		}
-		else if (num_commands == 1)
-		{
-			command_copy = ft_strdup(commands[0]);
-			if (parse_redirections(command_copy, redirections,
-					&redirection_count) != 0)
-			{
-				free(command_copy);
-				free(input);
-				continue ;
-			}
-			argc = parse_command(commands[0], argv);
-			if (argc > 0)
-			{
-				*exit_status() = execute_command(argv, argc, redirections,
-						redirection_count);
-			}
-			free(command_copy);
-			i = 0;
-			while (i < redirection_count)
-			{
-				free(redirections[i].file);
-				i++;
-			}
-		}
-		i = 0;
-		while (i < argc)
-		{
-			if (argv[i] != NULL)
-			{
-				free(argv[i]);
-				argv[i] = NULL;
-			}
-			i++;
-		}
-		free(input);
-	}
-	rl_clear_history();
-}
-
-void	handle_shlvl(void)
-{
-	char	*shlvl_str;
-	int		shlvl;
-
-	shlvl_str = get_our_env("SHLVL");
-	if (!shlvl_str)
-		shlvl = 0;
-	else
-		shlvl = atoi(shlvl_str);
-	shlvl += 1;
-	add_or_update_env("SHLVL", ft_itoa(shlvl));
-}
-
-int	main(int argc, char **argv, char **envp)
-{
-	(void)argc;
-	(void)argv;
-	if (*env_vars() == NULL)
-		*env_vars() = copy_envp(envp);
-	if (!env_vars())
-		return (perror("Failed to copy envp"), 1);
-	set_env_vars(*env_vars());
-	handle_shlvl();
-	handle_signals();
-	main_loop();
-	free_env(*env_vars());
-	return (*exit_status());
 }
