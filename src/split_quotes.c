@@ -6,7 +6,7 @@
 /*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 11:12:34 by mhummel           #+#    #+#             */
-/*   Updated: 2024/10/02 13:28:40 by mhummel          ###   ########.fr       */
+/*   Updated: 2024/10/02 14:19:51 by mhummel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ static char	*extract_quoted_token(const char *str, size_t *pos, char quote)
 	while (str[end] && str[end] != quote)
 		end++;
 	*pos = end + 1;
-	return (strndup(str + start, end - start));
+	return (ft_strndup(str + start, end - start));
 }
 
 static char	*extract_unquoted_token(const char *str, size_t *pos)
@@ -100,7 +100,7 @@ static char	*extract_unquoted_token(const char *str, size_t *pos)
 	while (str[end] && str[end] != ' ' && !is_quote(str[end]))
 		end++;
 	*pos = end;
-	return (strndup(str + start, end - start));
+	return (ft_strndup(str + start, end - start));
 }
 
 static char	*extract_token(const char *str, size_t *pos)
