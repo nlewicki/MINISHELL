@@ -6,25 +6,24 @@
 /*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 11:12:34 by mhummel           #+#    #+#             */
-/*   Updated: 2024/10/02 12:13:11 by mhummel          ###   ########.fr       */
+/*   Updated: 2024/10/02 13:28:40 by mhummel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	free_token_array(t_array *tokens)
+void	free_token_array(char **tokens)
 {
-	size_t	i;
+	int	i;
 
 	i = 0;
 	if (!tokens)
 		return ;
-	while (i < tokens->count)
+	while (tokens[i])
 	{
-		free(tokens->tokens[i]);
+		free(tokens[i]);
 		i++;
 	}
-	free(tokens->tokens);
 	free(tokens);
 }
 
@@ -117,26 +116,19 @@ static char	*extract_token(const char *str, size_t *pos)
 	return (token);
 }
 
-static t_array	*init_result(const char *input)
+static char	**init_result(const char *input)
 {
-	t_array	*result;
+	size_t	count;
+	char	**result;
 
 	if (!input)
 		return (NULL);
-	result = malloc(sizeof(t_array));
-	if (!result)
-		return (NULL);
-	result->count = count_tokens(input);
-	result->tokens = calloc(result->count + 1, sizeof(char *));
-	if (!result->tokens)
-	{
-		free(result);
-		return (NULL);
-	}
+	count = count_tokens(input);
+	result = calloc(count + 1, sizeof(char *));
 	return (result);
 }
 
-static bool	fill_result(t_array *result, const char *input)
+static bool	fill_result(char **result, const char *input)
 {
 	size_t	pos;
 	size_t	token_index;
@@ -149,8 +141,8 @@ static bool	fill_result(t_array *result, const char *input)
 			pos++;
 		if (input[pos])
 		{
-			result->tokens[token_index] = extract_token(input, &pos);
-			if (!result->tokens[token_index])
+			result[token_index] = extract_token(input, &pos);
+			if (!result[token_index])
 				return (false);
 			token_index++;
 		}
@@ -158,9 +150,9 @@ static bool	fill_result(t_array *result, const char *input)
 	return (true);
 }
 
-t_array	*split_space_quotes(const char *input)
+char	**split_space_quotes(const char *input)
 {
-	t_array	*result;
+	char	**result;
 
 	result = init_result(input);
 	if (!result)

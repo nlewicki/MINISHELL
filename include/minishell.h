@@ -6,7 +6,7 @@
 /*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 09:08:07 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/10/02 12:15:47 by mhummel          ###   ########.fr       */
+/*   Updated: 2024/10/02 13:29:06 by mhummel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,12 +37,6 @@ typedef struct s_redirection
 	int		type;
 	char	*file;
 }			t_redirection;
-
-typedef struct s_array
-{
-	char		**tokens;
-	size_t		count;
-}				t_array;
 
 // builtins
 // cd
@@ -115,7 +109,7 @@ int 	parse_input(char *input);
 void handle_history(char *input);
 
 //split quotes
-void		free_token_array(t_array *tokens);
-t_array		*split_space_quotes(const char *input);
+void	free_token_array(char **tokens);
+char	**split_space_quotes(const char *input);
 
 #endif
