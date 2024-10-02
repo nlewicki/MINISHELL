@@ -6,7 +6,7 @@
 /*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 10:23:02 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/10/02 12:35:45 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/10/02 13:18:45 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ bool	isspecials(char c)
 	return (false);
 }
 
-void	handle_op(t_trim *trim, char *input)
+void	handle_operator(t_trim *trim, char *input)
 {
 	if (trim->j > 0 && !isspace(trim->result[trim->j - 1]))
 		trim->result[trim->j++] = ' ';
@@ -93,7 +93,7 @@ void	handle_specials(t_trim *trim, char *input)
 		|| input[trim->i] == '<' || input[trim->i] == '$')
 	{
 		tmp = input[trim->i];
-		handle_op(trim, input);
+		handle_operator(trim, input);
 		if (tmp == '$')
 			trim->is_space = false;
 		else
@@ -135,8 +135,7 @@ char	*trim_whitespace(char *input)
 
 	new = ft_strtrim(input, " \t\f\n\v\r");
 	trim.len = ft_strlen(new);
-	printf("len: %zu\n", trim.len);
-	printf("new: %s\n", new);
+	printf("trimmed: %s\n", new);
 	trim.result = ft_calloc(sizeof(char), trim.len + 1);
 	if (!trim.result)
 		return (NULL);
@@ -148,22 +147,25 @@ char	*trim_whitespace(char *input)
 int	parse_input(char *input)
 {
 	char	*new;
+	t_array	*tokens;
 
 
 	printf("input: %s\n", input);
 	new = trim_whitespace(input);
-	t_array	*tokens;
-	size_t	i;
 
-	i = 0;
+
 	tokens = split_space_quotes(new);
 	if (!tokens)
 		return (1);
+
+	size_t	i;
+	i = 0;
 	while (i < tokens->count)
 	{
-		printf("Token %zu: %s\n", i, tokens->tokens[i]);
+		printf("Token %zu:%s\n", i, tokens->tokens[i]);
 		i++;
 	}
+
 	free_token_array(tokens);
 	return (0);
 }
