@@ -6,7 +6,7 @@
 /*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 11:12:34 by mhummel           #+#    #+#             */
-/*   Updated: 2024/10/02 12:12:02 by mhummel          ###   ########.fr       */
+/*   Updated: 2024/10/02 12:13:11 by mhummel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,21 +173,21 @@ t_array	*split_space_quotes(const char *input)
 	return (result);
 }
 
-int	main(void)
-{
-	t_array	*tokens;
-	size_t	i;
+// int	main(void)
+// {
+// 	t_array	*tokens;
+// 	size_t	i;
 
-	i = 0;
-	tokens = split_space_quotes("echo \"Hello, World!\" 'Goodbye, World!'");
-	if (!tokens)
-		return (1);
-	while (i < tokens->count)
-	{
-		printf("Token %zu: %s\n", i, tokens->tokens[i]);
-		i++;
-	}
-	free_token_array(tokens);
-	system("leaks a.out");
-	return (0);
-}
+// 	i = 0;
+// 	tokens = split_space_quotes("echo \"Hello, World!\" 'Goodbye, World!'");
+// 	if (!tokens)
+// 		return (1);
+// 	while (i < tokens->count)
+// 	{
+// 		printf("Token %zu: %s\n", i, tokens->tokens[i]);
+// 		i++;
+// 	}
+// 	free_token_array(tokens);
+// 	system("leaks a.out");
+// 	return (0);
+// }

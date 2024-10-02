@@ -6,7 +6,7 @@
 /*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 09:08:07 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/10/02 12:11:50 by mhummel          ###   ########.fr       */
+/*   Updated: 2024/10/02 12:13:37 by mhummel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,5 +111,9 @@ int			execute_command(char *args[], int arg_count,
 				t_redirection *redirections, int redirection_count);
 void		main_loop(void);
 void		handle_shlvl(void);
+
+//split quotes
+void		free_token_array(t_array *tokens);
+t_array		*split_space_quotes(const char *input);
 
 #endif
