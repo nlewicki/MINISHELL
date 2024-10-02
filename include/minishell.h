@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 09:08:07 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/09/30 09:59:56 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/10/02 12:11:50 by mhummel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 # include <stdlib.h>
 # include <string.h>
 # include <unistd.h>
-#include <stdbool.h>
+# include <stdbool.h>
 
 # define MAX_ARGS 100
 # define MAX_REDIRECTIONS 10
@@ -37,6 +37,12 @@ typedef struct s_redirection
 	int		type;
 	char	*file;
 }			t_redirection;
+
+typedef struct s_array
+{
+	char		**tokens;
+	size_t		count;
+}				t_array;
 
 // builtins
 // cd

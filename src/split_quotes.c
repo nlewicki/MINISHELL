@@ -6,17 +6,11 @@
 /*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 11:12:34 by mhummel           #+#    #+#             */
-/*   Updated: 2024/10/02 12:05:55 by mhummel          ###   ########.fr       */
+/*   Updated: 2024/10/02 12:12:02 by mhummel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
-
-typedef struct s_array
-{
-	char		**tokens;
-	size_t		count;
-}				t_array;
+#include "minishell.h"
 
 void	free_token_array(t_array *tokens)
 {
