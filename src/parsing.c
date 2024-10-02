@@ -6,7 +6,7 @@
 /*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 10:23:02 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/10/02 12:27:52 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/10/02 12:35:45 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,20 +63,21 @@ void	handle_op(t_trim *trim, char *input)
 
 void	handle_quotes(t_trim *trim, char *input)
 {
-	char	quote;
+	char quote;
 
-	if (trim->j > 0 && !isspace(trim->result[trim->j - 1]))
+	if (trim->j > 0 && (!isspace(trim->result[trim->j - 1])))
 		trim->result[trim->j++] = ' ';
-	quote = input[trim->i++];
-	trim->result[trim->j++] = quote;
-	while (input[trim->i] != '\0' && input[trim->i] != quote)
+	quote = input[trim->i];
+	trim->result[trim->j++] = input[trim->i++];
+	while ((input[trim->i] != '\0') && (input[trim->i] != quote))
 		trim->result[trim->j++] = input[trim->i++];
 	if (input[trim->i] == quote)
-		trim->result[trim->j++] = input[trim->i++];
-	if (input[trim->i] != '\0' && !isspace(trim->result[trim->j - 1]))
-		trim->result[trim->j++] = ' ';
+	{
+		trim->result[trim->j++] = input[trim->i];
+			trim->result[trim->j++] = ' ';
+	}
 	else
-		printf("Error: Missing closing quote\n");
+		printf("Missing closing quote\n");
 }
 
 void	handle_specials(t_trim *trim, char *input)
@@ -151,16 +152,16 @@ int	parse_input(char *input)
 
 	printf("input: %s\n", input);
 	new = trim_whitespace(input);
-	char	**tokens;
+	t_array	*tokens;
 	size_t	i;
 
 	i = 0;
 	tokens = split_space_quotes(new);
 	if (!tokens)
 		return (1);
-	while (tokens[i])
+	while (i < tokens->count)
 	{
-		printf("Token %zu: %s\n", i, *tokens);
+		printf("Token %zu: %s\n", i, tokens->tokens[i]);
 		i++;
 	}
 	free_token_array(tokens);
