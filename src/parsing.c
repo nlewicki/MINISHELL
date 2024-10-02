@@ -6,7 +6,7 @@
 /*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 10:23:02 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/10/02 13:18:45 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/10/02 13:30:40 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,7 +147,7 @@ char	*trim_whitespace(char *input)
 int	parse_input(char *input)
 {
 	char	*new;
-	t_array	*tokens;
+	char	**tokens;
 
 
 	printf("input: %s\n", input);
@@ -160,12 +160,11 @@ int	parse_input(char *input)
 
 	size_t	i;
 	i = 0;
-	while (i < tokens->count)
+	while (tokens[i])
 	{
-		printf("Token %zu:%s\n", i, tokens->tokens[i]);
+		printf("Token %zu: %s\n", i, tokens[i]);
 		i++;
 	}
-
 	free_token_array(tokens);
 	return (0);
 }
