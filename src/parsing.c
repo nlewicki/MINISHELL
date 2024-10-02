@@ -6,7 +6,7 @@
 /*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 10:23:02 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/10/02 13:51:21 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/10/02 14:23:32 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,21 +133,19 @@ char	*trim_whitespace(char *input)
 	t_trim	trim;
 	char	*new;
 
-	new = ft_strtrim(input, " \t\f\n\v\r");
-	if (!new)
-		return (NULL);
-	trim.len = ft_strlen(new);
-	printf("trimmed: %s\n", new);
-	trim.result = ft_calloc(sizeof(char), trim.len + 1);
+	trim.len = ft_strlen(input);
+	trim.result = ft_calloc(sizeof(char), trim.len + 100);
 	if (!trim.result)
 	{
-		free(new);
 		return (NULL);
 	}
-	trim_str(&trim, new);
+	trim_str(&trim, input);
 	printf("result: %s\n", trim.result);
-	free(new);
-	return (trim.result);
+	new = ft_strtrim(trim.result, " \t\f\n\v\r");
+	if (!new)
+		return (NULL);
+	printf("trimmed: %s\n", input);
+	return (new);
 }
 
 int	parse_input(char *input)
