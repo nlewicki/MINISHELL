@@ -6,7 +6,7 @@
 /*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 10:23:02 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/10/02 12:12:42 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/10/02 12:27:52 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,7 +148,21 @@ int	parse_input(char *input)
 {
 	char	*new;
 
+
 	printf("input: %s\n", input);
 	new = trim_whitespace(input);
+	char	**tokens;
+	size_t	i;
+
+	i = 0;
+	tokens = split_space_quotes(new);
+	if (!tokens)
+		return (1);
+	while (tokens[i])
+	{
+		printf("Token %zu: %s\n", i, *tokens);
+		i++;
+	}
+	free_token_array(tokens);
 	return (0);
 }

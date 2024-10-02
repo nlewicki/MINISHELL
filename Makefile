@@ -16,6 +16,7 @@ CFILES =	src/builtins/pwd.c \
 			src/pipes.c \
 			src/expand.c \
 			src/redirection.c \
+			src/split_quotes.c \
 
 NAME = minishell
 CC = cc
