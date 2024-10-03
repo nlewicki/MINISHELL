@@ -6,7 +6,7 @@
 /*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 10:23:02 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/10/03 11:14:03 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/10/03 12:17:00 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -283,7 +283,7 @@ void	print_token_list(t_list *list)
 			printf(COLOR_NEXT "\tNext content: NULL\n" COLOR_RESET);
 		}
 
-		// Reset color to default after each node
+			// Reset color to default after each node
 		printf(COLOR_RESET);
 		list = list->next;
 		i++;
