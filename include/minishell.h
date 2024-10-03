@@ -6,7 +6,7 @@
 /*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 09:08:07 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/10/03 12:18:14 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/10/03 12:48:46 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,9 @@ typedef enum
 	TOKEN_REDIR_OUT,
 	TOKEN_REDIR_APPEND,
 	TOKEN_REDIR_HERE,
+	TOKEN_VARIABLE,
 	TOKEN_WORD,
+	TOKEN_COMMAND,
 }					t_token_type;
 
 typedef struct s_token
