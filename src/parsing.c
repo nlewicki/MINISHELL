@@ -6,7 +6,7 @@
 /*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 10:23:02 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/10/02 14:23:32 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/10/03 09:52:48 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ typedef struct s_trim
 	size_t	j;
 	size_t	len;
 	bool	is_space;
+	bool	error;
 
 }	t_trim;
 
@@ -77,7 +78,10 @@ void	handle_quotes(t_trim *trim, char *input)
 			trim->result[trim->j++] = ' ';
 	}
 	else
+	{
 		printf("Missing closing quote\n");
+		trim->error = true;
+	}
 }
 
 void	handle_specials(t_trim *trim, char *input)
@@ -106,6 +110,7 @@ void	trim_str(t_trim *trim, char *input)
 	trim->i = 0;
 	trim->j = 0;
 	trim->is_space = false;
+	trim->error = false;
 	while (trim->i < trim->len)
 	{
 		if (isspecials(input[trim->i]))
@@ -140,11 +145,16 @@ char	*trim_whitespace(char *input)
 		return (NULL);
 	}
 	trim_str(&trim, input);
+	if (trim.error == true)
+	{
+		free(trim.result);
+		return (NULL);
+	}
 	printf("result: %s\n", trim.result);
 	new = ft_strtrim(trim.result, " \t\f\n\v\r");
 	if (!new)
 		return (NULL);
-	printf("trimmed: %s\n", input);
+	printf("trimmed: %s\n", new);
 	return (new);
 }
 
@@ -153,25 +163,23 @@ int	parse_input(char *input)
 	char	*new;
 	char	**tokens;
 
-
 	printf("input: %s\n", input);
 	new = trim_whitespace(input);
 	if (!new)
 		return (1);
-
-
 	tokens = split_space_quotes(new);
 	free(new);
 	if (!tokens)
 		return (1);
 
-	size_t	i;
+	size_t	i; // only debugg
 	i = 0;
 	while (tokens[i])
 	{
 		printf("Token %zu:%s\n", i, tokens[i]);
 		i++;
-	}
+	} // end debugg
+
 	free_token_array(tokens);
 	return (0);
 }
