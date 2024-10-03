@@ -6,13 +6,13 @@
 /*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 10:23:02 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/10/03 12:54:05 by mhummel          ###   ########.fr       */
+/*   Updated: 2024/10/03 12:55:01 by mhummel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int			g_signal = 0;
+int	g_signal = 0;
 
 typedef struct s_trim
 {
@@ -22,7 +22,7 @@ typedef struct s_trim
 	size_t	len;
 	bool	is_space;
 	bool	error;
-}			t_trim;
+}	t_trim;
 
 void	handle_history(char *input)
 {
@@ -63,7 +63,7 @@ void	handle_operator(t_trim *trim, char *input)
 
 void	handle_quotes(t_trim *trim, char *input)
 {
-	char	quote;
+	char quote;
 
 	if (trim->j > 0 && (!isspace(trim->result[trim->j - 1])))
 		trim->result[trim->j++] = ' ';
@@ -74,7 +74,7 @@ void	handle_quotes(t_trim *trim, char *input)
 	if (input[trim->i] == quote)
 	{
 		trim->result[trim->j++] = input[trim->i];
-		trim->result[trim->j++] = ' ';
+			trim->result[trim->j++] = ' ';
 	}
 	else
 	{
@@ -157,15 +157,12 @@ char	*trim_whitespace(char *input)
 	return (new);
 }
 
-// debugg only fucniton
+ // debugg only fucniton
 void	print_token_list(t_list *list)
 {
-	t_token	*token;
-	size_t	i;
-	t_token	*prev_token;
-	t_token	*next_token;
+	t_token *token;
+	size_t	i = 0;
 
-	i = 0;
 	while (list)
 	{
 		token = (t_token *)list->content;
@@ -182,9 +179,10 @@ void	print_token_list(t_list *list)
 			printf("Token: HEREDOC (%s)\n", token->content);
 		else if (token->type == TOKEN_WORD)
 			printf("Token: WORD (%s)\n", token->content);
+
 		if (list->prev)
 		{
-			prev_token = (t_token *)list->prev->content;
+			t_token *prev_token = (t_token *)list->prev->content;
 			printf("\tPrev content: ");
 			if (prev_token->type == TOKEN_WORD)
 				printf("WORD (%s)\n", prev_token->content);
@@ -203,9 +201,10 @@ void	print_token_list(t_list *list)
 		{
 			printf("\tPrev content: NULL\n");
 		}
+
 		if (list->next)
 		{
-			next_token = (t_token *)list->next->content;
+			t_token *next_token = (t_token *)list->next->content;
 			printf("\tNext content: ");
 			if (next_token->type == TOKEN_WORD)
 				printf("WORD (%s)\n", next_token->content);
@@ -233,9 +232,6 @@ int	parse_input(char *input)
 {
 	char	*new;
 	char	**tokens;
-	t_token	*strct;
-	t_list	*list;
-	t_list	*new;
 
 	printf("input: %s\n", input);
 	new = trim_whitespace(input);
@@ -245,8 +241,10 @@ int	parse_input(char *input)
 	free(new);
 	if (!tokens)
 		return (1);
-	size_t i; // only debugg
-	list = NULL;
+
+	size_t	i; // only debugg
+	t_token *strct;
+	t_list *list = NULL;
 	i = 0;
 	while (tokens[i])
 	{
@@ -254,13 +252,15 @@ int	parse_input(char *input)
 		strct = malloc(sizeof(t_token));
 		if (!strct)
 			return (1);
-		fill_struct(strct, tokens[i]);
-		new = ft_lstnew(strct);
+		fill_struct(strct ,tokens[i]);
+		t_list *new = ft_lstnew(strct);
 		ft_lstadd_back(&list, new);
 		i++;
 	} // end debugg
+
 	// check linked list
 	print_token_list(list);
+
 	free_token_array(tokens);
 	return (0);
 }
