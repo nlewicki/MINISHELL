@@ -6,7 +6,7 @@
 /*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 10:23:02 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/10/03 13:10:47 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/10/03 13:56:14 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,11 +92,41 @@ void free_token(void *content)
 	free(token);
 }
 
+int create_linked_list(char **tokens, t_list **list)
+{
+	size_t	i;
+	t_token	*strct;
+	bool	command;
+
+	command = false;
+	i = 0;
+	while (tokens[i])
+	{
+		strct = malloc(sizeof(t_token));
+		if (!strct)
+			return (1);
+		if (strct->type == TOKEN_COMMAND && command)
+			strct->type = TOKEN_WORD;
+		fill_struct(strct, tokens[i], &command);
+		t_list *new = ft_lstnew(strct);
+		if (!new)
+		{
+			free(strct);
+			return (1);
+		}
+		ft_lstadd_back(list, new);
+		i++;
+	}
+	return (0);
+}
+
 int	parse_input(char *input)
 {
 	char	*new;
 	char	**tokens;
+	t_list	*list;
 
+	list = NULL;
 	printf("input: %s\n", input);
 	new = trim_whitespace(input);
 	if (!new)
@@ -105,30 +135,39 @@ int	parse_input(char *input)
 	free(new);
 	if (!tokens)
 		return (1);
-
-	size_t	i; // only debugg
-	t_token *strct;
-	t_list *list = NULL;
-	i = 0;
-	while (tokens[i])
+	if (create_linked_list(tokens, &list))
 	{
-		printf("Token %zu:%s\n", i, tokens[i]);
-		strct = malloc(sizeof(t_token));
-		if (!strct)
-			return (1);
-		fill_struct(strct ,tokens[i]);
-		t_list *new = ft_lstnew(strct);
-		ft_lstadd_back(&list, new);
-		i++;
-	} // end debugg
-
-	// check linked list
-	print_token_list(list);
-
+		free_token_array(tokens);
+		ft_lstclear(&list, free_token);
+		return (1);
+	}
+	print_token_list(list); // debug only
 	free_token_array(tokens);
 	ft_lstclear(&list, free_token);
 	return (0);
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 // ANSI color codes

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   process_token.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 10:08:26 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/10/03 13:12:54 by mhummel          ###   ########.fr       */
+/*   Updated: 2024/10/03 13:55:30 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,16 @@
 #include <limits.h>
 #include <sys/stat.h>
 
-bool	command_exists(const char *command)
+bool	command_exists(const char *command) // prototype
 {
-	char		*path_env;
-	char		*path_copy;
-	char		*path;
-	char		command_path[PATH_MAX];
-	int			written;
-	struct stat	buffer;
+	char *path_env;
+	char *path_copy;
+	char *path;
+	char command_path[PATH_MAX];
+	int written;
+	struct stat buffer;
 
-	path_env = getenv("PATH");
+	path_env = get_our_env("PATH");
 	if (!path_env)
 		return (false);
 	path_copy = ft_strdup(path_env);
@@ -53,7 +53,7 @@ bool	command_exists(const char *command)
 	return (false);
 }
 
-void	fill_struct(t_token *token, char *content)
+void	fill_struct(t_token *token, char *content, bool *command)
 {
 	if (!token || !content)
 		return ;
@@ -66,11 +66,17 @@ void	fill_struct(t_token *token, char *content)
 	else if (ft_strncmp(content, "<", 1) == 0)
 		token->type = TOKEN_REDIR_IN;
 	else if (ft_strncmp(content, "|", 1) == 0)
+	{
+		*command = false;
 		token->type = TOKEN_PIPE;
+	}
 	else if (ft_strncmp(content, "$", 1) == 0)
 		token->type = TOKEN_VARIABLE;
-	else if (command_exists(content))
+	else if (command_exists(content) && !*command)
+	{
+		*command = true;
 		token->type = TOKEN_COMMAND;
+	}
 	else
 		token->type = TOKEN_WORD;
 	token->content = ft_strdup(content);

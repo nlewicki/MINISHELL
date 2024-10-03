@@ -6,7 +6,7 @@
 /*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 09:08:07 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/10/03 13:11:11 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/10/03 13:54:34 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ void	handle_operator(t_trim *trim, char *input);
 void	handle_quotes(t_trim *trim, char *input);
 void	handle_specials(t_trim *trim, char *input);
 void	handle_history(char *input);
-void				fill_struct(t_token *token, char *content);
+void				fill_struct(t_token *token, char *content, bool *command);
 
 // builtins
 // cd
