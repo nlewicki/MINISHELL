@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 10:23:02 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/10/03 09:52:48 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/10/03 10:51:15 by mhummel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ typedef struct s_trim
 	size_t	len;
 	bool	is_space;
 	bool	error;
-
 }	t_trim;
 
 void	handle_history(char *input)
@@ -179,6 +178,7 @@ int	parse_input(char *input)
 		printf("Token %zu:%s\n", i, tokens[i]);
 		i++;
 	} // end debugg
+
 
 	free_token_array(tokens);
 	return (0);
