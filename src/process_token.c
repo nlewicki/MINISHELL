@@ -6,7 +6,7 @@
 /*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 10:08:26 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/10/03 13:10:53 by mhummel          ###   ########.fr       */
+/*   Updated: 2024/10/03 13:12:54 by mhummel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,14 +25,10 @@ bool	command_exists(const char *command)
 
 	path_env = getenv("PATH");
 	if (!path_env)
-	{
 		return (false);
-	}
 	path_copy = ft_strdup(path_env);
 	if (!path_copy)
-	{
 		return (false);
-	}
 	path = ft_strtok(path_copy, ":");
 	while (path)
 	{
