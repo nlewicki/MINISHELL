@@ -6,7 +6,7 @@
 /*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 10:23:02 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/10/03 09:13:34 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/10/03 09:52:48 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ typedef struct s_trim
 	size_t	j;
 	size_t	len;
 	bool	is_space;
+	bool	error;
 
 }	t_trim;
 
@@ -49,7 +50,7 @@ bool	isspecials(char c)
 	return (false);
 }
 
-int	handle_operator(t_trim *trim, char *input)
+void	handle_operator(t_trim *trim, char *input)
 {
 	if (trim->j > 0 && !isspace(trim->result[trim->j - 1]))
 		trim->result[trim->j++] = ' ';
@@ -59,10 +60,9 @@ int	handle_operator(t_trim *trim, char *input)
 		trim->result[trim->j++] = input[++trim->i];
 	if (input[trim->i] != '$')
 		trim->result[trim->j++] = ' ';
-	return (0);
 }
 
-int	handle_quotes(t_trim *trim, char *input)
+void	handle_quotes(t_trim *trim, char *input)
 {
 	char quote;
 
@@ -75,56 +75,46 @@ int	handle_quotes(t_trim *trim, char *input)
 	if (input[trim->i] == quote)
 	{
 		trim->result[trim->j++] = input[trim->i];
-		trim->result[trim->j++] = ' ';
-		return (0);
+			trim->result[trim->j++] = ' ';
 	}
 	else
 	{
 		printf("Missing closing quote\n");
-		return (1);
+		trim->error = true;
 	}
 }
 
-int	handle_specials(t_trim *trim, char *input)
+void	handle_specials(t_trim *trim, char *input)
 {
 	char	tmp;
-	int		ret;
 
 	if ((input[trim->i] == '\'') || (input[trim->i] == '\"'))
 	{
-		ret = handle_quotes(trim, input);
-		if (ret != 0)
-			return (ret);
+		handle_quotes(trim, input);
 		trim->is_space = true;
 	}
 	else if (input[trim->i] == '|' || input[trim->i] == '>'
 		|| input[trim->i] == '<' || input[trim->i] == '$')
 	{
 		tmp = input[trim->i];
-		ret = handle_operator(trim, input);
-		if (ret != 0)
-			return (ret);
+		handle_operator(trim, input);
 		if (tmp == '$')
 			trim->is_space = false;
 		else
 			trim->is_space = true;
 	}
-	return (0);
 }
 
-int	trim_str(t_trim *trim, char *input)
+void	trim_str(t_trim *trim, char *input)
 {
-	int	ret;
-
 	trim->i = 0;
 	trim->j = 0;
 	trim->is_space = false;
+	trim->error = false;
 	while (trim->i < trim->len)
 	{
 		if (isspecials(input[trim->i]))
-			ret = handle_specials(trim, input);
-			if (ret != 0)
-				return (ret);
+			handle_specials(trim, input);
 		else if (isspace(input[trim->i]))
 		{
 			if (!trim->is_space && trim->j > 0)
@@ -141,14 +131,12 @@ int	trim_str(t_trim *trim, char *input)
 		trim->i++;
 	}
 	trim->result[trim->j] = '\0';
-	return (0);
 }
 
 char	*trim_whitespace(char *input)
 {
 	t_trim	trim;
 	char	*new;
-	int		ret;
 
 	trim.len = ft_strlen(input);
 	trim.result = ft_calloc(sizeof(char), trim.len + 100);
@@ -156,8 +144,8 @@ char	*trim_whitespace(char *input)
 	{
 		return (NULL);
 	}
-	ret = trim_str(&trim, input);
-	if (ret != 0)
+	trim_str(&trim, input);
+	if (trim.error == true)
 	{
 		free(trim.result);
 		return (NULL);
@@ -166,7 +154,7 @@ char	*trim_whitespace(char *input)
 	new = ft_strtrim(trim.result, " \t\f\n\v\r");
 	if (!new)
 		return (NULL);
-	printf("trimmed: %s\n", input);
+	printf("trimmed: %s\n", new);
 	return (new);
 }
 
@@ -175,26 +163,23 @@ int	parse_input(char *input)
 	char	*new;
 	char	**tokens;
 
-
 	printf("input: %s\n", input);
 	new = trim_whitespace(input);
 	if (!new)
 		return (1);
-
-
 	tokens = split_space_quotes(new);
 	free(new);
 	if (!tokens)
 		return (1);
 
-	size_t	i;
+	size_t	i; // only debugg
 	i = 0;
-	while (tokens[i] != NULL)
+	while (tokens[i])
 	{
 		printf("Token %zu:%s\n", i, tokens[i]);
 		i++;
-	}
-	printf("total tokens: %zu\n", i);
+	} // end debugg
+
 	free_token_array(tokens);
 	return (0);
 }
