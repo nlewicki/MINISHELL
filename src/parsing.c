@@ -6,7 +6,7 @@
 /*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 10:23:02 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/10/03 10:51:15 by mhummel          ###   ########.fr       */
+/*   Updated: 2024/10/03 11:04:15 by mhummel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,6 +157,77 @@ char	*trim_whitespace(char *input)
 	return (new);
 }
 
+ // debugg only fucniton
+void	print_token_list(t_list *list)
+{
+	t_token *token;
+	size_t	i = 0;
+
+	while (list)
+	{
+		token = (t_token *)list->content;
+		printf("Node %zu: ", i);
+		if (token->type == TOKEN_PIPE)
+			printf("Token: PIPE (%s)\n", token->content);
+		else if (token->type == TOKEN_REDIR_IN)
+			printf("Token: REDIR IN (%s)\n", token->content);
+		else if (token->type == TOKEN_REDIR_OUT)
+			printf("Token: REDIR OUT (%s)\n", token->content);
+		else if (token->type == TOKEN_REDIR_APPEND)
+			printf("Token: REDIR APPEND (%s)\n", token->content);
+		else if (token->type == TOKEN_REDIR_HERE)
+			printf("Token: HEREDOC (%s)\n", token->content);
+		else if (token->type == TOKEN_WORD)
+			printf("Token: WORD (%s)\n", token->content);
+
+		if (list->prev)
+		{
+			t_token *prev_token = (t_token *)list->prev->content;
+			printf("\tPrev content: ");
+			if (prev_token->type == TOKEN_WORD)
+				printf("WORD (%s)\n", prev_token->content);
+			else if (prev_token->type == TOKEN_PIPE)
+				printf("PIPE\n");
+			else if (prev_token->type == TOKEN_REDIR_IN)
+				printf("REDIR IN\n");
+			else if (prev_token->type == TOKEN_REDIR_OUT)
+				printf("REDIR OUT\n");
+			else if (prev_token->type == TOKEN_REDIR_APPEND)
+				printf("REDIR APPEND\n");
+			else if (prev_token->type == TOKEN_REDIR_HERE)
+				printf("HEREDOC\n");
+		}
+		else
+		{
+			printf("\tPrev content: NULL\n");
+		}
+
+		if (list->next)
+		{
+			t_token *next_token = (t_token *)list->next->content;
+			printf("\tNext content: ");
+			if (next_token->type == TOKEN_WORD)
+				printf("WORD (%s)\n", next_token->content);
+			else if (next_token->type == TOKEN_PIPE)
+				printf("PIPE\n");
+			else if (next_token->type == TOKEN_REDIR_IN)
+				printf("REDIR IN\n");
+			else if (next_token->type == TOKEN_REDIR_OUT)
+				printf("REDIR OUT\n");
+			else if (next_token->type == TOKEN_REDIR_APPEND)
+				printf("REDIR APPEND\n");
+			else if (next_token->type == TOKEN_REDIR_HERE)
+				printf("HEREDOC\n");
+		}
+		else
+		{
+			printf("\tNext content: NULL\n");
+		}
+		list = list->next;
+		i++;
+	}
+}
+
 int	parse_input(char *input)
 {
 	char	*new;
@@ -172,13 +243,23 @@ int	parse_input(char *input)
 		return (1);
 
 	size_t	i; // only debugg
+	t_token *strct;
+	t_list *list = NULL;
 	i = 0;
 	while (tokens[i])
 	{
 		printf("Token %zu:%s\n", i, tokens[i]);
+		strct = malloc(sizeof(t_token));
+		if (!strct)
+			return (1);
+		fill_struct(strct ,tokens[i]);
+		t_list *new = ft_lstnew(strct);
+		ft_lstadd_back(&list, new);
 		i++;
 	} // end debugg
 
+	// check linked list
+	print_token_list(list);
 
 	free_token_array(tokens);
 	return (0);

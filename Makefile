@@ -17,6 +17,7 @@ CFILES =	src/builtins/pwd.c \
 			src/expand.c \
 			src/redirection.c \
 			src/split_quotes.c \
+			src/process_token.c \
 
 NAME = minishell
 CC = cc

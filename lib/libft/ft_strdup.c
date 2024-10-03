@@ -6,7 +6,7 @@
 /*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 11:31:37 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/03/12 12:18:26 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/10/03 10:57:49 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ char	*ft_strdup(const char *s1)
 	size_t	i;
 	char	*dup;
 
+	if (s1 == NULL)
+		return (NULL);
 	len = 0;
 	while (s1[len] != '\0')
 		len++;

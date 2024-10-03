@@ -6,25 +6,11 @@
 /*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 11:12:34 by mhummel           #+#    #+#             */
-/*   Updated: 2024/10/03 10:03:54 by mhummel          ###   ########.fr       */
+/*   Updated: 2024/10/03 11:04:41 by mhummel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-
-typedef enum {
-	TOKEN_PIPE,
-	TOKEN_REDIR_IN,
-	TOKEN_REDIR_OUT,
-	TOKEN_REDIR_APPEND,
-	TOKEN_WORD,
-}	t_token_type;
-
-typedef struct s_token{
-	t_token_type type;
-	char *value;
-} t_token;
 
 void	free_token_array(char **tokens)
 {
