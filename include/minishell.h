@@ -6,7 +6,7 @@
 /*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 09:08:07 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/10/02 13:51:49 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/10/03 10:38:54 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,22 @@ typedef struct s_redirection
 	int		type;
 	char	*file;
 }			t_redirection;
+
+typedef enum {
+	TOKEN_PIPE,
+	TOKEN_REDIR_IN,
+	TOKEN_REDIR_OUT,
+	TOKEN_REDIR_APPEND,
+	TOKEN_REDIR_HERE,
+	TOKEN_WORD,
+}	t_token_type;
+
+typedef struct s_token{
+	t_token_type	type;
+	char			*content;
+} t_token;
+
+void fill_struct(t_token *token, char *content);
 
 // builtins
 // cd
