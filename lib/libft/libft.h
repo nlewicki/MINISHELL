@@ -6,7 +6,7 @@
 /*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 13:13:20 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/09/19 11:13:47 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/10/03 10:10:02 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,12 +68,8 @@ void	ft_err(char *s1, char *s2, char *s3);
 typedef struct s_list
 {
 	void			*content;
-	int				index;
-	int				median;
-	int				price;
-	int				cheapest;
-	struct s_list	*target;
 	struct s_list	*next;
+	struct s_list	*prev;
 }	t_list;
 
 t_list	*ft_lstnew(void *content);
