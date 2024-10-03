@@ -6,7 +6,7 @@
 /*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 10:23:50 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/03/18 10:56:35 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/10/03 11:10:38 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,10 @@ void	ft_lstadd_back(t_list **lst, t_list *new)
 	if (*lst == NULL)
 	{
 		*lst = new;
+		new->prev = NULL;
 		return ;
 	}
 	last = ft_lstlast(*lst);
 	last->next = new;
+	new->prev = last;
 }
