@@ -6,23 +6,22 @@
 /*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 10:45:17 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/09/27 09:14:34 by mhummel          ###   ########.fr       */
+/*   Updated: 2024/10/03 12:53:53 by mhummel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include <sys/wait.h>
 #include <sys/stat.h>
+#include <sys/wait.h>
 
 #define MAX_PATH 1024
 
-static int is_directory(const char *path)
+static int	is_directory(const char *path)
 {
-	struct stat statbuf;
+	struct stat	statbuf;
+
 	if (stat(path, &statbuf) != 0)
-	{
-		return 0;
-	}
+		return (0);
 	return (S_ISDIR(statbuf.st_mode));
 }
 
@@ -72,22 +71,23 @@ int	execute_external_command(char **args)
 	char	*command_path;
 	pid_t	pid;
 	int		status;
+	char	*expanded;
 
 	if (args[0][0] == '$')
 	{
 		if (args[0][1] == '\0')
 			return (127);
-		char *expanded = expand_env_variables(args[0], 0);
+		expanded = expand_env_variables(args[0], 0);
 		if (expanded)
 		{
 			printf("%s\n", expanded);
 			free(expanded);
-			return 0;
+			return (0);
 		}
 		else
 		{
 			printf("\n");
-			return 0;
+			return (0);
 		}
 	}
 	if (args[0][0] == '/' || args[0][0] == '.')

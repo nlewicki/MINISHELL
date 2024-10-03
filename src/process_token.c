@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   process_token.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 10:08:26 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/10/03 11:01:40 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/10/03 12:53:38 by mhummel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void fill_struct(t_token *token, char *content)
+void	fill_struct(t_token *token, char *content)
 {
 	if (ft_strncmp(content, ">>", 2) == 0)
 		token->type = TOKEN_REDIR_APPEND;

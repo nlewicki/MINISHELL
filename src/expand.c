@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 12:37:27 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/09/30 10:53:49 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/10/03 12:53:02 by mhummel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,9 +47,8 @@ void	handle_expansion(size_t *length, const char **src)
 		*length += ft_strlen(status_str);
 		return (free(status_str));
 	}
-	while (**src && ((**src >= 'A' && **src <= 'Z') ||
-			(**src >= 'a' && **src <= 'z') ||
-			**src == '_'))
+	while (**src && ((**src >= 'A' && **src <= 'Z') || (**src >= 'a'
+				&& **src <= 'z') || **src == '_'))
 	{
 		var_name[i++] = **src;
 		(*src)++;
@@ -105,7 +104,7 @@ char	*expand_env_variables(char *src, int in_single_quotes)
 				dest += ft_strlen(status_str);
 				free(status_str);
 				src++;
-				continue;
+				continue ;
 			}
 			while (*src && ((*src >= 'A' && *src <= 'Z') || (*src >= 'a'
 						&& *src <= 'z') || *src == '_'))

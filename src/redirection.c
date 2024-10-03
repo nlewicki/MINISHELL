@@ -6,7 +6,7 @@
 /*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 10:16:29 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/10/03 10:09:13 by mhummel          ###   ########.fr       */
+/*   Updated: 2024/10/03 12:53:29 by mhummel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,40 +77,38 @@ int	redirect_output(char *file, int flags)
 	return (0);
 }
 
-int handle_heredoc(char *delimiter)
+int	handle_heredoc(char *delimiter)
 {
-    int pipe_fd[2];
-    char *line;
+	int		pipe_fd[2];
+	char	*line;
+	size_t	len;
 
-    if (pipe(pipe_fd) == -1)
-        return (perror("Error creating pipe"), 1);
-
-    while ((line = get_next_line(STDIN_FILENO)) != NULL)
-    {
-        // Entferne das Newline-Zeichen am Ende der Eingabe
-        size_t len = strlen(line);
-        if (len > 0 && line[len - 1] == '\n')
-            line[len - 1] = '\0';
-
-        if (strcmp(line, delimiter) == 0)
-        {
-            free(line);
-            break;
-        }
-        write(pipe_fd[1], line, strlen(line));
-        write(pipe_fd[1], "\n", 1);
-        free(line);
-    }
-
-    close(pipe_fd[1]);
-    if (dup2(pipe_fd[0], STDIN_FILENO) == -1)
-    {
-        perror("Error redirecting heredoc");
-        close(pipe_fd[0]);
-        return 1;
-    }
-    close(pipe_fd[0]);
-    return 0;
+	if (pipe(pipe_fd) == -1)
+		return (perror("Error creating pipe"), 1);
+	while ((line = get_next_line(STDIN_FILENO)) != NULL)
+	{
+		// Entferne das Newline-Zeichen am Ende der Eingabe
+		len = strlen(line);
+		if (len > 0 && line[len - 1] == '\n')
+			line[len - 1] = '\0';
+		if (strcmp(line, delimiter) == 0)
+		{
+			free(line);
+			break ;
+		}
+		write(pipe_fd[1], line, strlen(line));
+		write(pipe_fd[1], "\n", 1);
+		free(line);
+	}
+	close(pipe_fd[1]);
+	if (dup2(pipe_fd[0], STDIN_FILENO) == -1)
+	{
+		perror("Error redirecting heredoc");
+		close(pipe_fd[0]);
+		return (1);
+	}
+	close(pipe_fd[0]);
+	return (0);
 }
 
 int	apply_redirection(t_redirection *redirection)
@@ -129,12 +127,11 @@ int	apply_redirection(t_redirection *redirection)
 int	apply_redirections(t_redirection *redirections, int count)
 {
 	int	i;
-	int original_stdin;
-	int original_stdout;
+	int	original_stdin;
+	int	original_stdout;
 
 	original_stdin = dup(STDIN_FILENO);
 	original_stdout = dup(STDOUT_FILENO);
-
 	i = 0;
 	while (i < count)
 	{
