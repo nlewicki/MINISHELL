@@ -7,6 +7,7 @@ CFILES =	src/builtins/pwd.c \
 			src/builtins/export_utils.c \
 			src/builtins/export_utils2.c \
 			src/parsing.c \
+			src/parsing_handler.c \
 			src/main.c \
 			src/fake_globals.c \
 			src/signal.c \

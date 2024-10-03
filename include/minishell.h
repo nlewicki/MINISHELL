@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 09:08:07 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/10/03 12:59:54 by mhummel          ###   ########.fr       */
+/*   Updated: 2024/10/03 13:11:11 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,16 @@ typedef struct s_redirection
 	char			*file;
 }					t_redirection;
 
+typedef struct s_trim
+{
+	char			*result;
+	size_t			i;
+	size_t			j;
+	size_t			len;
+	bool			is_space;
+	bool			error;
+}					t_trim;
+
 typedef enum
 {
 	TOKEN_PIPE,
@@ -56,6 +66,10 @@ typedef struct s_token
 	char			*content;
 }					t_token;
 
+void	handle_operator(t_trim *trim, char *input);
+void	handle_quotes(t_trim *trim, char *input);
+void	handle_specials(t_trim *trim, char *input);
+void	handle_history(char *input);
 void				fill_struct(t_token *token, char *content);
 
 // builtins
