@@ -6,39 +6,58 @@
 /*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 10:08:26 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/10/03 12:59:57 by mhummel          ###   ########.fr       */
+/*   Updated: 2024/10/03 13:10:53 by mhummel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include <limits.h>
 #include <sys/stat.h>
 
-bool	command_exists(const char *command) // prototype
+bool	command_exists(const char *command)
 {
-	char *path_env = getenv("PATH"); // Get the PATH environment variable
+	char		*path_env;
+	char		*path_copy;
+	char		*path;
+	char		command_path[PATH_MAX];
+	int			written;
+	struct stat	buffer;
+
+	path_env = getenv("PATH");
 	if (!path_env)
 	{
-		return (false); // Return false if PATH is not set
+		return (false);
 	}
-	char *path = strtok(path_env, ":"); // Split the PATH into directories
+	path_copy = ft_strdup(path_env);
+	if (!path_copy)
+	{
+		return (false);
+	}
+	path = ft_strtok(path_copy, ":");
 	while (path)
 	{
-		char command_path[512]; // Buffer to hold the full path of the command
-		snprintf(command_path, sizeof(command_path), "%s/%s", path, command);
-		struct stat buffer; // Structure to hold file information
+		written = snprintf(command_path, sizeof(command_path), "%s/%s", path,
+				command);
+		if (written < 0 || (size_t)written >= sizeof(command_path))
+		{
+			path = ft_strtok(NULL, ":");
+			continue ;
+		}
 		if (stat(command_path, &buffer) == 0)
 		{
 			if (buffer.st_mode & S_IXUSR)
-			{                // Check if it's an executable
-				return (true); // Command exists
+			{
+				free(path_copy);
+				return (true);
 			}
 		}
-		path = strtok(NULL, ":"); // Move to the next directory in PATH
+		path = ft_strtok(NULL, ":");
 	}
-	return (false); // Command not found
+	free(path_copy);
+	return (false);
 }
 
-void fill_struct(t_token *token, char *content)
+void	fill_struct(t_token *token, char *content)
 {
 	if (!token || !content)
 		return ;
@@ -57,6 +76,6 @@ void fill_struct(t_token *token, char *content)
 	else if (command_exists(content))
 		token->type = TOKEN_COMMAND;
 	else
-			token->type = TOKEN_WORD;
+		token->type = TOKEN_WORD;
 	token->content = ft_strdup(content);
 }
