@@ -6,11 +6,13 @@
 /*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 10:08:26 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/10/03 12:59:36 by mhummel          ###   ########.fr       */
+/*   Updated: 2024/10/03 12:59:57 by mhummel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include <sys/stat.h>
+
 bool	command_exists(const char *command) // prototype
 {
 	char *path_env = getenv("PATH"); // Get the PATH environment variable
