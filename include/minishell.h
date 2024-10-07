@@ -6,7 +6,7 @@
 /*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 09:08:07 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/10/07 09:59:45 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/10/07 12:21:17 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ typedef struct s_trim
 	bool			error;
 }					t_trim;
 
-typedef enum
+typedef enum e_token_type
 {
 	TOKEN_PIPE,
 	TOKEN_REDIR_IN,
@@ -69,12 +69,10 @@ typedef struct s_token
 typedef struct s_ast
 {
 	t_token_type		type;
-	char			**args;
 	char			*filename;
 	char			*heredoc;
 	struct s_ast	*left;
 	struct s_ast	*right;
-	int				**tran;
 }					t_ast;
 
 void	handle_operator(t_trim *trim, char *input);
@@ -85,6 +83,7 @@ void				fill_struct(t_token *token, char *content, bool *command);
 int create_linked_list(char **tokens, t_list **list);
 void	print_token_list(t_list *list);
 void	free_token(void *content);
+t_ast *create_ast(t_list *token_list);
 
 // builtins
 // cd
