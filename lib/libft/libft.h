@@ -6,7 +6,7 @@
 /*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 13:13:20 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/10/03 10:10:02 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/10/04 11:30:39 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void	ft_err(char *s1, char *s2, char *s3);
 typedef struct s_list
 {
 	void			*content;
-	struct s_list	*next;
+	struct s_list	*next; // left and right
 	struct s_list	*prev;
 }	t_list;
 

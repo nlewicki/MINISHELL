@@ -3,14 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 11:20:30 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/10/03 10:14:21 by mhummel          ###   ########.fr       */
+/*   Updated: 2024/10/07 10:03:32 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	g_signal = 0;
 
 void	main_loop(void)
 {
@@ -22,9 +24,10 @@ void	main_loop(void)
 		input = readline("minishell> ");
 		if (!input)
 			break ;
-			
+
 		handle_history(input);
 		parse_input(input);
+		// execute_command
 	}
 	printf("exit\n");
 }

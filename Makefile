@@ -6,19 +6,21 @@ CFILES =	src/builtins/pwd.c \
 			src/builtins/export.c \
 			src/builtins/export_utils.c \
 			src/builtins/export_utils2.c \
-			src/parsing.c \
-			src/parsing_handler.c \
 			src/main.c \
-			src/fake_globals.c \
-			src/signal.c \
-			src/history.c \
-			src/path.c \
 			src/utils.c \
-			src/pipes.c \
-			src/expand.c \
-			src/redirection.c \
-			src/split_quotes.c \
-			src/process_token.c \
+			src/execution/fake_globals.c \
+			src/execution/signal.c \
+			src/execution/history.c \
+			src/execution/path.c \
+			src/execution/pipes.c \
+			src/execution/expand.c \
+			src/execution/redirection.c \
+			src/parsing/parsing.c \
+			src/parsing/parsing_handler.c \
+			src/parsing/split_quotes.c \
+			src/parsing/process_token.c \
+			src/parsing/create_linked_list.c \
+			src/parsing/create_ast.c \
 
 NAME = minishell
 CC = cc
@@ -42,6 +44,12 @@ $(OBJ_DIR)/%.o: src/%.c
 	@$(CC) -c $(CFLAGS) $< -o $@
 
 $(OBJ_DIR)/%.o: src/builtins/%.c
+	@$(CC) -c $(CFLAGS) $< -o $@
+
+$(OBJ_DIR)/%.o: src/execution/%.c
+	@$(CC) -c $(CFLAGS) $< -o $@
+
+$(OBJ_DIR)/%.o: src/parsing/%.c
 	@$(CC) -c $(CFLAGS) $< -o $@
 
 $(OBJ_DIR):
