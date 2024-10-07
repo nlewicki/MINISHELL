@@ -6,7 +6,7 @@
 /*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 09:08:07 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/10/07 12:21:17 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/10/07 13:29:53 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,8 @@ void				fill_struct(t_token *token, char *content, bool *command);
 int create_linked_list(char **tokens, t_list **list);
 void	print_token_list(t_list *list);
 void	free_token(void *content);
-t_ast *create_ast(t_list *token_list);
+t_ast	*parse(t_list **token);
+void print_ast(t_ast *node);
 
 // builtins
 // cd
