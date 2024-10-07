@@ -19,6 +19,8 @@ CFILES =	src/builtins/pwd.c \
 			src/parsing/parsing_handler.c \
 			src/parsing/split_quotes.c \
 			src/parsing/process_token.c \
+			src/parsing/create_linked_list.c \
+			src/parsing/create_ast.c \
 
 NAME = minishell
 CC = cc
