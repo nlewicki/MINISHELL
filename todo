@@ -1,4 +1,3 @@
-
 AST erstellen (left right)
 
 (redirect dann vielleicht) pipe dann  commands dann word in der order (hirarchie)
@@ -14,10 +13,10 @@ word	word	word	word
 toms github -> inspo
 
 function die nodes abspielen kann
-
-pipe - pipe_execution(pipe zeug (pipe command))
+evaluate_ast()
+pipe - pipe_execution(pipe zeug machen(pipe command))
 	in pipe execution die grose execution function (eveluate_ast) aufrufen
-		linkd -- if type_command execute command
+		links -- if type_command execute command
 		rechts -- if type_command execute command
 
 
