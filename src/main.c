@@ -6,7 +6,7 @@
 /*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 11:20:30 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/10/07 10:03:32 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/10/09 12:58:00 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,16 @@
 
 int	g_signal = 0;
 
+// t_list	tokeniser(char *input)
+// {
+
+// }
+
 void	main_loop(void)
 {
 	char *input;
+	t_list *tokens;
+	t_list *tabel;
 
 	while (1)
 	{
@@ -27,6 +34,8 @@ void	main_loop(void)
 
 		handle_history(input);
 		parse_input(input);
+		// tokens = tokeniser(input);
+		// tabel = create_table(tokens);
 		// execute_command
 	}
 	printf("exit\n");

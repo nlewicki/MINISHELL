@@ -6,7 +6,7 @@
 /*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 10:08:26 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/10/03 13:55:30 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/10/09 12:40:18 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ bool	command_exists(const char *command) // prototype
 	return (false);
 }
 
-void	fill_struct(t_token *token, char *content, bool *command)
+void	fill_struct(t_token *token, char *content)
 {
 	if (!token || !content)
 		return ;
@@ -66,17 +66,7 @@ void	fill_struct(t_token *token, char *content, bool *command)
 	else if (ft_strncmp(content, "<", 1) == 0)
 		token->type = TOKEN_REDIR_IN;
 	else if (ft_strncmp(content, "|", 1) == 0)
-	{
-		*command = false;
 		token->type = TOKEN_PIPE;
-	}
-	else if (ft_strncmp(content, "$", 1) == 0)
-		token->type = TOKEN_VARIABLE;
-	else if (command_exists(content) && !*command)
-	{
-		*command = true;
-		token->type = TOKEN_COMMAND;
-	}
 	else
 		token->type = TOKEN_WORD;
 	token->content = ft_strdup(content);

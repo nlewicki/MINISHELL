@@ -6,7 +6,7 @@
 /*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 09:53:33 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/10/07 09:59:35 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/10/09 12:41:34 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,18 +25,14 @@ int	create_linked_list(char **tokens, t_list **list)
 {
 	size_t	i;
 	t_token	*strct;
-	bool	command;
 
-	command = false;
 	i = 0;
 	while (tokens[i])
 	{
 		strct = malloc(sizeof(t_token));
 		if (!strct)
 			return (1);
-		if (strct->type == TOKEN_COMMAND && command)
-			strct->type = TOKEN_WORD;
-		fill_struct(strct, tokens[i], &command);
+		fill_struct(strct, tokens[i]);
 		t_list *new = ft_lstnew(strct);
 		if (!new)
 		{
@@ -76,10 +72,6 @@ void	print_token_list(t_list *list)
 			printf("Token: HEREDOC (%s)\n", token->content);
 		else if (token->type == TOKEN_WORD)
 			printf("Token: WORD (%s)\n", token->content);
-		else if (token->type == TOKEN_VARIABLE)
-			printf("Token: VARIABLE (%s)\n", token->content);
-		else if (token->type == TOKEN_COMMAND)
-			printf("Token: COMMAND (%s)\n", token->content);
 
 		// Print previous content
 		if (list->prev)
@@ -98,10 +90,6 @@ void	print_token_list(t_list *list)
 				printf("REDIR APPEND\n");
 			else if (prev_token->type == TOKEN_REDIR_HERE)
 				printf("HEREDOC\n");
-			else if (prev_token->type == TOKEN_VARIABLE)
-				printf("VARIABLE\n");
-			else if (prev_token->type == TOKEN_COMMAND)
-				printf("COMMAND\n");
 		}
 		else
 		{
@@ -125,10 +113,6 @@ void	print_token_list(t_list *list)
 				printf("REDIR APPEND\n");
 			else if (next_token->type == TOKEN_REDIR_HERE)
 				printf("HEREDOC\n");
-			else if (next_token->type == TOKEN_VARIABLE)
-				printf("VARIABLE\n");
-			else if (next_token->type == TOKEN_COMMAND)
-				printf("COMMAND\n");
 		}
 		else
 		{

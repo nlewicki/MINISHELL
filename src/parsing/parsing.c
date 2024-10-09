@@ -6,7 +6,7 @@
 /*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 10:23:02 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/10/07 13:31:03 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/10/09 12:59:22 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,22 +79,14 @@ char	*trim_whitespace(char *input)
 	return (new);
 }
 
-void	free_ast(t_ast *ast)
-{
-	if (!ast)
-		return ;
-	free_ast(ast->left);
-	free_ast(ast->right);
-	free(ast);
-}
-
 int	parse_input(char *input)
 {
 	char	*new;
 	char	**tokens;
 	t_list	*list;
-	t_ast *ast;
+	t_list	*tabel;
 
+	tabel = NULL;
 	list = NULL;
 	printf("input: %s\n", input);
 	new = trim_whitespace(input);
@@ -110,13 +102,15 @@ int	parse_input(char *input)
 		ft_lstclear(&list, free_token);
 		return (1);
 	}
-	// print_token_list(list); // debug only
-
-	ast = parse(&list);
-	print_ast(ast);
+	print_token_list(list); // debug only
 	free_token_array(tokens);
+	if (create_table(list))
+	{
+		ft_lstclear(&list, free_token);
+		return (1);
+	}
+	print_struct_table(tabel); // debug only
 	ft_lstclear(&list, free_token);
-	free_ast(ast);
 	return (0);
 }
 

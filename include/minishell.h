@@ -6,7 +6,7 @@
 /*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 09:08:07 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/10/07 13:29:53 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/10/09 12:44:17 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,9 +55,7 @@ typedef enum e_token_type
 	TOKEN_REDIR_OUT,
 	TOKEN_REDIR_APPEND,
 	TOKEN_REDIR_HERE,
-	TOKEN_VARIABLE,
-	TOKEN_WORD,
-	TOKEN_COMMAND,
+	TOKEN_WORD
 }					t_token_type;
 
 typedef struct s_token
@@ -66,25 +64,22 @@ typedef struct s_token
 	char			*content;
 }					t_token;
 
-typedef struct s_ast
+typedef struct s_command
 {
-	t_token_type		type;
-	char			*filename;
-	char			*heredoc;
-	struct s_ast	*left;
-	struct s_ast	*right;
-}					t_ast;
+	char			**args;
+	char			**filename;
+	char			**red_symbol;
+}					t_command;
 
-void	handle_operator(t_trim *trim, char *input);
-void	handle_quotes(t_trim *trim, char *input);
-void	handle_specials(t_trim *trim, char *input);
-void	handle_history(char *input);
-void				fill_struct(t_token *token, char *content, bool *command);
-int create_linked_list(char **tokens, t_list **list);
-void	print_token_list(t_list *list);
-void	free_token(void *content);
-t_ast	*parse(t_list **token);
-void print_ast(t_ast *node);
+void				handle_operator(t_trim *trim, char *input);
+void				handle_quotes(t_trim *trim, char *input);
+void				handle_specials(t_trim *trim, char *input);
+void				handle_history(char *input);
+void				fill_struct(t_token *token, char *content);
+int					create_linked_list(char **tokens, t_list **list);
+void				print_token_list(t_list *list);
+void				free_token(void *content);
+void    print_struct_table(t_list *table);
 
 // builtins
 // cd
