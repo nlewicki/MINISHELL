@@ -6,7 +6,7 @@
 /*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 09:08:07 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/10/09 12:44:17 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/10/09 13:19:00 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,8 @@ void				fill_struct(t_token *token, char *content);
 int					create_linked_list(char **tokens, t_list **list);
 void				print_token_list(t_list *list);
 void				free_token(void *content);
-void    print_struct_table(t_list *table);
+void				print_struct_tabel(t_list *tabel);
+t_list				*create_tabel(t_list *tokens);
 
 // builtins
 // cd
@@ -150,7 +151,7 @@ int					execute_command(char *args[], int arg_count,
 						t_redirection *redirections, int redirection_count);
 void				main_loop(void);
 void				handle_shlvl(void);
-int					parse_input(char *input);
+t_list				*parse_input(char *input);
 void				handle_history(char *input);
 
 // split quotes

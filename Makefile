@@ -20,8 +20,9 @@ CFILES =	src/builtins/pwd.c \
 			src/parsing/split_quotes.c \
 			src/parsing/process_token.c \
 			src/parsing/create_linked_list.c \
-			src/parsing/create_table~.c \
-			src/parsing/utils_debug.c \
+			src/parsing/create_tabel.c \
+			src/parsing/print_tabel.c \
+			src/parsing/print_list.c \
 
 NAME = minishell
 CC = cc

@@ -6,7 +6,7 @@
 /*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 10:23:02 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/10/09 12:59:22 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/10/09 13:35:03 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,15 +71,15 @@ char	*trim_whitespace(char *input)
 		free(trim.result);
 		return (NULL);
 	}
-	printf("result: %s\n", trim.result);
+	// printf("result: %s\n", trim.result);
 	new = ft_strtrim(trim.result, " \t\f\n\v\r");
 	if (!new)
 		return (NULL);
-	printf("trimmed: %s\n", new);
+	// printf("trimmed: %s\n", new);
 	return (new);
 }
 
-int	parse_input(char *input)
+t_list	*parse_input(char *input)
 {
 	char	*new;
 	char	**tokens;
@@ -88,29 +88,21 @@ int	parse_input(char *input)
 
 	tabel = NULL;
 	list = NULL;
-	printf("input: %s\n", input);
+	// printf("input: %s\n", input);
 	new = trim_whitespace(input);
 	if (!new)
-		return (1);
+		return (NULL);
 	tokens = split_space_quotes(new);
 	free(new);
 	if (!tokens)
-		return (1);
+		return (NULL);
 	if (create_linked_list(tokens, &list))
 	{
 		free_token_array(tokens);
 		ft_lstclear(&list, free_token);
-		return (1);
+		return (NULL);
 	}
-	print_token_list(list); // debug only
 	free_token_array(tokens);
-	if (create_table(list))
-	{
-		ft_lstclear(&list, free_token);
-		return (1);
-	}
-	print_struct_table(tabel); // debug only
-	ft_lstclear(&list, free_token);
-	return (0);
+	return (list);
 }
 
