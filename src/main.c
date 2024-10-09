@@ -6,18 +6,13 @@
 /*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 11:20:30 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/10/09 13:31:25 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/10/09 13:45:02 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 int	g_signal = 0;
-
-// t_list	tokeniser(char *input)
-// {
-
-// }
 
 void	main_loop(void)
 {
@@ -35,8 +30,8 @@ void	main_loop(void)
 		handle_history(input);
 		tokens = parse_input(input);
 		print_token_list(tokens);
-		tabel = create_tabel(tokens);
-		// print_struct_tabel(tabel);
+		tabel = create_tabel(tokens, tabel);
+		print_struct_tabel(tabel);
 		// execute_command
 	}
 	printf("exit\n");

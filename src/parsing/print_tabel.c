@@ -25,6 +25,11 @@ void  print_contents(char **str)
 
 void    print_struct_tabel(t_list *tabel)
 {
+    if (!tabel)
+    {
+        printf("No content in the table\n");
+        return ;
+    }
     t_command   *current_cmd;
 
     current_cmd = (t_command *)tabel->content;

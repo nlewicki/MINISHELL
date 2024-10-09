@@ -6,7 +6,7 @@
 /*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 09:08:07 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/10/09 13:19:00 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/10/09 13:45:10 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ int					create_linked_list(char **tokens, t_list **list);
 void				print_token_list(t_list *list);
 void				free_token(void *content);
 void				print_struct_tabel(t_list *tabel);
-t_list				*create_tabel(t_list *tokens);
+t_list				*create_tabel(t_list *tokens, t_list *tabel);
 
 // builtins
 // cd
