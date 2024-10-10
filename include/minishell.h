@@ -6,7 +6,7 @@
 /*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 09:08:07 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/10/10 09:45:32 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/10/10 13:19:10 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,13 @@
 # define MAX_REDIRECTIONS 10
 
 extern int			g_signal;
+
+typedef struct s_info
+{
+	size_t	nbr_words;
+	size_t	nbr_reds;
+	size_t	nbr_filenames;
+}	t_info;
 
 typedef struct s_redirection
 {
@@ -81,6 +88,7 @@ void				print_token_list(t_list *list);
 void				free_token(void *content);
 void				print_struct_tabel(t_list *tabel);
 t_list				*create_tabel(t_list *token_list);
+void    print_tabel(t_list *tabel);
 
 // builtins
 // cd

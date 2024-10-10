@@ -43,20 +43,21 @@ void    print_struct_tabel(t_list *tabel)
     printf("\033[32m|\033[0m");
     printf("\033[33m Nbr of args:         [%zu]\n", nbr_of(current_cmd->args));
     printf("\033[32m|\033[0m");
-    printf("\033[33m Nbr of filenames:    [%zu]\n", nbr_of(current_cmd->filename));
-    printf("\033[32m|\033[0m");
     printf("\033[33m Nbr of red symbols:  [%zu]\n\033[0m", nbr_of(current_cmd->red_symbol));
+    printf("\033[32m|\033[0m");
+    printf("\033[33m Nbr of filenames:    [%zu]\n", nbr_of(current_cmd->filename));
+
     printf("\033[32m|\033[0m");
 
     printf("\033[32m\n|\033[0m");
     printf("\033[35m ARGS:         ");
     print_contents(current_cmd->args);
     printf("\033[32m\n|\033[0m");
-    printf("\033[35m FILENAMES:    ");
-    print_contents(current_cmd->filename);
-    printf("\033[32m\n|\033[0m");
     printf("\033[35m REDIRECTIONS: \033[0m");
     print_contents(current_cmd->red_symbol);
+    printf("\033[32m\n|\033[0m");
+    printf("\033[35m FILENAMES:    ");
+    print_contents(current_cmd->filename);
     printf("\033[32m\n|\033[0m");
 }
 
@@ -74,6 +75,7 @@ void    print_tabel(t_list *tabel)
     line = 1;
     while (tmp != NULL)
     {
+        printf("\033[32m|------------------------------------|\n");
         printf("\033[32m|------------------------------------|\n");
         printf("|            [line: %zu]               |\n", line);
         printf("\033[32m|------------------------------------|\n");
