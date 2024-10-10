@@ -6,7 +6,7 @@
 /*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 09:08:07 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/10/10 13:19:10 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/10/10 13:25:28 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@
 # include <stdlib.h>
 # include <string.h>
 # include <unistd.h>
+# include <limits.h>
 
 # define MAX_ARGS 100
 # define MAX_REDIRECTIONS 10
@@ -153,7 +154,6 @@ void				strip_quotes(char *str);
 int					strcasecmp_custom(const char *s1, const char *s2);
 
 // main
-int					parse_command(char *input, char *args[]);
 int					exec_new_shell(char **argv);
 int					execute_command(char *args[], int arg_count,
 						t_redirection *redirections, int redirection_count);

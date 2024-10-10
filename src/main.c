@@ -6,7 +6,7 @@
 /*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 11:20:30 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/10/10 13:22:01 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/10/10 13:24:32 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,9 @@ int	main(int argc, char **argv, char **envp)
 
 
 
+
+
+
 void	handle_shlvl(void)
 {
 	char	*shlvl_str;
@@ -68,32 +71,6 @@ void	handle_shlvl(void)
 	shlvl += 1;
 	add_or_update_env("SHLVL", ft_itoa(shlvl));
 }
-
-
-int	exec_new_shell(char **argv)
-{
-	pid_t	pid;
-	int		status;
-
-	pid = fork();
-	if (pid == 0)
-	{
-		execve("./minishell", argv, *env_vars());
-		perror("execve failed");
-		exit(1);
-	}
-	else if (pid > 0)
-	{
-		waitpid(pid, &status, 0);
-		return (status);
-	}
-	else
-	{
-		perror("fork failed");
-		return (1);
-	}
-}
-#include <limits.h>
 
 int	ft_exit(char *args[], int arg_count)
 {
