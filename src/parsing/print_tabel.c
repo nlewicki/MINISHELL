@@ -3,6 +3,8 @@
 
 size_t  nbr_of(char **str)
 {
+    if (!str)
+        return (0);
     size_t i;
 
     i = 0;
@@ -13,6 +15,11 @@ size_t  nbr_of(char **str)
 
 void  print_contents(char **str)
 {
+    if (!str)
+    {
+        printf("\033[34mNo content\n\033[0m");
+        return ;
+    }
     size_t i;
 
     i = 0;
@@ -55,6 +62,11 @@ void    print_struct_tabel(t_list *tabel)
 
 void    print_tabel(t_list *tabel)
 {
+    if (!tabel)
+    {
+        printf("\033[34mNo content in the table\n\033[0m");
+        return ;
+    }
     t_list *tmp;
     size_t  line;
 

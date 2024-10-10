@@ -6,7 +6,7 @@
 /*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 13:34:16 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/10/09 13:34:20 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/10/10 12:11:40 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,4 +67,5 @@ void	print_token_list(t_list *list)
 		list = list->next;
 		i++;
 	}
+	printf("\n\n");
 }

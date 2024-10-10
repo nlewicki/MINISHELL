@@ -6,7 +6,7 @@
 /*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 09:45:16 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/10/10 11:29:32 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/10/10 12:13:23 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,10 +142,9 @@ t_list	*create_tabel(t_list *token_list)
 		printf("nbr of reds: %zu\n", nbr_reds);
 		printf("nbr of filenames: %zu\n", nbr_filenames);
 
-		// ft_lstadd_back(&table, new_node);
-		// nbr_words = 0;
-		// nbr_reds = 0;
-		// nbr_filenames = 0;
+		ft_lstadd_back(&table, new_node);
+		if (tmp == NULL)
+			break ;
 		tmp = tmp->next;
 		blocks--;
 		printf("[%zu]\n", blocks);
