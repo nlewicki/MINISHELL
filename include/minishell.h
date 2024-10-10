@@ -6,7 +6,7 @@
 /*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 09:08:07 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/10/10 13:25:28 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/10/10 13:29:13 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,8 +155,6 @@ int					strcasecmp_custom(const char *s1, const char *s2);
 
 // main
 int					exec_new_shell(char **argv);
-int					execute_command(char *args[], int arg_count,
-						t_redirection *redirections, int redirection_count);
 void				main_loop(void);
 void				handle_shlvl(void);
 t_list				*parse_input(char *input);

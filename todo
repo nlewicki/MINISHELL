@@ -1,23 +1,9 @@
-AST erstellen (left right)
-
-(redirect dann vielleicht) pipe dann  commands dann word in der order (hirarchie)
-pipe zeigt auf command links und command rechts, command zeigt auf word
+tabel failsafe machen oder So
 
 
-		   pipe
-		/		\
-	command		command
-	/		/	  /	   \
-word	word	word	word
+builtins funktionieren
+external commands functionieren
 
-toms github -> inspo
-
-function die nodes abspielen kann
-evaluate_ast()
-pipe - pipe_execution(pipe zeug machen(pipe command))
-	in pipe execution die grose execution function (eveluate_ast) aufrufen
-		links -- if type_command execute command
-		rechts -- if type_command execute command
 
 
 

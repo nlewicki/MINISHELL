@@ -6,7 +6,7 @@
 /*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 11:20:30 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/10/10 13:24:32 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/10/10 13:28:20 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	main_loop(void)
 		print_token_list(tokens);
 		tabel = create_tabel(tokens);
 		print_tabel(tabel);
-		// execute_command
+		// execute_command(tabel);
 	}
 	printf("exit\n");
 }
