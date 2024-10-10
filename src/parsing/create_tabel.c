@@ -6,7 +6,7 @@
 /*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 09:45:16 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/10/10 12:13:23 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/10/10 12:28:13 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,51 +49,47 @@ t_command	*init_cmd(void)
 	return (new_cmd);
 }
 
-// typedef struct s_info
-// {
-// 	size_t	nbr_words;
-// 	size_t	nbr_reds;
-// 	size_t	nbr_filenames;
-// }	t_info;
+typedef struct s_info
+{
+	size_t	nbr_words;
+	size_t	nbr_reds;
+	size_t	nbr_filenames;
+}	t_info;
 
-// t_info	*init_info(void)
-// {
-// 	t_info	*info;
+t_info *init_info(void)
+{
+	t_info *info;
 
-// 	info = malloc(sizeof(t_info));
-// 	if (!info)
-// 		return (NULL);
-// 	info->nbr_words = 0;
-// 	info->nbr_reds = 0;
-// 	info->nbr_filenames = 0;
-// 	return (info);
-// }
+	info = malloc(sizeof(t_info));
+	if (!info)
+		return (NULL);
+	info->nbr_words = 0;
+	info->nbr_reds = 0;
+	info->nbr_filenames = 0;
+	return (info);
+}
+
+void reset_info(t_info *info)
+{
+	info->nbr_words = 0;
+	info->nbr_reds = 0;
+	info->nbr_filenames = 0;
+}
 
 int	is_redirection(t_token *current_token)
 {
-	if (current_token->type == TOKEN_REDIR_IN
+	return (current_token->type == TOKEN_REDIR_IN
 		|| current_token->type == TOKEN_REDIR_OUT
 		|| current_token->type == TOKEN_REDIR_APPEND
-		|| current_token->type == TOKEN_REDIR_HERE)
-		{
-			printf("REDIRECTION\n");
-			return (1);
-		}
-	else
-	{
-		printf("NOT REDIRECTION\n");
-		return (0);
-	}
+		|| current_token->type == TOKEN_REDIR_HERE);
 }
 
-void	count_words_redirections(t_list **tokens, size_t *nbr_words, size_t *nbr_reds, size_t *nbr_filenames)
+void	count_words_redirections(t_list **tokens, t_info *info)
 {
 	t_list	*tmp;
 	t_token	*current_token;
-	*nbr_filenames = 0;
-	*nbr_reds = 0;
-	*nbr_words = 0;
 
+	reset_info(info);
 	tmp = *tokens;
 	while (tmp)
 	{
@@ -102,15 +98,15 @@ void	count_words_redirections(t_list **tokens, size_t *nbr_words, size_t *nbr_re
 			break ;
 		if (is_redirection(current_token))
 		{
-			(*nbr_reds)++;
+			(info->nbr_reds)++;
 			if (tmp->next)
 			{
-				(*nbr_filenames)++;
+				(info->nbr_filenames)++;
 				tmp = tmp->next;
 			}
 		}
 		else
-			(*nbr_words)++;
+			(info->nbr_words)++;
 		tmp = tmp->next;
 	}
 	*tokens = tmp;
@@ -118,15 +114,16 @@ void	count_words_redirections(t_list **tokens, size_t *nbr_words, size_t *nbr_re
 
 t_list	*create_tabel(t_list *token_list)
 {
-	t_list	*table = NULL;
-	size_t	blocks;
-	t_list	*tmp;
+	t_list		*table = NULL;
+	size_t		blocks;
+	t_list		*tmp;
 	t_command	*new_cmd;
-	t_list	*new_node;
-	size_t	nbr_words = 0;
-	size_t	nbr_reds= 0;
-	size_t	nbr_filenames = 0;
+	t_list		*new_node;
+	t_info		*info;
 
+	info = init_info();
+	if (!info)
+		return (NULL);
 
 	blocks = count_lines(token_list);
 	printf("BLOCKS: %zu\n", blocks);
@@ -135,12 +132,14 @@ t_list	*create_tabel(t_list *token_list)
 	while (blocks > 0 && tmp != NULL)
 	{
 		new_cmd = init_cmd();
+		if (!new_cmd)
+			return (NULL);
 		new_node = ft_lstnew((void *)new_cmd);
+		count_words_redirections(&tmp, info);
+		printf("nbr of words: %zu\n", info->nbr_words);
+		printf("nbr of reds: %zu\n", info->nbr_reds);
+		printf("nbr of filenames: %zu\n", info->nbr_filenames);
 
-		count_words_redirections(&tmp, &nbr_words, &nbr_reds, &nbr_filenames);
-		printf("nbr of words: %zu\n", nbr_words);
-		printf("nbr of reds: %zu\n", nbr_reds);
-		printf("nbr of filenames: %zu\n", nbr_filenames);
 
 		ft_lstadd_back(&table, new_node);
 		if (tmp == NULL)
