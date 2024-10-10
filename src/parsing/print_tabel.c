@@ -27,7 +27,7 @@ void    print_struct_tabel(t_list *tabel)
 {
     if (!tabel)
     {
-        printf("No content in the table\n");
+        printf("\033[34mNo content in the table\n\033[0m");
         return ;
     }
     t_command   *current_cmd;
