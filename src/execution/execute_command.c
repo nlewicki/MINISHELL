@@ -6,7 +6,7 @@
 /*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 09:59:19 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/10/14 12:56:42 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/10/14 14:04:28 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,8 +73,14 @@ int	execute_command(t_list *tabel)
 	tmp = tabel;
 	builtin = is_builtin((t_command *)tmp->content);
 	if (builtin)
+	{
+		write(1, "builtin\n", 8);
 		exec_builtin((t_command *)tmp->content, builtin);
+	}
 	else
+	{
+		write(1, "not a builtin\n", 14);
 		execute_external_command(((t_command *)tmp->content)->args);
+	}
 	return (0);
 }
