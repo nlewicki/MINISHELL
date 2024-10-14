@@ -6,7 +6,7 @@
 /*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 09:08:07 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/10/10 13:29:13 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/10/14 09:47:58 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,18 @@
 # define MAX_REDIRECTIONS 10
 
 extern int			g_signal;
+
+typedef enum s_builtin_type
+{
+	NONE,
+	EXIT,
+	PWD,
+	CD,
+	ENV,
+	EXPORT,
+	UNSET,
+	ECHO
+}				t_builtin_type;
 
 typedef struct s_info
 {
