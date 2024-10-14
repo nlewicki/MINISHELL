@@ -6,7 +6,7 @@
 /*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 09:59:19 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/10/14 10:00:10 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/10/14 10:32:35 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,25 +44,28 @@ int	is_builtin(t_command *cmd)
 		return (NONE);
 }
 
-int	exec_builtin(t_command *cmd, int builtin)
+void	exec_builtin(t_command *cmd, int builtin)
 {
-	write(1, "Executing builtin\n\n", 19);
+	int		argc;
+
+	argc = nbr_of_args(cmd->args);
 	if (builtin == CD)
-		ft_cd(cmd->args, nbr_of_args(cmd->args));
+		ft_cd(cmd->args, argc);
 	else if (builtin == PWD)
 		pwd();
 	else if (builtin == ECHO)
-		ft_echo(cmd->args, nbr_of_args(cmd->args));
+		ft_echo(cmd->args, argc);
 	else if (builtin == ENV)
 		env();
 	else if (builtin == UNSET)
-		ft_unset(cmd->args, nbr_of_args(cmd->args));
+		ft_unset(cmd->args, argc);
 	else if (builtin == EXPORT)
-		ft_export(cmd->args, nbr_of_args(cmd->args));
-	return (0);
+		ft_export(cmd->args, argc);
+	else if (builtin == EXIT)
+		ft_exit(cmd->args, argc);
 }
 
-int execute_command(t_list *tabel)
+int	execute_command(t_list *tabel)
 {
 	t_list	*tmp;
 	int		builtin;
@@ -72,6 +75,6 @@ int execute_command(t_list *tabel)
 	if (builtin)
 		exec_builtin((t_command *)tmp->content, builtin);
 	else
-		write(1, "Not a builtin\n", 14);
+		execute_external_command(((t_command *)tmp->content)->args);
 	return (0);
 }

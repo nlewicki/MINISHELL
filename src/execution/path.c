@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   path.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 10:45:17 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/10/03 12:53:53 by mhummel          ###   ########.fr       */
+/*   Updated: 2024/10/14 10:21:51 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ int	execute_external_command(char **args)
 	int		status;
 	char	*expanded;
 
+	// write(1, "Not a builtin\n", 14);
 	if (args[0][0] == '$')
 	{
 		if (args[0][1] == '\0')
