@@ -5,6 +5,7 @@ mark words as quoted or unquoted (f.e. hello'world') ???? wie erkennen wir ob sp
 
 
 type for $? (exitstatus) ??
+--> vermutung execute-external_commands ist arsch... sollten wir neu machen (sollten wahtscheinlich alles neu machen)
 
 
 
