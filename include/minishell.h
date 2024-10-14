@@ -6,7 +6,7 @@
 /*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 09:08:07 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/10/07 09:59:45 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/10/14 10:00:21 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,31 @@
 # include <stdlib.h>
 # include <string.h>
 # include <unistd.h>
+# include <limits.h>
 
 # define MAX_ARGS 100
 # define MAX_REDIRECTIONS 10
 
 extern int			g_signal;
+
+typedef enum s_builtin_type
+{
+	NONE,
+	EXIT,
+	PWD,
+	CD,
+	ENV,
+	EXPORT,
+	UNSET,
+	ECHO
+}				t_builtin_type;
+
+typedef struct s_info
+{
+	size_t	nbr_words;
+	size_t	nbr_reds;
+	size_t	nbr_filenames;
+}	t_info;
 
 typedef struct s_redirection
 {
@@ -48,16 +68,14 @@ typedef struct s_trim
 	bool			error;
 }					t_trim;
 
-typedef enum
+typedef enum e_token_type
 {
 	TOKEN_PIPE,
 	TOKEN_REDIR_IN,
 	TOKEN_REDIR_OUT,
 	TOKEN_REDIR_APPEND,
 	TOKEN_REDIR_HERE,
-	TOKEN_VARIABLE,
-	TOKEN_WORD,
-	TOKEN_COMMAND,
+	TOKEN_WORD
 }					t_token_type;
 
 typedef struct s_token
@@ -66,25 +84,25 @@ typedef struct s_token
 	char			*content;
 }					t_token;
 
-typedef struct s_ast
+typedef struct s_command
 {
-	t_token_type		type;
 	char			**args;
-	char			*filename;
-	char			*heredoc;
-	struct s_ast	*left;
-	struct s_ast	*right;
-	int				**tran;
-}					t_ast;
+	char			**filename;
+	char			**red_symbol;
+}					t_command;
 
-void	handle_operator(t_trim *trim, char *input);
-void	handle_quotes(t_trim *trim, char *input);
-void	handle_specials(t_trim *trim, char *input);
-void	handle_history(char *input);
-void				fill_struct(t_token *token, char *content, bool *command);
-int create_linked_list(char **tokens, t_list **list);
-void	print_token_list(t_list *list);
-void	free_token(void *content);
+int execute_command(t_list *tabel);
+void				handle_operator(t_trim *trim, char *input);
+void				handle_quotes(t_trim *trim, char *input);
+void				handle_specials(t_trim *trim, char *input);
+void				handle_history(char *input);
+void				fill_struct(t_token *token, char *content);
+int					create_linked_list(char **tokens, t_list **list);
+void				print_token_list(t_list *list);
+void				free_token(void *content);
+void				print_struct_tabel(t_list *tabel);
+t_list				*create_tabel(t_list *token_list);
+void    print_tabel(t_list *tabel);
 
 // builtins
 // cd
@@ -149,13 +167,10 @@ void				strip_quotes(char *str);
 int					strcasecmp_custom(const char *s1, const char *s2);
 
 // main
-int					parse_command(char *input, char *args[]);
 int					exec_new_shell(char **argv);
-int					execute_command(char *args[], int arg_count,
-						t_redirection *redirections, int redirection_count);
 void				main_loop(void);
 void				handle_shlvl(void);
-int					parse_input(char *input);
+t_list				*parse_input(char *input);
 void				handle_history(char *input);
 
 // split quotes
