@@ -15,6 +15,7 @@ CFILES =	src/builtins/pwd.c \
 			src/execution/pipes.c \
 			src/execution/expand.c \
 			src/execution/redirection.c \
+			src/execution/execute_command.c \
 			src/parsing/parsing.c \
 			src/parsing/parsing_handler.c \
 			src/parsing/split_quotes.c \
@@ -23,6 +24,7 @@ CFILES =	src/builtins/pwd.c \
 			src/parsing/create_tabel.c \
 			src/parsing/print_tabel.c \
 			src/parsing/print_list.c \
+
 
 NAME = minishell
 CC = cc

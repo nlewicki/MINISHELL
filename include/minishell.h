@@ -6,7 +6,7 @@
 /*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 09:08:07 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/10/14 09:47:58 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/10/14 10:00:21 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,7 @@ typedef struct s_command
 	char			**red_symbol;
 }					t_command;
 
+int execute_command(t_list *tabel);
 void				handle_operator(t_trim *trim, char *input);
 void				handle_quotes(t_trim *trim, char *input);
 void				handle_specials(t_trim *trim, char *input);
