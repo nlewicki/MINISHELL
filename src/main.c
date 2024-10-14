@@ -3,16 +3,57 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 11:20:30 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/10/14 12:39:42 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/10/14 13:08:42 by mhummel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 int		g_signal = 0;
+
+void	free_command(void *content)
+{
+	t_command	*cmd;
+	int			i;
+
+	cmd = (t_command *)content;
+	if (!cmd)
+		return ;
+	if (cmd->args)
+	{
+		i = 0;
+		while (cmd->args[i])
+		{
+			free(cmd->args[i]);
+			i++;
+		}
+		free(cmd->args);
+	}
+	if (cmd->filename)
+	{
+		i = 0;
+		while (cmd->filename[i])
+		{
+			free(cmd->filename[i]);
+			i++;
+		}
+		free(cmd->filename);
+	}
+	if (cmd->red_symbol)
+	{
+		i = 0;
+		while (cmd->red_symbol[i])
+		{
+			free(cmd->red_symbol[i]);
+			i++;
+		}
+		free(cmd->red_symbol);
+	}
+	free(cmd);
+}
 
 int	create_child_process(t_list *tmp, int in_fd, int *pipefd)
 {
@@ -96,6 +137,7 @@ void	main_loop(void)
 	char	*input;
 	t_list	*tokens;
 	t_list	*tabel;
+	char	*trimmed_input;
 
 	while (1)
 	{
@@ -103,15 +145,29 @@ void	main_loop(void)
 		input = readline("minishell> ");
 		if (!input)
 			break ;
-		handle_history(input);
-		tokens = parse_input(input);
-		// print_token_list(tokens);
-		tabel = create_tabel(tokens);
-		// print_tabel(tabel);
-		execute_tabel(tabel);
+		trimmed_input = trim_whitespace(input);
 		free(input);
-		ft_lstclear(&tokens, free_token);
-		ft_lstclear(&tabel, free_token);
+		if (!trimmed_input)
+			continue ;
+		if (strcmp(trimmed_input, "$?") == 0)
+		{
+			printf("%d\n", *exit_status());
+			free(trimmed_input);
+			continue ;
+		}
+		handle_history(trimmed_input);
+		tokens = parse_input(trimmed_input);
+		free(trimmed_input);
+		if (tokens)
+		{
+			tabel = create_tabel(tokens);
+			if (tabel)
+			{
+				execute_tabel(tabel);
+				ft_lstclear(&tabel, free_command);
+			}
+			ft_lstclear(&tokens, free_token);
+		}
 	}
 	printf("exit\n");
 }

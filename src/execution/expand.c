@@ -6,7 +6,7 @@
 /*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 12:37:27 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/10/03 12:53:02 by mhummel          ###   ########.fr       */
+/*   Updated: 2024/10/14 13:07:57 by mhummel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,41 +85,60 @@ char	*expand_env_variables(char *src, int in_single_quotes)
 	int		i;
 	char	*var_value;
 	char	*status_str;
+				char pid_str[16];
+	char	*final_result;
 
-	result = malloc(ft_strlen(src) * calculate_expanded_length(src,
-				in_single_quotes + 1));
-	if (!result)
-		return (NULL);
+	result = malloc(strlen(src) * 2);
 	dest = result;
 	while (*src)
 	{
-		if (*src == '$' && !in_single_quotes && *(src + 1) != '\0')
+		if (*src == '$' && !in_single_quotes)
 		{
 			src++;
-			i = 0;
 			if (*src == '?')
 			{
 				status_str = ft_itoa(*exit_status());
 				ft_strcpy(dest, status_str);
-				dest += ft_strlen(status_str);
+				dest += strlen(status_str);
 				free(status_str);
 				src++;
-				continue ;
 			}
-			while (*src && ((*src >= 'A' && *src <= 'Z') || (*src >= 'a'
-						&& *src <= 'z') || *src == '_'))
-				var_name[i++] = *src++;
-			var_name[i] = '\0';
-			var_value = get_our_env(var_name);
-			if (var_value)
+			else if (*src == '$')
 			{
-				ft_strcpy(dest, var_value);
-				dest += ft_strlen(var_value);
+				snprintf(pid_str, sizeof(pid_str), "%d", getpid());
+				ft_strcpy(dest, pid_str);
+				dest += strlen(pid_str);
+				src++;
 			}
+			else if (ft_isalpha(*src) || *src == '_')
+			{
+				i = 0;
+				while (ft_isalnum(src[i]) || src[i] == '_')
+				{
+					var_name[i] = src[i];
+					i++;
+				}
+				var_name[i] = '\0';
+				var_value = get_our_env(var_name);
+				if (var_value)
+				{
+					ft_strcpy(dest, var_value);
+					dest += strlen(var_value);
+				}
+				src += i;
+			}
+			else
+				*dest++ = '$';
 		}
 		else
+		{
+			if (*src == '\'')
+				in_single_quotes = !in_single_quotes;
 			*dest++ = *src++;
+		}
 	}
 	*dest = '\0';
-	return (result);
+	final_result = ft_strdup(result);
+	free(result);
+	return (final_result);
 }

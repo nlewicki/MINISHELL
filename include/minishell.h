@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 09:08:07 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/10/14 10:25:56 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/10/14 13:04:03 by mhummel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -177,5 +177,8 @@ void				handle_history(char *input);
 // split quotes
 void				free_token_array(char **tokens);
 char				**split_space_quotes(const char *input);
+
+char				*trim_whitespace(char *input);
+void				free_command(void *content);
 
 #endif
