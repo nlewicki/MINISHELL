@@ -6,7 +6,7 @@
 /*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 11:20:30 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/10/14 11:50:13 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/10/14 12:39:42 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,9 @@ void	main_loop(void)
 		tabel = create_tabel(tokens);
 		// print_tabel(tabel);
 		execute_tabel(tabel);
-		// execute_command(tabel); // add data? ->we have exit_status() should do the same
+		free(input);
+		ft_lstclear(&tokens, free_token);
+		ft_lstclear(&tabel, free_token);
 	}
 	printf("exit\n");
 }
