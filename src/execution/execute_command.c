@@ -6,7 +6,7 @@
 /*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 09:59:19 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/10/14 10:54:33 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/10/14 12:56:42 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	exec_builtin(t_command *cmd, int builtin)
 	else if (builtin == EXPORT)
 		ft_export(cmd->args, argc);
 	else if (builtin == EXIT)
-		ft_exit(cmd->args, argc);
+		ft_exit(cmd->args);
 }
 
 int	execute_command(t_list *tabel)
