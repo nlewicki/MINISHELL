@@ -6,7 +6,7 @@
 /*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 10:45:17 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/10/14 10:21:51 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/10/14 12:42:24 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,10 @@ int	execute_external_command(char **args)
 	else
 		command_path = search_path(args[0]);
 	if (!command_path)
+	{
+		ft_err(args[0], ": command not found", "\n");
 		return (127);
+	}
 	if (is_directory(command_path))
 	{
 		ft_err(command_path, ": is a directory", "\n");
