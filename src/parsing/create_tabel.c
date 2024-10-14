@@ -6,7 +6,7 @@
 /*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 09:45:16 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/10/10 13:19:03 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/10/14 10:23:25 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -175,7 +175,7 @@ t_list	*create_tabel(t_list *tokens)
 		return (NULL);
 
 	blocks = count_lines(tokens);
-	printf("BLOCKS: %zu\n", blocks);
+	// printf("BLOCKS: %zu\n", blocks);
 
 	tmp = tokens;
 	while (blocks > 0 && tmp != NULL)
@@ -186,21 +186,21 @@ t_list	*create_tabel(t_list *tokens)
 		new_node = ft_lstnew((void *)new_cmd);
 		tmp2 = tmp;
 		count_words_redirections(&tmp, info);
-		printf("nbr of words: %zu\n", info->nbr_words);
-		printf("nbr of reds: %zu\n", info->nbr_reds);
-		printf("nbr of filenames: %zu\n", info->nbr_filenames);
+		// printf("nbr of words: %zu\n", info->nbr_words);
+		// printf("nbr of reds: %zu\n", info->nbr_reds);
+		// printf("nbr of filenames: %zu\n", info->nbr_filenames);
 		new_cmd = allocate_cmd(new_cmd, tmp2, info);
 
 		ft_lstadd_back(&table, new_node);
 		if (tmp == NULL)
 		{
 			blocks--;
-			printf("[%zu]\n", blocks);
+			// printf("[%zu]\n", blocks);
 			break ;
 		}
 		tmp = tmp->next;
 		blocks--;
-		printf("[%zu]\n", blocks);
+		// printf("[%zu]\n", blocks);
 	}
 	return (table);
 }
