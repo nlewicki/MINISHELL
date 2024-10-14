@@ -6,7 +6,7 @@
 /*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 11:20:30 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/10/14 13:08:42 by mhummel          ###   ########.fr       */
+/*   Updated: 2024/10/14 13:40:04 by mhummel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,11 +132,26 @@ int	execute_tabel(t_list *tabel)
 	return (0);
 }
 
+void process_tokens(t_list *tokens)
+{
+    t_list *tabel;
+
+    if (tokens)
+    {
+        tabel = create_tabel(tokens);
+        if (tabel)
+        {
+            execute_tabel(tabel);
+            ft_lstclear(&tabel, free_command);
+        }
+        ft_lstclear(&tokens, free_token);
+    }
+}
+
 void	main_loop(void)
 {
 	char	*input;
 	t_list	*tokens;
-	t_list	*tabel;
 	char	*trimmed_input;
 
 	while (1)
@@ -158,16 +173,7 @@ void	main_loop(void)
 		handle_history(trimmed_input);
 		tokens = parse_input(trimmed_input);
 		free(trimmed_input);
-		if (tokens)
-		{
-			tabel = create_tabel(tokens);
-			if (tabel)
-			{
-				execute_tabel(tabel);
-				ft_lstclear(&tabel, free_command);
-			}
-			ft_lstclear(&tokens, free_token);
-		}
+		process_tokens(tokens);
 	}
 	printf("exit\n");
 }
