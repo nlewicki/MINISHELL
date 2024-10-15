@@ -16,7 +16,7 @@ type for $? (exitstatus) ??
 syntax errors abfangen --> manu
 
 missing closing quotes besser abfangen -> syntax errors?
-quotes nicht splitten (-> specials = "<>|"; ?????)
+quotes nicht splitten (-> specials = "<>|"; ?????) --> fixedgalube
 -> quotes entfernen!  aba wanna?
 
 variables expanden? (ab $ +1 bis kein buchstabe mehr)
@@ -26,5 +26,5 @@ echo hallo$pATH$HOME
 
 
 test "asd"ads"ads"
-result: test "asd"ads"ads"
+result: test "asd"ads"ads" --> fixedglaube
 
