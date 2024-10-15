@@ -6,7 +6,7 @@
 /*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 10:23:02 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/10/15 12:13:24 by mhummel          ###   ########.fr       */
+/*   Updated: 2024/10/15 13:32:51 by mhummel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,7 @@ t_list	*parse_input(char *input)
 	char	**tokens;
 	t_list	*list;
 	t_list	*tabel;
+	char	*error;
 
 	tabel = NULL;
 	list = NULL;
@@ -113,7 +114,7 @@ t_list	*parse_input(char *input)
 	if (!new)
 		return (NULL);
 	tokens = split_space_quotes(new);
-		// split_space_quotes aber lass die quotes drin
+	// split_space_quotes aber lass die quotes drin
 	free(new);
 	if (!tokens)
 		return (NULL);
@@ -127,5 +128,13 @@ t_list	*parse_input(char *input)
 		return (NULL);
 	}
 	free_token_array(tokens);
+	error = handle_syntax_errors(input);
+	if (error)
+	{
+		ft_putendl_fd(error, STDERR_FILENO);
+		free(error);
+		ft_lstclear(&list, free_token);
+		return (NULL);
+	}
 	return (list);
 }
