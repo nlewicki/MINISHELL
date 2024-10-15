@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 10:23:02 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/10/15 09:33:40 by mhummel          ###   ########.fr       */
+/*   Updated: 2024/10/15 09:15:10 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ bool	isspecials(char c)
 {
 	char	*specials;
 
-	specials = "<>|\'\"$";
+	specials = "<>|$";
 	while (*specials)
 	{
 		if (c == *specials)
@@ -71,11 +71,11 @@ char	*trim_whitespace(char *input)
 		free(trim.result);
 		return (NULL);
 	}
-	// printf("result: %s\n", trim.result);
+	printf("result: %s\n", trim.result);
 	new = ft_strtrim(trim.result, " \t\f\n\v\r");
 	if (!new)
 		return (NULL);
-	// printf("trimmed: %s\n", new);
+	printf("trimmed: %s\n", new);
 	return (new);
 }
 
@@ -88,14 +88,16 @@ t_list	*parse_input(char *input)
 
 	tabel = NULL;
 	list = NULL;
-	// printf("input: %s\n", input);
+	printf("input: %s\n", input);
 	new = trim_whitespace(input);
 	if (!new)
 		return (NULL);
-	tokens = split_space_quotes(new);
+	tokens = split_space_quotes(new); // split_space_quotes aber lass die quotes drin
 	free(new);
 	if (!tokens)
 		return (NULL);
+	for (size_t i = 0; tokens[i]; i++) // debugg
+		printf("token: %s\n", tokens[i]); // debugg
 	if (create_linked_list(tokens, &list))
 	{
 		free_token_array(tokens);
