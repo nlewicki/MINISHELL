@@ -28,3 +28,9 @@ echo hallo$pATH$HOME
 test "asd"ads"ads"
 result: test "asd"ads"ads" --> fixedglaube
 
+cd - (OLDPWD)
+cd ~ (HOME)
+
+
+echo -nnnnn geht
+echo -nnnnna nicht
