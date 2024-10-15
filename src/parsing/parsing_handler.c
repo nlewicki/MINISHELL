@@ -6,7 +6,7 @@
 /*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 13:06:42 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/10/03 13:10:59 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/10/15 15:59:18 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@ void	handle_quotes(t_trim *trim, char *input)
 {
 	char quote;
 
-	if (trim->j > 0 && (!isspace(trim->result[trim->j - 1])))
-		trim->result[trim->j++] = ' ';
+	// if (trim->j > 0 && (!isspace(trim->result[trim->j - 1])))
+	// 	trim->result[trim->j++] = ' ';
 	quote = input[trim->i];
 	trim->result[trim->j++] = input[trim->i++];
 	while ((input[trim->i] != '\0') && (input[trim->i] != quote))
@@ -37,7 +37,7 @@ void	handle_quotes(t_trim *trim, char *input)
 	if (input[trim->i] == quote)
 	{
 		trim->result[trim->j++] = input[trim->i];
-			trim->result[trim->j++] = ' ';
+			// trim->result[trim->j++] = ' ';
 	}
 	else
 	{
