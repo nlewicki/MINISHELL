@@ -11,6 +11,9 @@ type for $? (exitstatus) ??
 
 syntax errors abfangen
 
+"$?" adds extra space
+
+
 
 
 
