@@ -15,11 +15,5 @@ type for $? (exitstatus) ??
 
 syntax errors abfangen
 
-"$?" adds extra space
-
-nach quotes checken und qotes gleich lassen
-
-
-
 
 
