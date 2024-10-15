@@ -6,7 +6,7 @@
 /*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 11:12:34 by mhummel           #+#    #+#             */
-/*   Updated: 2024/10/15 09:57:15 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/10/15 12:36:21 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,72 +77,27 @@ static size_t	count_tokens(const char *str)
 	return (count);
 }
 
-static size_t	calculate_token_length(const char *str, size_t *start,
-		char *quote)
-{
-	size_t	end;
-	size_t	token_len;
-
-	end = *start;
-	token_len = 0;
-	*quote = 0;
-	while (str[end] && (str[end] != ' ' || *quote != 0))
-	{
-		if (is_quote(str[end]))
-		{
-			if (*quote == 0)
-				*quote = str[end];
-			else if (*quote == str[end])
-				*quote = 0;
-		}
-		else
-			token_len++;
-		end++;
-	}
-	*start = end;
-	return (token_len);
-}
-
-static void	copy_token_without_quotes(const char *str, size_t *start,
-		size_t end, char *token)
-{
-	size_t	i;
-	char	quote;
-
-	quote = 0;
-	i = 0;
-	while (*start < end)
-	{
-		if (is_quote(str[*start]))
-		{
-			if (quote == 0)
-				quote = str[*start];
-			else if (quote == str[*start])
-				quote = 0;
-		}
-		else
-			token[i++] = str[*start];
-		(*start)++;
-	}
-	token[i] = '\0';
-}
-
 static char	*extract_token_2(const char *str, size_t *pos)
 {
-	size_t	token_len;
-	char	*token;
-	char	quote;
 	size_t	start;
+	size_t	end;
+	char	quote = 0;
 
-	quote = 0;
 	start = *pos;
-	token_len = calculate_token_length(str, &start, &quote);
-	token = (char *)malloc(token_len + 1);
-	if (!token)
-		return (NULL);
-	copy_token_without_quotes(str, pos, start, token);
-	*pos = start;
-	return (token);
+	end = start;
+	while (str[end] && (str[end] != ' ' || quote != 0)) // Stop only at space if not in quotes
+	{
+		if (is_quote(str[end])) // Handle quotes inside token
+		{
+			if (quote == 0)
+				quote = str[end]; // Opening a quote
+			else if (quote == str[end])
+				quote = 0; // Closing a quote
+		}
+		end++;
+	}
+	*pos = end;
+	return (ft_strndup(str + start, end - start));
 }
 
 static char	*extract_token(const char *str, size_t *pos)
