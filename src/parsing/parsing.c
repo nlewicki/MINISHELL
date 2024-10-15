@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 10:23:02 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/10/14 12:59:40 by mhummel          ###   ########.fr       */
+/*   Updated: 2024/10/14 13:26:59 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,44 +71,38 @@ char	*trim_whitespace(char *input)
 		free(trim.result);
 		return (NULL);
 	}
-	// printf("result: %s\n", trim.result);
+	printf("result: %s\n", trim.result);
 	new = ft_strtrim(trim.result, " \t\f\n\v\r");
 	if (!new)
 		return (NULL);
-	// printf("trimmed: %s\n", new);
+	printf("trimmed: %s\n", new);
 	return (new);
 }
 
-t_list *parse_input(char *input)
+t_list	*parse_input(char *input)
 {
-    char *new;
-    char **tokens;
-    t_list *list;
-    t_list *tabel;
+	char	*new;
+	char	**tokens;
+	t_list	*list;
+	t_list	*tabel;
 
-    list = NULL;
-    tabel = NULL;
-    new = trim_whitespace(input);
-    if (!new)
-        return (NULL);
-
-    // Expand environment variables
-    char *expanded = expand_env_variables(new, 0);
-    free(new);
-    if (!expanded)
-        return (NULL);
-
-    tokens = split_space_quotes(expanded);
-    free(expanded);
-    if (!tokens)
-        return (NULL);
-    if (create_linked_list(tokens, &list))
-    {
-        free_token_array(tokens);
-        ft_lstclear(&list, free_token);
-        return (NULL);
-    }
-    free_token_array(tokens);
-    return (list);
+	tabel = NULL;
+	list = NULL;
+	// printf("input: %s\n", input);
+	new = trim_whitespace(input);
+	if (!new)
+		return (NULL);
+	tokens = split_space_quotes(new);
+	free(new);
+	if (!tokens)
+		return (NULL);
+	if (create_linked_list(tokens, &list))
+	{
+		free_token_array(tokens);
+		ft_lstclear(&list, free_token);
+		return (NULL);
+	}
+	free_token_array(tokens);
+	return (list);
 }
 

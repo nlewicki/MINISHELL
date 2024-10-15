@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_command.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 09:59:19 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/10/14 13:04:30 by mhummel          ###   ########.fr       */
+/*   Updated: 2024/10/14 12:56:42 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,25 +62,19 @@ void	exec_builtin(t_command *cmd, int builtin)
 	else if (builtin == EXPORT)
 		ft_export(cmd->args, argc);
 	else if (builtin == EXIT)
-		ft_exit(cmd->args, argc);
+		ft_exit(cmd->args);
 }
 
-int execute_command(t_list *tabel)
+int	execute_command(t_list *tabel)
 {
-    t_list *tmp;
-    int builtin;
-    int status;
+	t_list	*tmp;
+	int		builtin;
 
-    tmp = tabel;
-    builtin = is_builtin((t_command *)tmp->content);
-
-    if (builtin)
-    {
-        exec_builtin((t_command *)tmp->content, builtin);
-        status = *exit_status(); // Assuming exit_status is set in exec_builtin
-    }
-    else
-        status = execute_external_command(((t_command *)tmp->content)->args);
-    *exit_status() = status; // Ensure global exit status is set
-    return (0);
+	tmp = tabel;
+	builtin = is_builtin((t_command *)tmp->content);
+	if (builtin)
+		exec_builtin((t_command *)tmp->content, builtin);
+	else
+		execute_external_command(((t_command *)tmp->content)->args);
+	return (0);
 }

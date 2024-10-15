@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 11:20:30 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/10/14 13:40:04 by mhummel          ###   ########.fr       */
+/*   Updated: 2024/10/14 13:18:00 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,46 +14,7 @@
 
 int		g_signal = 0;
 
-void	free_command(void *content)
-{
-	t_command	*cmd;
-	int			i;
-
-	cmd = (t_command *)content;
-	if (!cmd)
-		return ;
-	if (cmd->args)
-	{
-		i = 0;
-		while (cmd->args[i])
-		{
-			free(cmd->args[i]);
-			i++;
-		}
-		free(cmd->args);
-	}
-	if (cmd->filename)
-	{
-		i = 0;
-		while (cmd->filename[i])
-		{
-			free(cmd->filename[i]);
-			i++;
-		}
-		free(cmd->filename);
-	}
-	if (cmd->red_symbol)
-	{
-		i = 0;
-		while (cmd->red_symbol[i])
-		{
-			free(cmd->red_symbol[i]);
-			i++;
-		}
-		free(cmd->red_symbol);
-	}
-	free(cmd);
-}
+int	execute_tabel(t_list *tabel);
 
 int	create_child_process(t_list *tmp, int in_fd, int *pipefd)
 {
@@ -132,27 +93,11 @@ int	execute_tabel(t_list *tabel)
 	return (0);
 }
 
-void process_tokens(t_list *tokens)
-{
-    t_list *tabel;
-
-    if (tokens)
-    {
-        tabel = create_tabel(tokens);
-        if (tabel)
-        {
-            execute_tabel(tabel);
-            ft_lstclear(&tabel, free_command);
-        }
-        ft_lstclear(&tokens, free_token);
-    }
-}
-
 void	main_loop(void)
 {
 	char	*input;
 	t_list	*tokens;
-	char	*trimmed_input;
+	t_list	*tabel;
 
 	while (1)
 	{
@@ -160,20 +105,15 @@ void	main_loop(void)
 		input = readline("minishell> ");
 		if (!input)
 			break ;
-		trimmed_input = trim_whitespace(input);
+		handle_history(input);
+		tokens = parse_input(input);
+		print_token_list(tokens);
+		tabel = create_tabel(tokens);
+		print_tabel(tabel);
+		execute_tabel(tabel);
 		free(input);
-		if (!trimmed_input)
-			continue ;
-		if (strcmp(trimmed_input, "$?") == 0)
-		{
-			printf("%d\n", *exit_status());
-			free(trimmed_input);
-			continue ;
-		}
-		handle_history(trimmed_input);
-		tokens = parse_input(trimmed_input);
-		free(trimmed_input);
-		process_tokens(tokens);
+		ft_lstclear(&tokens, free_token);
+		ft_lstclear(&tabel, free_token);
 	}
 	printf("exit\n");
 }
@@ -208,46 +148,29 @@ void	handle_shlvl(void)
 	add_or_update_env("SHLVL", ft_itoa(shlvl));
 }
 
-int	ft_exit(char *args[], int arg_count)
+int	ft_exit(char *args[])
 {
-	long long	exit_code;
-	char		*arg;
-	int			i;
-	int			is_valid;
+	int	exit_code;
 
 	exit_code = 0;
-	ft_putendl_fd("exit", STDOUT_FILENO);
-	if (arg_count > 2)
+	if (args[1] != NULL)
 	{
-		ft_putendl_fd("exit: too many arguments", STDERR_FILENO);
-		return (1);
-	}
-	if (arg_count == 2)
-	{
-		arg = args[1];
-		i = 0;
-		while (ft_isspace(arg[i]))
-			i++;
-		if (arg[i] == '+' || arg[i] == '-')
+		if (!ft_atoi(args[1]) || ft_strlen(args[1]) == 0)
 		{
-			i++;
-		}
-		is_valid = 1;
-		while (arg[i])
-		{
-			if (!ft_isdigit(arg[i]))
-			{
-				is_valid = 0;
-				break ;
-			}
-			i++;
-		}
-		exit_code = ft_atol(args[1]);
-		if (!is_valid || (exit_code > INT_MAX || exit_code < INT_MIN))
-		{
-			ft_putendl_fd("exit: numeric argument required", STDERR_FILENO);
+			ft_putendl_fd("exit", 2);
+			ft_putendl_fd("minishell: exit: numeric argument required", 2);
 			exit(255);
 		}
+		if (args[2])
+		{
+			ft_putendl_fd("exit", 2);
+			ft_putendl_fd("minishell: exit: too many arguments", 2);
+			*exit_status() = 1;
+		}
+		exit_code = ft_atoi(args[1]);
+		exit_code = exit_code % 256;
 	}
-	exit((int)(exit_code & 0xFF));
+	*exit_status() = exit_code;
+	ft_putendl_fd("exit", 2);
+	exit(exit_code);
 }
