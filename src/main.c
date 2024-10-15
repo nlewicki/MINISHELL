@@ -6,7 +6,7 @@
 /*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 11:20:30 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/10/15 09:33:17 by mhummel          ###   ########.fr       */
+/*   Updated: 2024/10/15 11:50:50 by mhummel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ void	main_loop(void)
 {
 	char	*input;
 	t_list	*tokens;
-	t_list	*tabel;
+	// t_list	*tabel;
 
 	while (1)
 	{
@@ -107,13 +107,13 @@ void	main_loop(void)
 			break ;
 		handle_history(input);
 		tokens = parse_input(input);
-		// print_token_list(tokens);
-		tabel = create_tabel(tokens);
+		print_token_list(tokens);
+		// tabel = create_tabel(tokens);
 		// print_tabel(tabel);
-		execute_tabel(tabel);
+		// execute_tabel(tabel);
 		free(input);
 		ft_lstclear(&tokens, free_token);
-		ft_lstclear(&tabel, free_token);
+		// ft_lstclear(&tabel, free_token);
 	}
 	printf("exit\n");
 }

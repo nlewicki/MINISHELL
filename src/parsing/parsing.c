@@ -6,7 +6,7 @@
 /*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 10:23:02 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/10/15 10:33:29 by mhummel          ###   ########.fr       */
+/*   Updated: 2024/10/15 11:51:31 by mhummel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ bool	isspecials(char c)
 {
 	char	*specials;
 
-	specials = "<>|$";
+	specials = "<>|\'\"$";
 	while (*specials)
 	{
 		if (c == *specials)
@@ -117,6 +117,7 @@ t_list	*parse_input(char *input)
 		return (NULL);
 	for (size_t i = 0; tokens[i]; i++) // debugg
 		printf("token: %s\n", tokens[i]); // debugg
+	// handle_syntax_error(tokens);
 	if (create_linked_list(tokens, &list))
 	{
 		free_token_array(tokens);
