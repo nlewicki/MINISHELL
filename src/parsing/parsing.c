@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nicolewicki <nicolewicki@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 10:23:02 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/10/15 16:20:30 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/10/15 16:47:28 by nicolewicki      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,6 @@ t_list	*parse_input(char *input)
 	char	*new;
 	char	**tokens;
 	t_list	*list;
-	t_list	*tabel;
 	char	*error;
 
 	list = NULL;
@@ -112,28 +111,26 @@ t_list	*parse_input(char *input)
 	new = trim_whitespace(input);
 	if (!new)
 		return (NULL);
+	error = handle_syntax_errors(input);
+	if (error)
+	{
+		ft_putendl_fd(error, STDERR_FILENO);
+		free(error);
+		return (NULL);
+	}
 	tokens = split_space_quotes(new);
-	// split_space_quotes aber lass die quotes drin
 	free(new);
 	if (!tokens)
 		return (NULL);
 	for (size_t i = 0; tokens[i]; i++)    // debugg
 		printf("token: %s\n", tokens[i]); // debugg
 	// handle_syntax_error(tokens);
-	// if (create_linked_list(tokens, &list))
-	// {
-	// 	free_token_array(tokens);
-	// 	ft_lstclear(&list, free_token);
-	// 	return (NULL);
-	// }
-	free_token_array(tokens);
-	error = handle_syntax_errors(input);
-	if (error)
+	if (create_linked_list(tokens, &list))
 	{
-		ft_putendl_fd(error, STDERR_FILENO);
-		free(error);
+		free_token_array(tokens);
 		ft_lstclear(&list, free_token);
 		return (NULL);
 	}
+	free_token_array(tokens);
 	return (list);
 }
