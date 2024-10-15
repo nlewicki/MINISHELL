@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nicolewicki <nicolewicki@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 10:23:02 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/10/15 12:40:48 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/10/15 14:49:30 by nicolewicki      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ bool	isspecials(char c)
 {
 	char	*specials;
 
-	specials = "<>|\'\"$";
+	specials = "<>|";
 	while (*specials)
 	{
 		if (c == *specials)
@@ -104,9 +104,7 @@ t_list	*parse_input(char *input)
 	char	*new;
 	char	**tokens;
 	t_list	*list;
-	t_list	*tabel;
 
-	tabel = NULL;
 	list = NULL;
 	printf("input: %s\n", input);
 	new = trim_whitespace(input);
