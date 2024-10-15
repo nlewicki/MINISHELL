@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 10:23:02 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/10/15 09:15:10 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/10/15 10:33:29 by mhummel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,13 +54,32 @@ void	trim_str(t_trim *trim, char *input)
 	trim->result[trim->j] = '\0';
 }
 
+static int		ft_trim_len(char *input)
+{
+	int		i;
+	int		len;
+
+	i = 0;
+	len = 0;
+	while (input[i])
+	{
+		if (!ft_isspace(input[i]))
+			len++;
+		if (input[i] == '<' || input[i] == '>' || input[i] == '|' || input[i] == '$')
+			len++;
+		i++;
+	}
+	return (len);
+}
+
 char	*trim_whitespace(char *input)
 {
 	t_trim	trim;
 	char	*new;
 
-	trim.len = ft_strlen(input);
-	trim.result = ft_calloc(sizeof(char), trim.len + 100);
+	trim.len = ft_trim_len(input);
+	printf("len: %zu\n", trim.len);
+	trim.result = ft_calloc(sizeof(char), trim.len + 1);
 	if (!trim.result)
 	{
 		return (NULL);
