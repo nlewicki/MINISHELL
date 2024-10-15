@@ -6,7 +6,7 @@
 /*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 10:45:17 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/10/14 12:42:24 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/10/14 14:12:37 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,9 @@ int	execute_external_command(char **args)
 	pid_t	pid;
 	int		status;
 	char	*expanded;
+	bool	printed;
 
+	printed = false;
 	// write(1, "Not a builtin\n", 14);
 	if (args[0][0] == '$')
 	{
@@ -81,9 +83,9 @@ int	execute_external_command(char **args)
 		expanded = expand_env_variables(args[0], 0);
 		if (expanded)
 		{
-			printf("%s\n", expanded);
+			ft_err(expanded, NULL, NULL);
+			printed = true;
 			free(expanded);
-			return (0);
 		}
 		else
 		{
@@ -97,7 +99,9 @@ int	execute_external_command(char **args)
 		command_path = search_path(args[0]);
 	if (!command_path)
 	{
-		ft_err(args[0], ": command not found", "\n");
+		if (!printed)
+			ft_err(args[0], NULL, NULL);
+		ft_err(": command not found", "\n", NULL);
 		return (127);
 	}
 	if (is_directory(command_path))
