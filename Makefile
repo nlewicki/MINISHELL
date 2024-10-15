@@ -1,4 +1,6 @@
-CFILES =	src/builtins/pwd.c \
+CFILES =	src/main.c \
+			src/utils.c \
+			src/builtins/pwd.c \
 			src/builtins/env.c \
 			src/builtins/cd.c \
 			src/builtins/echo.c \
@@ -6,8 +8,6 @@ CFILES =	src/builtins/pwd.c \
 			src/builtins/export.c \
 			src/builtins/export_utils.c \
 			src/builtins/export_utils2.c \
-			src/main.c \
-			src/utils.c \
 			src/execution/fake_globals.c \
 			src/execution/signal.c \
 			src/execution/history.c \
