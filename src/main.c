@@ -6,7 +6,7 @@
 /*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 11:20:30 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/10/14 13:18:00 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/10/15 11:42:13 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ void	main_loop(void)
 {
 	char	*input;
 	t_list	*tokens;
-	t_list	*tabel;
+	// t_list	*tabel;
 
 	while (1)
 	{
@@ -108,12 +108,12 @@ void	main_loop(void)
 		handle_history(input);
 		tokens = parse_input(input);
 		print_token_list(tokens);
-		tabel = create_tabel(tokens);
-		print_tabel(tabel);
-		execute_tabel(tabel);
+		// tabel = create_tabel(tokens);
+		// print_tabel(tabel);
+		// execute_tabel(tabel);
 		free(input);
 		ft_lstclear(&tokens, free_token);
-		ft_lstclear(&tabel, free_token);
+		// ft_lstclear(&tabel, free_token);
 	}
 	printf("exit\n");
 }
