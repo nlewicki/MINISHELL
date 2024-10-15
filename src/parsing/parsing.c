@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nicolewicki <nicolewicki@student.42.fr>    +#+  +:+       +#+        */
+/*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 10:23:02 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/10/15 14:49:30 by nicolewicki      ###   ########.fr       */
+/*   Updated: 2024/10/15 16:20:30 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,8 @@ t_list	*parse_input(char *input)
 	char	*new;
 	char	**tokens;
 	t_list	*list;
+	t_list	*tabel;
+	char	*error;
 
 	list = NULL;
 	printf("input: %s\n", input);
@@ -111,7 +113,7 @@ t_list	*parse_input(char *input)
 	if (!new)
 		return (NULL);
 	tokens = split_space_quotes(new);
-		// split_space_quotes aber lass die quotes drin
+	// split_space_quotes aber lass die quotes drin
 	free(new);
 	if (!tokens)
 		return (NULL);
@@ -125,5 +127,13 @@ t_list	*parse_input(char *input)
 	// 	return (NULL);
 	// }
 	free_token_array(tokens);
+	error = handle_syntax_errors(input);
+	if (error)
+	{
+		ft_putendl_fd(error, STDERR_FILENO);
+		free(error);
+		ft_lstclear(&list, free_token);
+		return (NULL);
+	}
 	return (list);
 }
