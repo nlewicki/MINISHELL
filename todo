@@ -17,14 +17,22 @@ echo -nnnnna nicht
 get_len function funktioniert nciht richtig!!!!!!
 
 
-tests:
+leaks:
+handle_shlvl() itoa leak
+copy_envp großer leak
 
+
+----- tests that work:
 test "asd"ads"ads"
 das "asd"  "'     fgd   "t t | sa
  das "asd" "'     fgd   "t t | sa $TEST $sa
+echo hallo"welt     "hallo
 
 
-test that do not work:
-
+----- test that do not work:
 halla <>ads<
 $$PATH$HOME|$HOME
+ls -la|echo$PATH
+echo $PATHhome$HOME" .   hallo $?"     >>'$$?'<<infile>out|$
+"$?      "<'""'|   "out"        <<in
+
