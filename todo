@@ -1,34 +1,24 @@
-parsing leackfree machen
+parsing leakfree machen
 
 type for $? (exitstatus) ??
 --> vermutung execute-external_commands ist arsch... sollten wir neu machen (sollten wahtscheinlich alles neu machen)
 
-syntax errors abfangen --> manu
-
-missing closing quotes besser abfangen -> syntax errors?
-quotes nicht splitten (-> specials = "<>|"; ?????) --> fixedgalube
 -> quotes entfernen!  aba wanna?
 
 variables expanden? (ab $ +1 bis kein buchstabe mehr)
 echo hallo$pATH$HOME
 
-
-
-
-test "asd"ads"ads"
-result: test "asd"ads"ads" --> fixedglaube
-
 cd - (OLDPWD)
 cd ~ (HOME)
-
 
 echo -nnnnn geht
 echo -nnnnna nicht
 
 
-das "asd"  "'     fgd   "t
 
+
+tests:
+
+test "asd"ads"ads"
 das "asd"  "'     fgd   "t t | sa
--> 20 PIPES
-
  das "asd" "'     fgd   "t t | sa $TEST $sa
