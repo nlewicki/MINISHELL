@@ -6,7 +6,7 @@
 /*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 10:23:02 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/10/16 12:52:47 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/10/16 13:18:52 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ char	*trim_whitespace(char *input)
 	t_trim	trim;
 
 	trim.len = ft_trim_len(input);
-	printf("		len: [%zu]\n", trim.len);
+	// printf("		len: [%zu]\n", trim.len);
 	trim.result = ft_calloc(sizeof(char), trim.len + 1);
 	if (!trim.result)
 		return (NULL);
@@ -116,18 +116,10 @@ char	*trim_whitespace(char *input)
 	return (trim.result);
 }
 
-t_list	*parse_input(char *input)
+void	*check_syntax(char *input)
 {
-	char	*new;
-	char	**tokens;
-	t_list	*list;
 	char	*error;
 
-	list = NULL;
-	printf("input:   [%s]", input);
-	new = trim_whitespace(input);
-	if (!new)
-		return (NULL);
 	error = handle_syntax_errors(input);
 	if (error)
 	{
@@ -135,18 +127,35 @@ t_list	*parse_input(char *input)
 		free(error);
 		return (NULL);
 	}
+	return (input);
+}
+
+t_list	*parse_input(char *input)
+{
+	char	*new;
+	char	**tokens;
+	t_list	*list;
+
+	list = NULL;
+	printf("input:   [%s]\n", input);
+	new = trim_whitespace(input);
+	if (!new)
+		return (NULL);
+	if (!check_syntax(new))
+		return (free(new), NULL);
 	tokens = split_space_quotes(new);
 	free(new);
 	if (!tokens)
 		return (NULL);
+	printf("\n");
 	for (size_t i = 0; tokens[i]; i++)      // debugg
 		printf("token: [%s]\n", tokens[i]); // debugg
-	if (create_linked_list(tokens, &list))
-	{
-		free_token_array(tokens);
-		ft_lstclear(&list, free_token);
-		return (NULL);
-	}
+	// if (create_linked_list(tokens, &list))
+	// {
+	// 	free_token_array(tokens);
+	// 	ft_lstclear(&list, free_token);
+	// 	return (NULL);
+	// }
 	free_token_array(tokens);
 	return (list);
 }

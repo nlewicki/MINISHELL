@@ -22,3 +22,9 @@ tests:
 test "asd"ads"ads"
 das "asd"  "'     fgd   "t t | sa
  das "asd" "'     fgd   "t t | sa $TEST $sa
+
+
+
+test that does not work:
+
+$$PATH$HOME|$HOME
