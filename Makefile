@@ -24,7 +24,9 @@ CFILES =	src/main.c \
 			src/parsing/create_tabel.c \
 			src/parsing/print_tabel.c \
 			src/parsing/print_list.c \
-			src.parsing/syntax_errors.c
+			src/parsing/syntax_errors.c \
+			src/parsing/expansions_quotes_handler.c \
+
 
 
 NAME = minishell

@@ -1,17 +1,7 @@
-tabel failsafe machen oder So
-
-mark words as quoted or unquoted (f.e. hello'world') ???? wie erkennen wir ob space dazwischen soll oder nicht? hallo test oder hallotest
--> vllt nicht bei ' oder " extra "wort" erstellen, sondern zusammen lassen?
-
+parsing leackfree machen
 
 type for $? (exitstatus) ??
 --> vermutung execute-external_commands ist arsch... sollten wir neu machen (sollten wahtscheinlich alles neu machen)
-
-
-
-
-
-
 
 syntax errors abfangen --> manu
 

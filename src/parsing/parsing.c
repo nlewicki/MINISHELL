@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 10:23:02 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/10/16 11:17:25 by mhummel          ###   ########.fr       */
+/*   Updated: 2024/10/16 12:20:29 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,7 +141,7 @@ t_list	*parse_input(char *input)
 		return (NULL);
 	for (size_t i = 0; tokens[i]; i++)      // debugg
 		printf("token: [%s]\n", tokens[i]); // debugg
-	// handle_syntax_error(tokens);
+	expansions_quotes_handler(tokens);
 	if (create_linked_list(tokens, &list))
 	{
 		free_token_array(tokens);
