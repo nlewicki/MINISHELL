@@ -6,7 +6,7 @@
 /*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 12:20:21 by mhummel           #+#    #+#             */
-/*   Updated: 2024/10/15 13:28:30 by mhummel          ###   ########.fr       */
+/*   Updated: 2024/10/16 10:50:02 by mhummel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,11 @@ static int	skip_spaces(const char *input, int i)
 static char	*get_error_message(char op)
 {
 	if (op == '|')
-		return (ft_strdup("syntax error: unexpected end of file"));
+		return (ft_strdup("syntax error near unexpected token '|'"));
+	if (op == ';')
+		return (ft_strdup("syntax error near unexpected token ';'"));
+	if (op == '\0')
+		return (ft_strdup("syntax error near unexpected token `newline'"));
 	return (ft_strdup("syntax error near unexpected token `newline'"));
 }
 
@@ -38,13 +42,13 @@ static char	*check_operator(const char *input, int *i, int is_start)
 		|| (op == '|' && input[*i] == '|'))
 		(*i)++;
 	*i = skip_spaces(input, *i);
-	if (input[*i] == '|' || input[*i] == ';' || input[*i] == '>'
-		|| input[*i] == '<')
+	if ((op == ';' || op == '|') && (input[*i] == '|' || input[*i] == ';'
+			|| input[*i] == '>' || input[*i] == '<'))
 		return (get_error_message(input[*i]));
 	if (input[*i] == '\0')
 	{
 		if (op == '|')
-			return (get_error_message('|'));
+			return (get_error_message('\0'));
 		if (op == '>' || op == '<')
 			return (get_error_message('\0'));
 	}
@@ -59,6 +63,8 @@ char	*handle_syntax_errors(const char *input)
 
 	i = 0;
 	last_non_space = -1;
+	if (input[i] == '\0')
+		return (NULL);
 	while (input[i])
 	{
 		if (input[i] != ' ' && input[i] != '\t')
