@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nicolewicki <nicolewicki@student.42.fr>    +#+  +:+       +#+        */
+/*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 10:23:02 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/10/15 16:47:28 by nicolewicki      ###   ########.fr       */
+/*   Updated: 2024/10/16 10:06:41 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,14 +88,15 @@ char	*trim_whitespace(char *input)
 	t_trim	trim;
 
 	trim.len = ft_trim_len(input);
-	printf("len: %zu\n", trim.len);
+	printf("		len: [%zu]\n", trim.len);
 	trim.result = ft_calloc(sizeof(char), trim.len + 1);
 	if (!trim.result)
 		return (NULL);
 	trim_str(&trim, input);
 	if (trim.error == true)
 		return (free(trim.result), NULL);
-	printf("result: %s\n", trim.result);
+	printf("trimmed: [%s]			len: [%zu]\n", trim.result, ft_strlen(trim.result));
+
 	return (trim.result);
 }
 
@@ -107,7 +108,7 @@ t_list	*parse_input(char *input)
 	char	*error;
 
 	list = NULL;
-	printf("input: %s\n", input);
+	printf("input:   [%s]", input);
 	new = trim_whitespace(input);
 	if (!new)
 		return (NULL);
@@ -123,7 +124,7 @@ t_list	*parse_input(char *input)
 	if (!tokens)
 		return (NULL);
 	for (size_t i = 0; tokens[i]; i++)    // debugg
-		printf("token: %s\n", tokens[i]); // debugg
+		printf("token: [%s]\n", tokens[i]); // debugg
 	// handle_syntax_error(tokens);
 	if (create_linked_list(tokens, &list))
 	{
