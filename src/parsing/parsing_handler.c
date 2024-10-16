@@ -6,7 +6,7 @@
 /*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 13:06:42 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/10/16 10:42:17 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/10/16 10:58:27 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,14 @@ void	handle_operator(t_trim *trim, char *input)
 	if ((input[trim->i] == '<' && input[trim->i + 1] == '<')
 		|| (input[trim->i] == '>' && input[trim->i + 1] == '>'))
 		trim->result[trim->j++] = input[++trim->i];
-	if (input[trim->i] != '$' && !isspace(input[trim->i + 1]))
-		trim->result[trim->j++] = ' ';
 	trim->i++;
+	if (isspace(input[trim->i]))
+	{
+		trim->result[trim->j++] = ' ';
+		trim->is_space = true;
+	}
+	else
+		trim->is_space = false;
 }
 
 void	handle_quotes(t_trim *trim, char *input)

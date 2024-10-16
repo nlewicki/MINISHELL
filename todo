@@ -40,3 +40,5 @@ das "asd"  "'     fgd   "t
 
 das "asd"  "'     fgd   "t t | sa
 -> 20 PIPES
+
+ das "asd" "'     fgd   "t t | sa $TEST $sa
