@@ -14,7 +14,7 @@ cd ~ (HOME)
 echo -nnnnn geht
 echo -nnnnna nicht
 
-
+get_len function funktioniert nciht richtig!!!!!!
 
 
 tests:
@@ -24,7 +24,7 @@ das "asd"  "'     fgd   "t t | sa
  das "asd" "'     fgd   "t t | sa $TEST $sa
 
 
+test that do not work:
 
-test that does not work:
-
+halla <>ads<
 $$PATH$HOME|$HOME

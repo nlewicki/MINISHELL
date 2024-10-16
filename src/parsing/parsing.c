@@ -6,7 +6,7 @@
 /*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 10:23:02 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/10/16 13:18:52 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/10/16 13:28:36 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,7 @@ static int	ft_trim_len(char *input)
 		}
 		i++;
 	}
+	len += 10;
 	return (len);
 }
 
@@ -104,7 +105,7 @@ char	*trim_whitespace(char *input)
 	t_trim	trim;
 
 	trim.len = ft_trim_len(input);
-	// printf("		len: [%zu]\n", trim.len);
+	printf("\ntrim_len: [%zu]\n\n", trim.len);
 	trim.result = ft_calloc(sizeof(char), trim.len + 1);
 	if (!trim.result)
 		return (NULL);
