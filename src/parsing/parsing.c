@@ -6,7 +6,7 @@
 /*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 10:23:02 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/10/16 11:01:19 by mhummel          ###   ########.fr       */
+/*   Updated: 2024/10/16 11:17:25 by mhummel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,12 @@ void	trim_str(t_trim *trim, char *input)
 	trim->error = false;
 	while (input[trim->i] && trim->j < trim->len)
 	{
-		if (isspecials(input[trim->i]) || input[trim->i] == '\'' || input[trim->i] == '\"')
+		if (isspecials(input[trim->i]) || input[trim->i] == '\''
+			|| input[trim->i] == '\"')
 		{
 			handle_specials(trim, input);
 			if (trim->error)
-				break;
+				break ;
 		}
 		else if (isspace(input[trim->i]))
 		{
@@ -93,12 +94,8 @@ static int	ft_trim_len(char *input)
 			len++;
 			last_was_space = 1;
 		}
-		if (input[i] == '<' || input[i] == '>' || input[i] == '|'
-			|| input[i] == '$')
-			len++;
 		i++;
 	}
-	// len += 100;
 	return (len);
 }
 
@@ -114,8 +111,8 @@ char	*trim_whitespace(char *input)
 	trim_str(&trim, input);
 	if (trim.error == true)
 		return (free(trim.result), NULL);
-	printf("trimmed: [%s]			len: [%zu]\n", trim.result, ft_strlen(trim.result));
-
+	printf("trimmed: [%s]			len: [%zu]\n", trim.result,
+					ft_strlen(trim.result));
 	return (trim.result);
 }
 
@@ -142,7 +139,7 @@ t_list	*parse_input(char *input)
 	free(new);
 	if (!tokens)
 		return (NULL);
-	for (size_t i = 0; tokens[i]; i++)    // debugg
+	for (size_t i = 0; tokens[i]; i++)      // debugg
 		printf("token: [%s]\n", tokens[i]); // debugg
 	// handle_syntax_error(tokens);
 	if (create_linked_list(tokens, &list))
