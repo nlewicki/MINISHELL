@@ -6,7 +6,7 @@
 /*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 10:23:02 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/10/16 10:06:41 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/10/16 10:25:50 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,12 @@ void	trim_str(t_trim *trim, char *input)
 	trim->error = false;
 	while (input[trim->i] && trim->j < trim->len)
 	{
-		if (isspecials(input[trim->i]))
+		if (isspecials(input[trim->i]) || input[trim->i] == '\'' || input[trim->i] == '\"')
+		{
 			handle_specials(trim, input);
+			if (trim->error)
+				break;
+		}
 		else if (isspace(input[trim->i]))
 		{
 			if (!trim->is_space && trim->j > 0 && trim->j < trim->len - 1)
@@ -43,13 +47,13 @@ void	trim_str(t_trim *trim, char *input)
 				trim->result[trim->j++] = ' ';
 				trim->is_space = true;
 			}
+			trim->i++;
 		}
 		else
 		{
-			trim->result[trim->j++] = input[trim->i];
+			trim->result[trim->j++] = input[trim->i++];
 			trim->is_space = false;
 		}
-		trim->i++;
 	}
 	trim->result[trim->j] = '\0';
 }
@@ -80,6 +84,7 @@ static int	ft_trim_len(char *input)
 			len++;
 		i++;
 	}
+	len += 100;
 	return (len);
 }
 
