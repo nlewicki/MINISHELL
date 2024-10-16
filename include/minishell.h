@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 09:08:07 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/10/15 12:51:18 by mhummel          ###   ########.fr       */
+/*   Updated: 2024/10/16 10:41:20 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,7 @@ typedef struct s_command
 	char			**red_symbol;
 }					t_command;
 
+bool	isspecials(char c);
 int	ft_exit(char *args[]);
 int execute_command(t_list *tabel);
 void				handle_operator(t_trim *trim, char *input);

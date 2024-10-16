@@ -6,7 +6,7 @@
 /*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 13:06:42 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/10/16 10:22:19 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/10/16 10:42:17 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,9 @@ void	handle_operator(t_trim *trim, char *input)
 	if ((input[trim->i] == '<' && input[trim->i + 1] == '<')
 		|| (input[trim->i] == '>' && input[trim->i + 1] == '>'))
 		trim->result[trim->j++] = input[++trim->i];
-	if (input[trim->i] != '$')
+	if (input[trim->i] != '$' && !isspace(input[trim->i + 1]))
 		trim->result[trim->j++] = ' ';
+	trim->i++;
 }
 
 void	handle_quotes(t_trim *trim, char *input)
@@ -46,19 +47,15 @@ void	handle_quotes(t_trim *trim, char *input)
 
 void	handle_specials(t_trim *trim, char *input)
 {
-	char	tmp;
-
 	if ((input[trim->i] == '\'') || (input[trim->i] == '\"'))
 	{
 		handle_quotes(trim, input);
 		trim->is_space = false;
 	}
-	else if (input[trim->i] == '|' || input[trim->i] == '>'
-		|| input[trim->i] == '<' || input[trim->i] == '$')
+	else if (isspecials(input[trim->i]) || input[trim->i] == '$')
 	{
-		tmp = input[trim->i];
 		handle_operator(trim, input);
-		if (tmp == '$')
+		if (input[trim->i - 1] == '$')
 			trim->is_space = false;
 		else
 			trim->is_space = true;
