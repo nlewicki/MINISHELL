@@ -26,6 +26,7 @@ CFILES =	src/main.c \
 			src/parsing/print_list.c \
 			src/parsing/syntax_errors.c \
 			src/parsing/expansion_handler.c \
+			src/parsing/trim_len.c
 
 
 

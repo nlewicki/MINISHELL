@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 10:23:02 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/10/17 09:50:14 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/10/17 11:25:46 by mhummel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,47 +56,6 @@ void	trim_str(t_trim *trim, char *input)
 		trim->i++;
 	}
 	trim->result[trim->j] = '\0';
-}
-
-static int	ft_trim_len(char *input)
-{
-	int		i;
-	int		len;
-	int		last_was_space;
-	char	quote_char;
-
-	i = 0;
-	len = 0;
-	last_was_space = 1;
-	quote_char = 0;
-	while (input[i])
-	{
-		if (quote_char)
-		{
-			len++;
-			if (input[i] == quote_char)
-				quote_char = 0;
-		}
-		else if (input[i] == '"' || input[i] == '\'')
-		{
-			len++;
-			quote_char = input[i];
-			last_was_space = 0;
-		}
-		else if (!ft_isspace(input[i]))
-		{
-			len++;
-			last_was_space = 0;
-		}
-		else if (!last_was_space)
-		{
-			len++;
-			last_was_space = 1;
-		}
-		i++;
-	}
-	len += 10;
-	return (len);
 }
 
 char	*trim_whitespace(char *input)
