@@ -6,7 +6,7 @@
 /*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 13:06:42 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/10/16 13:00:40 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/10/17 09:50:34 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,20 @@
 
 void	handle_operator(t_trim *trim, char *input)
 {
-	if (trim->j > 0 && !isspace(trim->result[trim->j - 1]))
-		trim->result[trim->j++] = ' ';
-	trim->result[trim->j++] = input[trim->i];
+	if (trim->j > 0 && (!ft_isspace(trim->result[trim->j - 1])))
+		trim->result[(trim->j)++] = ' ';
+	trim->result[(trim->j)++] = input[trim->i];
 	if ((input[trim->i] == '<' && input[trim->i + 1] == '<')
 		|| (input[trim->i] == '>' && input[trim->i + 1] == '>'))
-		trim->result[trim->j++] = input[++trim->i];
-	trim->i++;
-	if (isspace(input[trim->i]))
 	{
-		trim->result[trim->j++] = ' ';
-		trim->is_space = true;
+		trim->result[trim->j++] = input[trim->i + 1];
+		if (input[trim->i + 2] != '\0')
+			trim->result[trim->j++] = ' ';
+		trim->i++;
+		return ;
 	}
-	else
-		trim->is_space = false;
+	if (input[trim->i + 1] != '\0')
+		trim->result[trim->j++] = ' ';
 }
 
 void	handle_quotes(t_trim *trim, char *input)
@@ -41,12 +41,11 @@ void	handle_quotes(t_trim *trim, char *input)
 	if (input[trim->i] == quote)
 	{
 		trim->result[trim->j++] = input[trim->i];
-		trim->i++;
 	}
 	else
 	{
-		printf("Missing closing quote\n");
 		trim->error = true;
+		printf("missing closing quote\n");
 	}
 }
 
@@ -57,13 +56,11 @@ void	handle_specials(t_trim *trim, char *input)
 		handle_quotes(trim, input);
 		trim->is_space = false;
 	}
-	else if (isspecials(input[trim->i]) || input[trim->i] == '$')
+	else if (input[trim->i] == '|' || input[trim->i] == '<'
+		|| input[trim->i] == '>')
 	{
 		handle_operator(trim, input);
-		if (input[trim->i - 1] == '$')
-			trim->is_space = false;
-		else
-			trim->is_space = true;
+		trim->is_space = true;
 	}
 }
 
