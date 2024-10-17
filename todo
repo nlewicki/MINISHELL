@@ -1,44 +1,38 @@
-tabel failsafe machen oder So
-
-mark words as quoted or unquoted (f.e. hello'world') ???? wie erkennen wir ob space dazwischen soll oder nicht? hallo test oder hallotest
--> vllt nicht bei ' oder " extra "wort" erstellen, sondern zusammen lassen?
-
+parsing leakfree machen
 
 type for $? (exitstatus) ??
 --> vermutung execute-external_commands ist arsch... sollten wir neu machen (sollten wahtscheinlich alles neu machen)
 
-
-
-
-
-
-
-syntax errors abfangen --> manu
-
-missing closing quotes besser abfangen -> syntax errors?
-quotes nicht splitten (-> specials = "<>|"; ?????) --> fixedgalube
 -> quotes entfernen!  aba wanna?
 
 variables expanden? (ab $ +1 bis kein buchstabe mehr)
 echo hallo$pATH$HOME
 
-
-
-
-test "asd"ads"ads"
-result: test "asd"ads"ads" --> fixedglaube
-
 cd - (OLDPWD)
 cd ~ (HOME)
-
 
 echo -nnnnn geht
 echo -nnnnna nicht
 
+get_len function funktioniert nciht richtig!!!!!!
 
-das "asd"  "'     fgd   "t
 
+leaks:
+handle_shlvl() itoa leak
+copy_envp großer leak
+
+
+----- tests that work:
+test "asd"ads"ads"
 das "asd"  "'     fgd   "t t | sa
--> 20 PIPES
-
  das "asd" "'     fgd   "t t | sa $TEST $sa
+echo hallo"welt     "hallo
+
+
+----- test that do not work:
+halla <>ads<
+$$PATH$HOME|$HOME
+ls -la|echo$PATH
+echo $PATHhome$HOME" .   hallo $?"     >>'$$?'<<infile>out|$
+"$?      "<'""'|   "out"        <<in
+
