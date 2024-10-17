@@ -6,7 +6,7 @@
 /*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 11:20:30 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/10/15 11:50:50 by mhummel          ###   ########.fr       */
+/*   Updated: 2024/10/16 13:48:21 by mhummel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,26 +127,26 @@ int	main(int argc, char **argv, char **envp)
 	if (!env_vars())
 		return (perror("Failed to copy envp"), 1);
 	set_env_vars(*env_vars());
-	handle_shlvl();
+	// handle_shlvl();
 	handle_signals();
 	main_loop();
 	free_env(*env_vars());
 	return (*exit_status());
 }
 
-void	handle_shlvl(void)
-{
-	char	*shlvl_str;
-	int		shlvl;
+// void	handle_shlvl(void)
+// {
+// 	char	*shlvl_str;
+// 	int		shlvl;
 
-	shlvl_str = get_our_env("SHLVL");
-	if (!shlvl_str)
-		shlvl = 0;
-	else
-		shlvl = atoi(shlvl_str);
-	shlvl += 1;
-	add_or_update_env("SHLVL", ft_itoa(shlvl));
-}
+// 	shlvl_str = get_our_env("SHLVL");
+// 	if (!shlvl_str)
+// 		shlvl = 0;
+// 	else
+// 		shlvl = atoi(shlvl_str);
+// 	shlvl += 1;
+// 	add_or_update_env("SHLVL", ft_itoa(shlvl));
+// }
 
 int	ft_exit(char *args[])
 {
