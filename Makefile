@@ -13,7 +13,6 @@ CFILES =	src/main.c \
 			src/execution/history.c \
 			src/execution/path.c \
 			src/execution/pipes.c \
-			src/execution/expand.c \
 			src/execution/redirection.c \
 			src/execution/execute_command.c \
 			src/execution/ft_exit.c \
@@ -27,8 +26,8 @@ CFILES =	src/main.c \
 			src/parsing/print_tabel.c \
 			src/parsing/print_list.c \
 			src/parsing/syntax_errors.c \
-			src/parsing/expansion_handler.c \
-			src/parsing/trim_len.c
+			src/parsing/trim_len.c \
+			src/parsing/expand.c \
 
 
 
