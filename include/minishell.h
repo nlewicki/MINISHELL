@@ -6,7 +6,7 @@
 /*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 09:08:07 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/10/16 12:53:10 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/10/17 10:39:35 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,8 @@ void				free_token(void *content);
 void				print_struct_tabel(t_list *tabel);
 t_list				*create_tabel(t_list *token_list);
 void				print_tabel(t_list *tabel);
+int	ft_exit(char *args[]);
+void	handle_shlvl(void);
 
 // builtins
 // cd

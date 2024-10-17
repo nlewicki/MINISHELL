@@ -6,7 +6,7 @@
 /*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 10:23:02 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/10/17 09:50:14 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/10/17 10:23:04 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,8 +151,8 @@ t_list	*parse_input(char *input)
 	if (!tokens)
 		return (NULL);
 	printf("\n");
-	for (size_t i = 0; tokens[i]; i++)      // debugg
-		printf("token: [%s]\n", tokens[i]); // debugg
+	// for (size_t i = 0; tokens[i]; i++)      // debugg
+	// 	printf("token: [%s]\n", tokens[i]); // debugg
 	if (create_linked_list(tokens, &list))
 	{
 		free_token_array(tokens);

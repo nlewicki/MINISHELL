@@ -16,6 +16,8 @@ CFILES =	src/main.c \
 			src/execution/expand.c \
 			src/execution/redirection.c \
 			src/execution/execute_command.c \
+			src/execution/ft_exit.c \
+			src/execution/handle_shlvl.c \
 			src/parsing/parsing.c \
 			src/parsing/parsing_handler.c \
 			src/parsing/split_quotes.c \
