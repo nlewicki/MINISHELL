@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 09:08:07 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/10/17 10:59:42 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/10/17 12:44:05 by mhummel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,6 @@ bool				isspecials(char c);
 int					ft_exit(char *args[]);
 int					execute_command(t_list *tabel);
 void				handle_operator(t_trim *trim, char *input);
-void				handle_quotes(t_trim *trim, char *input);
 void				handle_specials(t_trim *trim, char *input);
 void				handle_history(char *input);
 void				fill_struct(t_token *token, char *content);
@@ -108,9 +107,10 @@ void				free_token(void *content);
 void				print_struct_tabel(t_list *tabel);
 t_list				*create_tabel(t_list *token_list);
 void				print_tabel(t_list *tabel);
-int	ft_exit(char *args[]);
-void	handle_shlvl(void);
-char	*expand_env_variables(char *src);
+int					ft_exit(char *args[]);
+void				handle_shlvl(void);
+char				*expand_env_variables(char *src);
+int					ft_trim_len(char *input);
 
 // builtins
 // cd
