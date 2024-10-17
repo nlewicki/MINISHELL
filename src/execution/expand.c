@@ -6,7 +6,7 @@
 /*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 12:37:27 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/10/17 11:05:44 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/10/17 11:24:40 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,17 +31,113 @@ char	*get_our_env(const char *name)
 	return (NULL);
 }
 
-char	*expand_env_variables(char *src)
+static char	*copy_until_dollar(char **result, char *start, char *end)
 {
-	(void)src;
-	return (NULL);
+	size_t	len;
+	char	*new_result;
+
+	len = *result ? strlen(*result) : 0;
+	len += end - start;
+	new_result = realloc(*result, len + 1);
+	if (new_result == NULL)
+		return (NULL);
+	*result = new_result;
+	(*result)[len] = '\0';
+	strncat(*result, start, end - start);
+	return (*result);
 }
 
-void	check_dollar(t_list *tabel)
+static char	*get_var_name(char **end)
+{
+	char	*var_name;
+
+	if (**end == '{')
+	{
+		(*end)++;
+		var_name = *end;
+		while (**end && **end != '}')
+			(*end)++;
+	}
+	else
+	{
+		var_name = *end;
+		while (isalnum(**end) || **end == '_')
+			(*end)++;
+	}
+	return (var_name);
+}
+
+static char	*append_var_value(char **result, char *var_value)
+{
+	size_t	len;
+	char	*new_result;
+
+	if (var_value == NULL)
+		return (*result);
+	len = *result ? strlen(*result) : 0;
+	len += strlen(var_value);
+	new_result = realloc(*result, len + 1);
+	if (new_result == NULL)
+		return (NULL);
+	*result = new_result;
+	strcat(*result, var_value);
+	return (*result);
+}
+
+static char	*handle_dollar(char **result, char **start, char **end)
+{
+	char	*var_name;
+	char	*var_value;
+	char	tmp;
+
+	(*end)++;
+	var_name = get_var_name(end);
+	tmp = **end;
+	**end = '\0';
+	var_value = get_our_env(var_name);
+	**end = tmp;
+	if (append_var_value(result, var_value) == NULL)
+		return (NULL);
+	*start = *end;
+	if (**end == '}')
+		(*end)++;
+	return (*result);
+}
+
+char	*expand_env_variables(char *src)
+{
+	char	*result;
+	char	*start;
+	char	*end;
+
+	result = NULL;
+	start = src;
+	end = src;
+	while (*end)
+	{
+		if (*end == '$' && (isalnum(*(end + 1)) || *(end + 1) == '{' || *(end + 1) == '_'))
+		{
+			if (copy_until_dollar(&result, start, end) == NULL)
+				return (NULL);
+			if (handle_dollar(&result, &start, &end) == NULL)
+				return (NULL);
+		}
+		else
+			end++;
+	}
+	if (*start && copy_until_dollar(&result, start, end) == NULL)
+		return (NULL);
+	if (result == NULL)
+		return (strdup(src));
+	return (result);
+}
+
+void check_dollar(t_list *tabel)
 {
 	t_list		*tmp;
 	t_command	*row;
 	size_t		i;
+	char		*expanded;
 
 	tmp = tabel;
 	while (tmp)
@@ -51,9 +147,14 @@ void	check_dollar(t_list *tabel)
 		while (row->args[i])
 		{
 			printf("row->args[%zu]: %s\n", i, row->args[i]);
-			if (row->args[i][0] == '$')
+			if (ft_strchr(row->args[i], '$') != NULL)
 			{
-				row->args[i] = expand_env_variables(row->args[i]);
+				expanded = expand_env_variables(row->args[i]);
+				if (expanded)
+				{
+					free(row->args[i]);
+					row->args[i] = expanded;
+				}
 			}
 			i++;
 		}
@@ -65,5 +166,6 @@ t_list	*expansion(t_list *tabel)
 {
 	// check_quotes(tabel);
 	check_dollar(tabel);
+	print_tabel(tabel);
 	return (NULL);
 }

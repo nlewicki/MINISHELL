@@ -18,7 +18,7 @@ get_len function funktioniert nciht richtig!!!!!!
 
 
 leaks:
-handle_shlvl() itoa leak
+handle_shlvl() itoa leak -> fixed glaub(wir haben noch viele mallocs)
 copy_envp großer leak
 
 

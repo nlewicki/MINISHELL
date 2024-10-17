@@ -6,7 +6,7 @@
 /*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 11:02:29 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/10/15 09:52:35 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/10/17 12:25:16 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,5 +45,6 @@ int	ft_echo(char *argv[], int argc)
 	}
 	if (!n_flag)
 		printf("\n");
+	*exit_status() = 0;
 	return (0);
 }
