@@ -6,7 +6,7 @@
 /*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 09:08:07 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/10/17 10:39:35 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/10/17 10:42:53 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@
 # include <string.h>
 # include <unistd.h>
 # include <limits.h>
+# include <sys/stat.h>
+# include <sys/wait.h>
 
 # define MAX_ARGS 100
 # define MAX_REDIRECTIONS 10
