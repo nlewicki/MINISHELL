@@ -6,7 +6,7 @@
 /*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 12:37:27 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/10/17 14:21:05 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/10/17 14:35:56 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -201,49 +201,48 @@ static void	shift_string(char *str, int start, int end)
 
 static void	handle_double_quotes(char *str, int *i)
 {
-	int	start;
-	int	end;
+	int start = *i;
+	int end = start + 1;
 
-	start = *i;
-	end = start + 1;
-	while (str[end] && str[end] != '"')
+	// Find closing double quote
+	while (str[end] && str[end] != '\"')
 		end++;
-	if (str[end] == '"')
+
+	// If we found a closing double quote
+	if (str[end] == '\"')
 	{
-		shift_string(str + start, 0, 1);
-		shift_string(str + end - 1, 0, 1);
-		*i = end - 2;
+		// Remove both opening and closing double quotes
+		shift_string(str + start, 0, 1);         // Remove opening "
+		shift_string(str + end - 1, 0, 1);       // Remove closing "
+		*i = end - 2;  // Update position (adjusted for removed quotes)
 	}
 	else
-		*i = end;
+	{
+		*i = end; // If no closing double quote, just move the pointer to end
+	}
 }
 
 static void	handle_single_quotes(char *str, int *i)
 {
-	int	start;
-	int	end;
-	int	j;
+	int start = *i;
+	int end = start + 1;
 
-	start = *i;
-	end = start + 1;
+	// Find closing single quote
 	while (str[end] && str[end] != '\'')
 		end++;
+
+	// If we found a closing single quote
 	if (str[end] == '\'')
 	{
-		shift_string(str + start, 0, 1);
-		shift_string(str + end - 1, 0, 1);
-		j = start;
-		while (str[j] && j < end - 2)
-		{
-			if (str[j] == '\'')
-				shift_string(str + j, 0, 1);
-			else
-				j++;
-		}
-		*i = j - 1;
+		// Remove both opening and closing single quotes
+		shift_string(str + start, 0, 1);         // Remove opening '
+		shift_string(str + end - 1, 0, 1);       // Remove closing '
+		*i = end - 2;  // Update position (adjusted for removed quotes)
 	}
 	else
-		*i = end;
+	{
+		*i = end; // If no closing single quote, just move the pointer to end
+	}
 }
 
 void	strip_quotes(char *str)
@@ -253,7 +252,7 @@ void	strip_quotes(char *str)
 	i = 0;
 	while (str[i])
 	{
-		if (str[i] == '"')
+		if (str[i] == '\"')
 			handle_double_quotes(str, &i);
 		else if (str[i] == '\'')
 			handle_single_quotes(str, &i);

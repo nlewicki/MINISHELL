@@ -39,3 +39,6 @@ handle_expansion() -> wenn in ungeraden single quotes -> nicht expanden, wenn in
 check_quotes() -> 1. ausere geschlossene double quotes entfernen. single quotes in geschlossenen double quotes bleiben alle.
 				  2. ausere geschlossene single quotes entfernen. single quotes in geschlossenen single quotes entfernen. double quotes in geschlossenen single quotes bleiben alle.
 
+'""'test'""' does not work:
+"test'"'
+-> '""' test '""' does work
