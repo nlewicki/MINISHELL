@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_handler.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 13:06:42 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/10/17 09:50:34 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/10/17 12:47:08 by mhummel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	handle_quotes(t_trim *trim, char *input)
 	else
 	{
 		trim->error = true;
-		printf("missing closing quote\n");
+		printf("Error: Missing closing quote\n");
 	}
 }
 
