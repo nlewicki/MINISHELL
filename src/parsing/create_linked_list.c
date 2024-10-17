@@ -6,7 +6,7 @@
 /*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 09:53:33 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/10/17 11:07:47 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/10/17 14:39:54 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	create_linked_list(char **tokens, t_list **list)
 	t_token	*strct;
 	t_list	*new;
 
-	write(1, "\ncreate_linked_list\n", 20);
+	// write(1, "\ncreate_linked_list\n", 20);
 	i = 0;
 	while (tokens[i])
 	{

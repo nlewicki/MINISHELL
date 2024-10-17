@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 11:20:30 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/10/17 13:44:00 by mhummel          ###   ########.fr       */
+/*   Updated: 2024/10/17 14:43:24 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	main_loop(void)
 		tokens = parse_input(input);
 		// print_token_list(tokens);
 		tabel = create_tabel(tokens);
-		print_tabel(tabel);
+		// print_tabel(tabel);
 		expansion(tabel);
 		execute_command(tabel);
 		free(input);
@@ -51,14 +51,14 @@ int	main(int argc, char **argv, char **envp)
 	set_env_vars(*env_vars());
 
 	// debugg
-	char **env = *env_vars();
-	for (int i = 0; env[i]; i++)
-		printf("env[%d]: %s\n", i, env[i]);
-	printf("\nPATH: %s\n", get_our_env("PATH"));
+	// char **env = *env_vars();
+	// for (int i = 0; env[i]; i++)
+	// 	printf("env[%d]: %s\n", i, env[i]);
+	// printf("\nPATH: %s\n", get_our_env("PATH"));
 
 	handle_shlvl();
 	handle_signals();
 	main_loop();
 	free_env(*env_vars());
-	return (*exit_status());
+	// return (*exit_status());
 }

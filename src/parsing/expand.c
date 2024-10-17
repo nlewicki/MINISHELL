@@ -6,7 +6,7 @@
 /*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 12:37:27 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/10/17 14:35:56 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/10/17 14:40:17 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -179,7 +179,7 @@ void	handle_expansion(t_list *tabel)
 		i = 0;
 		while (row->args[i])
 		{
-			printf("row->args[%zu]: %s\n", i, row->args[i]);
+			// printf("row->args[%zu]: %s\n", i, row->args[i]);
 			if (ft_strchr(row->args[i], '$') != NULL)
 				process_arg(row, &i);
 			i++;
@@ -284,6 +284,6 @@ t_list	*expansion(t_list *tabel)
 {
 	handle_expansion(tabel); // needs rework
 	remove_quotes(tabel); // seems to be working
-	print_tabel(tabel);
+	// print_tabel(tabel);
 	return (NULL);
 }
