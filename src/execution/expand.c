@@ -6,7 +6,7 @@
 /*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 12:37:27 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/10/17 11:24:40 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/10/17 13:20:33 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,14 +31,24 @@ char	*get_our_env(const char *name)
 	return (NULL);
 }
 
+static size_t	get_result_len(char *result)
+{
+	size_t	len;
+
+	len = 0;
+	if (result != NULL)
+		len = ft_strlen(result);
+	return (len);
+}
+
 static char	*copy_until_dollar(char **result, char *start, char *end)
 {
 	size_t	len;
 	char	*new_result;
 
-	len = *result ? strlen(*result) : 0;
+	len = get_result_len(*result);
 	len += end - start;
-	new_result = realloc(*result, len + 1);
+	new_result = ft_realloc(*result, len + 1);
 	if (new_result == NULL)
 		return (NULL);
 	*result = new_result;
@@ -51,19 +61,9 @@ static char	*get_var_name(char **end)
 {
 	char	*var_name;
 
-	if (**end == '{')
-	{
+	var_name = *end;
+	while (ft_isalnum(**end) || **end == '_')
 		(*end)++;
-		var_name = *end;
-		while (**end && **end != '}')
-			(*end)++;
-	}
-	else
-	{
-		var_name = *end;
-		while (isalnum(**end) || **end == '_')
-			(*end)++;
-	}
 	return (var_name);
 }
 
@@ -74,9 +74,9 @@ static char	*append_var_value(char **result, char *var_value)
 
 	if (var_value == NULL)
 		return (*result);
-	len = *result ? strlen(*result) : 0;
-	len += strlen(var_value);
-	new_result = realloc(*result, len + 1);
+	len = get_result_len(*result);
+	len += ft_strlen(var_value);
+	new_result = ft_realloc(*result, len + 1);
 	if (new_result == NULL)
 		return (NULL);
 	*result = new_result;
@@ -99,8 +99,6 @@ static char	*handle_dollar(char **result, char **start, char **end)
 	if (append_var_value(result, var_value) == NULL)
 		return (NULL);
 	*start = *end;
-	if (**end == '}')
-		(*end)++;
 	return (*result);
 }
 
@@ -115,7 +113,7 @@ char	*expand_env_variables(char *src)
 	end = src;
 	while (*end)
 	{
-		if (*end == '$' && (isalnum(*(end + 1)) || *(end + 1) == '{' || *(end + 1) == '_'))
+		if (*end == '$' && (ft_isalnum(*(end + 1)) || *(end + 1) == '_'))
 		{
 			if (copy_until_dollar(&result, start, end) == NULL)
 				return (NULL);
@@ -128,11 +126,11 @@ char	*expand_env_variables(char *src)
 	if (*start && copy_until_dollar(&result, start, end) == NULL)
 		return (NULL);
 	if (result == NULL)
-		return (strdup(src));
+		result = ft_strdup(src);
 	return (result);
 }
 
-void check_dollar(t_list *tabel)
+void handle_expansion(t_list *tabel)
 {
 	t_list		*tmp;
 	t_command	*row;
@@ -164,8 +162,8 @@ void check_dollar(t_list *tabel)
 
 t_list	*expansion(t_list *tabel)
 {
-	// check_quotes(tabel);
-	check_dollar(tabel);
+	handle_expansion(tabel);
+	// remove_quotes(tabel);
 	print_tabel(tabel);
 	return (NULL);
 }

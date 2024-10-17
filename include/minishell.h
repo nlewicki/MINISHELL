@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 09:08:07 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/10/17 12:44:05 by mhummel          ###   ########.fr       */
+/*   Updated: 2024/10/17 13:16:25 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,7 +145,6 @@ int					pwd(void);
 int					ft_unset(char *argv[], int argc);
 // expand
 char				*get_our_env(const char *var_name);
-void				handle_expansion(size_t *length, const char **src);
 size_t				calculate_expanded_length(const char *src,
 						int in_single_quotes);
 

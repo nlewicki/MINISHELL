@@ -36,3 +36,9 @@ echo $PATHhome$HOME" .   hallo $?"     >>'$$?'<<infile>out|$
 
 ----- test that do not work:
 
+
+
+check_expansion() -> wenn ungerade single quotes -> nicht expanden, wenn gerade -> expanden (% 2 == 0) alles andere $ expanden, wenn nichts zum expanden da, dann remove wort
+check_quotes() -> 1. ausere geschlossene double quotes entfernen. single quotes in geschlossenen double quotes bleiben alle.
+				  2. ausere geschlossene single quotes entfernen. single quotes in geschlossenen single quotes entfernen. double quotes in geschlossenen single quotes bleiben alle.
+
