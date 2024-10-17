@@ -6,7 +6,7 @@
 /*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 09:08:07 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/10/17 10:42:53 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/10/17 10:59:42 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,7 @@ typedef struct s_command
 	char			**red_symbol;
 }					t_command;
 
+t_list	*expansion(t_list *tabel);
 bool				isspecials(char c);
 int					ft_exit(char *args[]);
 int					execute_command(t_list *tabel);
@@ -109,6 +110,7 @@ t_list				*create_tabel(t_list *token_list);
 void				print_tabel(t_list *tabel);
 int	ft_exit(char *args[]);
 void	handle_shlvl(void);
+char	*expand_env_variables(char *src);
 
 // builtins
 // cd
@@ -146,7 +148,7 @@ char				*get_our_env(const char *var_name);
 void				handle_expansion(size_t *length, const char **src);
 size_t				calculate_expanded_length(const char *src,
 						int in_single_quotes);
-char				*expand_env_variables(char *src, int in_single_quotes);
+
 // fake globals
 int					*exit_status(void);
 char				***env_vars(void);

@@ -6,13 +6,13 @@
 /*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 09:45:16 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/10/14 13:35:29 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/10/17 11:08:22 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-size_t count_lines(t_list *tokens)
+size_t	count_lines(t_list *tokens)
 {
 	t_list	*tmp;
 	size_t	lines;
@@ -42,9 +42,9 @@ t_command	*init_cmd(void)
 	return (new_cmd);
 }
 
-t_info *init_info(void)
+t_info	*init_info(void)
 {
-	t_info *info;
+	t_info	*info;
 
 	info = malloc(sizeof(t_info));
 	if (!info)
@@ -55,7 +55,7 @@ t_info *init_info(void)
 	return (info);
 }
 
-void reset_info(t_info *info)
+void	reset_info(t_info *info)
 {
 	info->nbr_words = 0;
 	info->nbr_reds = 0;

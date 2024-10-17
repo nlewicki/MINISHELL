@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 11:31:51 by mhummel           #+#    #+#             */
-/*   Updated: 2024/09/27 09:37:49 by mhummel          ###   ########.fr       */
+/*   Updated: 2024/10/17 10:59:26 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int	ft_cd(char *argv[], int argc)
 		return (0);
 	else
 		path = argv[1];
-	expanded_path = expand_env_variables(path, 0);
+	expanded_path = expand_env_variables(path);
 	if (!expanded_path)
 		return (write(2, "cd: expansion failed\n", 21), 1);
 	if (chdir(path) != 0)

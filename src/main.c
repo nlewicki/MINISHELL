@@ -6,7 +6,7 @@
 /*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 11:20:30 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/10/17 10:39:12 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/10/17 10:51:40 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	main_loop(void)
 		// print_token_list(tokens);
 		tabel = create_tabel(tokens);
 		print_tabel(tabel);
-		// expansion(tabel);
+		expansion(tabel);
 		// execute_tabel(tabel);
 		free(input);
 		ft_lstclear(&tokens, free_token);
