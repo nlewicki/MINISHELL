@@ -6,7 +6,7 @@
 /*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 12:37:27 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/10/17 13:32:26 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/10/17 13:39:44 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -191,6 +191,7 @@ void	handle_expansion(t_list *tabel)
 t_list	*expansion(t_list *tabel)
 {
 	handle_expansion(tabel);
+	// remove_quotes(tabel);
 	print_tabel(tabel);
 	return (NULL);
 }
