@@ -60,6 +60,9 @@ check_quotes() -> 1. ausere geschlossene double quotes entfernen. single quotes 
 //"hallo"
 //"aaaaa$PATH"
 //"$PATHaaaaa"
-
 "'$HOME'"
 -> should expand
+
+
+echo hallo > test.txt | cat test.txt
+echo hallo > test.txt | cat < test.txt
