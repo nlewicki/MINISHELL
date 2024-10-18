@@ -6,7 +6,7 @@
 #    By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/12 11:07:18 by nlewicki          #+#    #+#              #
-#    Updated: 2024/09/19 13:41:05 by mhummel          ###   ########.fr        #
+#    Updated: 2024/10/18 11:08:39 by mhummel          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -64,6 +64,7 @@ FILES = ft_bzero.c \
 		ft_strcspn.c \
 		ft_realloc.c \
 		ft_err.c \
+		ft_strjoin3.c \
 		get_next_line.c \
 		get_next_line_utils.c
 
