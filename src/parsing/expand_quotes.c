@@ -6,7 +6,7 @@
 /*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 09:50:19 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/10/18 09:50:23 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/10/18 09:54:20 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,48 +25,40 @@ static void	shift_string(char *str, int start, int end)
 
 static void	handle_double_quotes(char *str, int *i)
 {
-	int start = *i;
-	int end = start + 1;
+	int	start;
+	int	end;
 
-	// Find closing double quote
+	start = *i;
+	end = start + 1;
 	while (str[end] && str[end] != '\"')
 		end++;
-
-	// If we found a closing double quote
 	if (str[end] == '\"')
 	{
-		// Remove both opening and closing double quotes
-		shift_string(str + start, 0, 1);         // Remove opening "
-		shift_string(str + end - 1, 0, 1);       // Remove closing "
-		*i = end - 2;  // Update position (adjusted for removed quotes)
+		shift_string(str + start, 0, 1); // Remove opening "
+		shift_string(str + end - 1, 0, 1); // Remove closing "
+		*i = end - 2;
 	}
 	else
-	{
-		*i = end; // If no closing double quote, just move the pointer to end
-	}
+		*i = end;
 }
 
 static void	handle_single_quotes(char *str, int *i)
 {
-	int start = *i;
-	int end = start + 1;
+	int	start;
+	int	end;
 
-	// Find closing single quote
+	start = *i;
+	end = start + 1;
 	while (str[end] && str[end] != '\'')
 		end++;
-
-	// If we found a closing single quote
 	if (str[end] == '\'')
 	{
-		// Remove both opening and closing single quotes
-		shift_string(str + start, 0, 1);         // Remove opening '
-		shift_string(str + end - 1, 0, 1);       // Remove closing '
-		*i = end - 2;  // Update position (adjusted for removed quotes)
+		shift_string(str + start, 0, 1);
+		shift_string(str + end - 1, 0, 1);
+		*i = end - 2;
 	}
 	else
-	{
-		*i = end; // If no closing single quote, just move the pointer to end
-	}
+		*i = end;
 }
 
 void	strip_quotes(char *str)

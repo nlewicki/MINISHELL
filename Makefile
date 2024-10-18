@@ -28,6 +28,8 @@ CFILES =	src/main.c \
 			src/parsing/syntax_errors.c \
 			src/parsing/trim_len.c \
 			src/parsing/expand.c \
+			src/parsing/expand2.c \
+			src/parsing/expand_env.c \
 			src/parsing/expand_quotes.c \
 
 
