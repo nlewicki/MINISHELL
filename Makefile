@@ -11,8 +11,8 @@ CFILES =	src/main.c \
 			src/execution/fake_globals.c \
 			src/execution/signal.c \
 			src/execution/history.c \
-			src/execution/path.c \
-			src/execution/path_utils.c \
+			src/execution/execute_external.c \
+			src/execution/external_utils.c \
 			src/execution/pipes.c \
 			src/execution/redirection.c \
 			src/execution/execute_command.c \
