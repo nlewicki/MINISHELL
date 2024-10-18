@@ -42,3 +42,24 @@ check_quotes() -> 1. ausere geschlossene double quotes entfernen. single quotes 
 '""'test'""' does not work:
 "test'"'
 -> '""' test '""' does work
+
+
+/ ---- test cases ----- //
+//"$PATH"
+//"$PATH""$HOME"
+// !!"$HOME"!!"$PATH"!!
+//"$$PATH"
+//"$PATH$"
+//"$PATH$HOME$"
+//"$PATH$HOME$$?"
+//"$PATH$$$HOME"
+//"$?$PATH$$$HOME$?"
+//"$$$PATH$$$HOME$$"
+//"PATH"
+//"$"
+//"hallo"
+//"aaaaa$PATH"
+//"$PATHaaaaa"
+
+"'$HOME'"
+-> should expand
