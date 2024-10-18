@@ -6,7 +6,7 @@
 /*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 11:20:30 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/10/18 12:54:04 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/10/18 14:01:06 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,9 +49,9 @@ void	main_loop(void)
 			}
 			// print_token_list(tokens);
 			tabel = create_tabel(tokens);
-			print_tabel(tabel);
+			// print_tabel(tabel);
 			new_tabel = expansion(tabel);
-			print_tabel(new_tabel);
+			// print_tabel(new_tabel);
 			execution(new_tabel);
 			free(input);
 			ft_lstclear(&tokens, free_token);
@@ -76,7 +76,7 @@ int	main(int argc, char **argv, char **envp)
 	// for (int i = 0; env[i]; i++)
 	// 	printf("env[%d]: %s\n", i, env[i]);
 	// printf("\nPATH: %s\n", get_our_env("PATH"));
-
+	*exit_status() = 0;
 	handle_shlvl();
 	handle_signals();
 	main_loop();

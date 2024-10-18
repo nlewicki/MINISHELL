@@ -6,7 +6,7 @@
 /*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 10:08:44 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/10/18 10:09:24 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/10/18 14:15:19 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,14 +70,25 @@ char	*handle_dollar(char **result, char **start, char **end)
 	char	*var_value;
 	char	tmp;
 
+
 	(*end)++;
-	var_name = get_var_name(end);
-	tmp = **end;
-	**end = '\0';
-	var_value = get_our_env(var_name);
-	**end = tmp;
+	if (**end == '?')
+	{
+		var_value = ft_itoa(*exit_status());
+		(*end)++;
+	}
+	else
+	{
+		var_name = get_var_name(end);
+		tmp = **end;
+		**end = '\0';
+		var_value = get_our_env(var_name);
+		**end = tmp;
+	}
 	if (append_var_value(result, var_value) == NULL)
 		return (NULL);
+	if (**end == '?')
+		free(var_value);
 	*start = *end;
 	return (*result);
 }
