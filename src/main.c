@@ -3,16 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 11:20:30 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/10/18 10:44:42 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/10/18 11:48:38 by mhummel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 int		g_signal = 0;
+
+int	execution(t_list *tabel)
+{
+	int	result;
+
+	if (ft_lstsize(tabel) > 1)
+		result = execute_piped_commands(tabel);
+	else
+		result = execute_command(tabel);
+	return (result);
+}
 
 void	main_loop(void)
 {
@@ -36,7 +47,7 @@ void	main_loop(void)
 			print_tabel(tabel);
 			new_tabel = expansion(tabel);
 			print_tabel(new_tabel);
-			execute_command(tabel);
+			execution(new_tabel);
 			free(input);
 			ft_lstclear(&tokens, free_token);
 			ft_lstclear(&tabel, free_token);
