@@ -6,7 +6,7 @@
 /*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 09:50:19 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/10/18 09:54:20 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/10/18 10:16:51 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,22 +76,14 @@ void	strip_quotes(char *str)
 	}
 }
 
-void	remove_quotes(t_list *tabel)
+void	remove_quotes(t_command *cmd)
 {
-	t_list		*tmp;
-	t_command	*cmd;
-	size_t		i;
+	size_t	i;
 
-	tmp = tabel;
-	while (tmp)
+	i = 0;
+	while (cmd->args[i])
 	{
-		cmd = tmp->content;
-		i = 0;
-		while (cmd->args[i])
-		{
-			strip_quotes(cmd->args[i]);
-			i++;
-		}
-		tmp = tmp->next;
+		strip_quotes(cmd->args[i]);
+		i++;
 	}
 }

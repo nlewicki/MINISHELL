@@ -6,7 +6,7 @@
 /*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 11:20:30 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/10/18 09:40:42 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/10/18 10:44:42 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ void	main_loop(void)
 	char	*input;
 	t_list	*tokens;
 	t_list	*tabel;
+	t_list	*new_tabel;
 
 	while (1)
 	{
@@ -26,16 +27,20 @@ void	main_loop(void)
 		input = readline("minishell> ");
 		if (!input)
 			break ;
-		handle_history(input);
-		tokens = parse_input(input);
-		// print_token_list(tokens);
-		tabel = create_tabel(tokens);
-		print_tabel(tabel);
-		expansion(tabel);
-		execute_command(tabel);
-		free(input);
-		ft_lstclear(&tokens, free_token);
-		ft_lstclear(&tabel, free_token);
+		else if (input[0] != '\0')
+		{
+			handle_history(input);
+			tokens = parse_input(input);
+			// print_token_list(tokens);
+			tabel = create_tabel(tokens);
+			print_tabel(tabel);
+			new_tabel = expansion(tabel);
+			print_tabel(new_tabel);
+			execute_command(tabel);
+			free(input);
+			ft_lstclear(&tokens, free_token);
+			ft_lstclear(&tabel, free_token);
+		}
 	}
 	printf("exit\n");
 }

@@ -6,7 +6,7 @@
 /*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 09:08:07 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/10/18 10:07:34 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/10/18 10:17:35 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ typedef struct s_command
 char	*expand_env_variables(char *src);
 char	*handle_dollar(char **result, char **start, char **end);
 char	*copy_until_dollar(char **result, char *start, char *end);
-void	remove_quotes(t_list *tabel);
+void	remove_quotes(t_command *cmd);
 t_list	*expansion(t_list *tabel);
 bool				isspecials(char c);
 int					ft_exit(char *args[]);

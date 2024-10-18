@@ -6,7 +6,7 @@
 /*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 12:37:27 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/10/18 10:09:18 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/10/18 10:23:47 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,51 +45,56 @@ void	remove_empty_arg(t_command *row, size_t *i)
 	(*i)--;
 }
 
-static void	process_arg(t_command *row, size_t *i)
+static void	process_arg(t_command *cmd, size_t *i)
 {
 	char	*expanded;
+	char	*temp;
 
-	expanded = expand_env_variables(row->args[*i]);
+	temp = ft_strdup(cmd->args[*i]);
+	if (!temp)
+		return ;
+	expanded = expand_env_variables(temp);
+	free(temp);
 	if (expanded)
 	{
 		if (*expanded == '\0')
 		{
 			free(expanded);
-			remove_empty_arg(row, i);
+			remove_empty_arg(cmd, i);
 		}
 		else
 		{
-			free(row->args[*i]);
-			row->args[*i] = expanded;
+			free(cmd->args[*i]);
+			cmd->args[*i] = expanded;
 		}
 	}
 }
 
-void	handle_expansion(t_list *tabel)
+void	handle_expansion(t_command *cmd)
 {
-	t_list		*tmp;
-	t_command	*row;
-	size_t		i;
+	size_t	i;
 
-	tmp = tabel;
-	while (tmp)
+	i = 0;
+	while (cmd->args[i])
 	{
-		row = tmp->content;
-		i = 0;
-		while (row->args[i])
-		{
-			if (ft_strchr(row->args[i], '$') != NULL)
-				process_arg(row, &i);
-			i++;
-		}
-		tmp = tmp->next;
+		if (ft_strchr(cmd->args[i], '$') != NULL)
+			process_arg(cmd, &i);
+		i++;
 	}
 }
 
 t_list	*expansion(t_list *tabel)
 {
-	handle_expansion(tabel); // needs rework
-	remove_quotes(tabel); // seems to be working
-	print_tabel(tabel);
-	return (NULL);
+	t_list		*tmp;
+	t_command	*cmd;
+
+	tmp = tabel;
+	while (tmp)
+	{
+		cmd = tmp->content;
+		handle_expansion(cmd);
+		remove_quotes(cmd);
+		tmp = tmp->next;
+	}
+	return (tabel);
 }
