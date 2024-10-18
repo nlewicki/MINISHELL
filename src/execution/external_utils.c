@@ -6,7 +6,7 @@
 /*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 11:10:53 by mhummel           #+#    #+#             */
-/*   Updated: 2024/10/18 14:01:44 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/10/18 14:45:59 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ int	handle_command_not_found(char **args)
 {
 	ft_putstr_fd(args[0], 2);
 	ft_putendl_fd(": command not found", 2);
+	*exit_status() = 127;
 	return (127);
 }
 
