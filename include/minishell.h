@@ -6,7 +6,7 @@
 /*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 09:08:07 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/10/18 11:14:39 by mhummel          ###   ########.fr       */
+/*   Updated: 2024/10/18 12:50:51 by mhummel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,11 +93,11 @@ typedef struct s_command
 	char			**red_symbol;
 }					t_command;
 
-char	*expand_env_variables(char *src);
-char	*handle_dollar(char **result, char **start, char **end);
-char	*copy_until_dollar(char **result, char *start, char *end);
-void	remove_quotes(t_command *cmd);
-t_list	*expansion(t_list *tabel);
+char				*expand_env_variables(char *src);
+char				*handle_dollar(char **result, char **start, char **end);
+char				*copy_until_dollar(char **result, char *start, char *end);
+void				remove_quotes(t_command *cmd);
+t_list				*expansion(t_list *tabel);
 bool				isspecials(char c);
 int					ft_exit(char *args[]);
 int					execute_command(t_list *tabel);
@@ -164,7 +164,15 @@ void				clear_shell_history(void);
 char				*search_path(const char *file);
 int					execute_external_command(char **args);
 // pipes
-int					execute_piped_commands(char *commands[], int num_commands);
+int					execute_piped_commands(t_list *command_list);
+int					is_builtin(t_command *cmd);
+void				exec_builtin(t_command *cmd, int builtin);
+// pipes_utils
+void				close_pipes(int pipe_fds[][2], int num_pipes);
+int					fork_and_execute(int pipe_fds[][2], t_list *current, int i,
+						int num_commands);
+int					wait_for_children(void);
+int					setup_child_pipes(int pipe_fds[][2], int i, int num_commands);
 // redirection
 int					parse_redirections(char *input, t_redirection *redirections,
 						int *redirection_count);
@@ -181,6 +189,7 @@ void				strip_quotes(char *str);
 int					strcasecmp_custom(const char *s1, const char *s2);
 
 // main
+int					execution(t_list *tabel);
 int					exec_new_shell(char **argv);
 void				main_loop(void);
 void				handle_shlvl(void);
