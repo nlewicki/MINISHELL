@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_tabel.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 09:45:16 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/10/17 11:08:22 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/10/18 14:38:25 by mhummel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	reset_info(t_info *info)
 	info->nbr_filenames = 0;
 }
 
-int	is_redirection(t_token *current_token)
+int	is_redirection_tabel(t_token *current_token)
 {
 	return (current_token->type == TOKEN_REDIR_IN
 		|| current_token->type == TOKEN_REDIR_OUT
@@ -82,7 +82,7 @@ void	count_words_redirections(t_list **tokens, t_info *info)
 		current_token = (t_token *)tmp->content;
 		if (current_token->type == TOKEN_PIPE)
 			break ;
-		if (is_redirection(current_token))
+		if (is_redirection_tabel(current_token))
 		{
 			(info->nbr_reds)++;
 			if (tmp->next)
@@ -114,7 +114,7 @@ t_command	*fill_cmd(t_command *cmd, t_list *position)
 		current_token = (t_token *)tmp->content;
 		if (current_token->type == TOKEN_PIPE)
 			break ;
-		if (is_redirection(current_token))
+		if (is_redirection_tabel(current_token))
 		{
 			cmd->red_symbol[j] = ft_strdup(current_token->content);
 			if (tmp->next)
