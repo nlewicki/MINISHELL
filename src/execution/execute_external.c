@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_external.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 10:45:17 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/10/18 11:26:53 by mhummel          ###   ########.fr       */
+/*   Updated: 2024/10/21 09:37:52 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ static void	execute_child_process(char *command_path, char **args)
 	execve(command_path, args, *env_vars());
 	perror("execve");
 	free(command_path);
+	*exit_status() = 126;
 	exit(126);
 }
 

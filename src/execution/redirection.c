@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 10:16:29 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/10/18 14:23:03 by mhummel          ###   ########.fr       */
+/*   Updated: 2024/10/21 09:35:40 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	redirect_input(char *file)
 	if (fd < 0)
 	{
 		print_redirection_error(file, "No such file or directory");
-		return (1);
+		return (*exit_status() = 1, 1);
 	}
 	if (dup2(fd, STDIN_FILENO) == -1)
 	{
@@ -44,7 +44,7 @@ int	redirect_output(char *file, int append)
 		ft_putstr_fd("minishell: ", 2);
 		ft_putstr_fd(file, 2);
 		ft_putendl_fd(": Permission denied", 2);
-		return (1);
+		return (*exit_status() = 1, 1);
 	}
 	if (dup2(fd, STDOUT_FILENO) == -1)
 	{

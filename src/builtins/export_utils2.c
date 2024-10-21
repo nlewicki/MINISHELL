@@ -6,7 +6,7 @@
 /*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 11:18:45 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/09/19 11:23:38 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/10/21 09:29:27 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,12 +90,12 @@ int	set_export_error(char *name, char *value)
 	if (!is_valid_identifier(name))
 	{
 		ft_err("export: ", name, ": not a valid identifier\n");
-		return (free(name), 1);
+		return (*exit_status() = 1, free(name), 1);
 	}
 	if (add_or_update_env(name, value) != 0)
 	{
 		ft_err("export: failed to set variable ", name, "\n");
-		return (free(name), 1);
+		return (*exit_status() = 1, free(name), 1);
 	}
 	free(name);
 	return (0);
