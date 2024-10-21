@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   syntax_errors.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 12:20:21 by mhummel           #+#    #+#             */
-/*   Updated: 2024/10/16 10:50:02 by mhummel          ###   ########.fr       */
+/*   Updated: 2024/10/21 10:49:43 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,12 @@ static int	skip_spaces(const char *input, int i)
 static char	*get_error_message(char op)
 {
 	if (op == '|')
-		return (ft_strdup("syntax error near unexpected token '|'"));
+		return (ft_strdup(" syntax error near unexpected token `|'"));
 	if (op == ';')
-		return (ft_strdup("syntax error near unexpected token ';'"));
+		return (ft_strdup(" syntax error near unexpected token ';'"));
 	if (op == '\0')
-		return (ft_strdup("syntax error near unexpected token `newline'"));
-	return (ft_strdup("syntax error near unexpected token `newline'"));
+		return (ft_strdup(" syntax error near unexpected token `newline'"));
+	return (ft_strdup(" syntax error near unexpected token `newline'"));
 }
 
 static char	*check_operator(const char *input, int *i, int is_start)
@@ -36,7 +36,7 @@ static char	*check_operator(const char *input, int *i, int is_start)
 
 	op = input[*i];
 	if (is_start && (op == '|' || op == ';'))
-		return (get_error_message(op));
+		return (*exit_status() = 2, get_error_message(op));
 	(*i)++;
 	if ((op == '>' && input[*i] == '>') || (op == '<' && input[*i] == '<')
 		|| (op == '|' && input[*i] == '|'))
@@ -44,13 +44,13 @@ static char	*check_operator(const char *input, int *i, int is_start)
 	*i = skip_spaces(input, *i);
 	if ((op == ';' || op == '|') && (input[*i] == '|' || input[*i] == ';'
 			|| input[*i] == '>' || input[*i] == '<'))
-		return (get_error_message(input[*i]));
+		return (*exit_status() = 2, get_error_message(input[*i]));
 	if (input[*i] == '\0')
 	{
 		if (op == '|')
-			return (get_error_message('\0'));
+			return (*exit_status() = 2, get_error_message('\0'));
 		if (op == '>' || op == '<')
-			return (get_error_message('\0'));
+			return (*exit_status() = 2, get_error_message('\0'));
 	}
 	return (NULL);
 }
@@ -80,6 +80,6 @@ char	*handle_syntax_errors(const char *input)
 			i++;
 	}
 	if (last_non_space != -1 && input[last_non_space] == '|')
-		return (get_error_message('|'));
+		return (*exit_status() = 2, get_error_message('|'));
 	return (NULL);
 }
