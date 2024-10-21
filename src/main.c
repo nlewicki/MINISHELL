@@ -6,7 +6,7 @@
 /*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 11:20:30 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/10/21 13:30:48 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/10/21 14:53:58 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,15 +110,20 @@ void	main_loop(void)
 	printf("exit\n");
 }
 
+void check_l(void)
+{
+	system("leaks minishell");
+}
+
 int	main(int argc, char **argv, char **envp)
 {
+	atexit(check_l);
 	(void)argc;
 	(void)argv;
 	if (*env_vars() == NULL)
 		*env_vars() = copy_envp(envp);
 	if (!env_vars())
 		return (perror("Failed to copy envp"), 1);
-	set_env_vars(*env_vars());
 
 	// debugg
 	// char **env = *env_vars();
@@ -130,6 +135,5 @@ int	main(int argc, char **argv, char **envp)
 	handle_shlvl();
 	handle_signals();
 	main_loop();
-	free_env(*env_vars());
 	// return (*exit_status());
 }

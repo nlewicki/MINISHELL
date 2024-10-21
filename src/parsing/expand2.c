@@ -6,7 +6,7 @@
 /*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 10:08:44 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/10/18 14:15:19 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/10/21 14:54:37 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ char	*copy_until_dollar(char **result, char *start, char *end)
 	if (new_result == NULL)
 		return (NULL);
 	*result = new_result;
+	// free(new_result);
 	ft_strlcat(*result, start, len + copy_len + 1);
 	return (*result);
 }

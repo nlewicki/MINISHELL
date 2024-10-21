@@ -6,7 +6,7 @@
 /*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 10:38:59 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/10/21 10:29:30 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/10/21 14:46:50 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	ft_exit(char *args[])
 		*exit_status() = exit_code;
 	}
 	exit_code = *exit_status();
-	// ft_putendl_fd("exit", 2);
-	// printf("exit code: %d\n", exit_code);
+	free_env(*env_vars());
+	clear_shell_history();
 	exit(exit_code);
 }
