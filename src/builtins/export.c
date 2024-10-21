@@ -6,7 +6,7 @@
 /*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 11:49:24 by mhummel           #+#    #+#             */
-/*   Updated: 2024/09/19 11:23:33 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/10/21 09:56:03 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ int	ft_export_args(char *arg)
 	else
 	{
 		if (!is_valid_identifier(arg))
-			return (ft_err("export: ", arg, ": not a valid identifier\n"), 1);
+			return (*exit_status() = 1, ft_err("export: ", arg, ": not a valid identifier\n"), 1);
 		if (mark_for_export(arg) != 0)
 		{
 			ft_err("export: failed to mark variable ", arg, " for export\n");

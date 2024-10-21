@@ -66,3 +66,6 @@ check_quotes() -> 1. ausere geschlossene double quotes entfernen. single quotes 
 
 echo hallo > test.txt | cat test.txt
 echo hallo > test.txt | cat < test.txt
+
+
+$TEST does segfault

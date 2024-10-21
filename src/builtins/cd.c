@@ -6,7 +6,7 @@
 /*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 11:31:51 by mhummel           #+#    #+#             */
-/*   Updated: 2024/10/17 10:59:26 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/10/21 10:01:51 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int	ft_cd(char *argv[], int argc)
 	if (chdir(path) != 0)
 	{
 		free(expanded_path);
-		return (perror("cd"), 1);
+		return (*exit_status() = 1, perror("cd"), 1);
 	}
 	free(expanded_path);
 	return (0);
