@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 09:08:07 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/10/18 13:43:18 by mhummel          ###   ########.fr       */
+/*   Updated: 2024/10/21 13:30:29 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,7 @@ typedef struct s_command
 	char			**red_symbol;
 }					t_command;
 
+int *is_expanded(void);
 char				*expand_env_variables(char *src);
 char				*handle_dollar(char **result, char **start, char **end);
 char				*copy_until_dollar(char **result, char *start, char *end);

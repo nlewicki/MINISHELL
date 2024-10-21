@@ -6,7 +6,7 @@
 /*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 11:20:30 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/10/21 13:08:40 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/10/21 13:30:48 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,6 +126,7 @@ int	main(int argc, char **argv, char **envp)
 	// 	printf("env[%d]: %s\n", i, env[i]);
 	// printf("\nPATH: %s\n", get_our_env("PATH"));
 	*exit_status() = 0;
+	*is_expanded() = 0;
 	handle_shlvl();
 	handle_signals();
 	main_loop();

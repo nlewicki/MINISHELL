@@ -6,7 +6,7 @@
 /*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 12:37:27 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/10/21 10:42:36 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/10/21 13:31:42 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,10 @@ static void	process_arg(t_command *cmd, size_t *i)
 			if (cmd->args[*i + 1] != NULL)
 				remove_empty_arg(cmd, i);
 			else
+			{
+				*is_expanded() = 1;
 				cmd->args[*i] = ft_strdup("");
+			}
 		}
 		else
 		{

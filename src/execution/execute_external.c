@@ -6,7 +6,7 @@
 /*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 10:45:17 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/10/21 10:12:21 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/10/21 13:44:23 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,11 +61,40 @@ static char	*find_command_path(const char *command)
 	return (search_in_path(command, path_env));
 }
 
+void	ft_errorcode_exit(char *command, char *path)
+{
+	ft_putstr_fd(command, 2);
+	if (ft_strcmp(command, ".") == 0)
+	{
+		ft_putendl_fd(": filename argument required", 2);
+		ft_putendl_fd(".: usage: . filename [arguments]", STDERR_FILENO);
+		free(path);
+		exit(2);
+	}
+	if (ft_strcmp(path, command) == 0 && !(ft_strncmp(command, "./",
+				2) == 0 || ft_strncmp(command, "/", 1) == 0
+			|| ft_strncmp(command, "../", 3) == 0))
+		ft_putendl_fd(": command not found", 2);
+	else
+	{
+		ft_putstr_fd(": ", 2);
+		ft_putendl_fd(strerror(errno), 2);
+	}
+	free(path);
+	if (errno == EACCES || errno == EISDIR)
+		exit(126);
+	exit(127);
+}
+
 static void	execute_child_process(char *command_path, char **args)
 {
+	if (*is_expanded() == 1)
+	{
+		exit(0);
+	}
 	execve(command_path, args, *env_vars());
 	*exit_status() = 126;
-	perror("execve");
+	ft_errorcode_exit(args[0], command_path);
 	free(command_path);
 	exit(126);
 }
