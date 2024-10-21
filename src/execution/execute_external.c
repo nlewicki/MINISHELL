@@ -6,7 +6,7 @@
 /*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 10:45:17 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/10/21 09:37:52 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/10/21 10:12:21 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,9 +64,9 @@ static char	*find_command_path(const char *command)
 static void	execute_child_process(char *command_path, char **args)
 {
 	execve(command_path, args, *env_vars());
+	*exit_status() = 126;
 	perror("execve");
 	free(command_path);
-	*exit_status() = 126;
 	exit(126);
 }
 

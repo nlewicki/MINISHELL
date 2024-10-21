@@ -6,7 +6,7 @@
 /*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 10:16:29 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/10/21 09:35:40 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/10/21 10:07:26 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	redirect_output(char *file, int append)
 	int	flags;
 
 	flags = O_WRONLY | O_CREAT;
-	flags |= (append) ? O_APPEND : O_TRUNC;
+	flags |= (append) ? O_APPEND : O_TRUNC; // grrrrrrrrrr
 	fd = open(file, flags, 0644);
 	if (fd < 0)
 	{
