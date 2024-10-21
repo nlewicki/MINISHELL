@@ -6,7 +6,7 @@
 /*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 10:16:29 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/10/21 10:07:26 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/10/21 10:29:07 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ int	redirect_output(char *file, int append)
 	fd = open(file, flags, 0644);
 	if (fd < 0)
 	{
-		ft_putstr_fd("minishell: ", 2);
 		ft_putstr_fd(file, 2);
 		ft_putendl_fd(": Permission denied", 2);
 		return (*exit_status() = 1, 1);
