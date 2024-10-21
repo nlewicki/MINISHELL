@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_tabel.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 09:45:16 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/10/18 14:38:25 by mhummel          ###   ########.fr       */
+/*   Updated: 2024/10/21 12:51:06 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -202,5 +202,6 @@ t_list	*create_tabel(t_list *tokens)
 		blocks--;
 		// printf("[%zu]\n", blocks);
 	}
+	free(info);
 	return (table);
 }

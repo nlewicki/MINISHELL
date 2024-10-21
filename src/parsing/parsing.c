@@ -6,7 +6,7 @@
 /*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 10:23:02 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/10/17 14:38:19 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/10/21 12:41:14 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ char	*trim_whitespace(char *input)
 		return (free(trim.result), NULL);
 	// printf("trimmed: [%s]			len: [%zu]\n", trim.result,
 			// ft_strlen(trim.result));
+	free(input);
 	return (trim.result);
 }
 

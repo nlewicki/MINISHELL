@@ -3,16 +3,55 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 11:20:30 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/10/18 14:37:35 by mhummel          ###   ########.fr       */
+/*   Updated: 2024/10/21 13:08:40 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 int		g_signal = 0;
+
+void free_tabel(void *content)
+{
+	t_command *cmd = (t_command *)content;
+	size_t i;
+
+	if (cmd->args)
+	{
+		i = 0;
+		while (cmd->args[i])
+		{
+			free(cmd->args[i]);
+			i++;
+		}
+		free(cmd->args);
+	}
+	if (cmd->filename)
+	{
+		i = 0;
+		while (cmd->filename[i])
+		{
+			free(cmd->filename[i]);
+			i++;
+		}
+		free(cmd->filename);
+	}
+	if (cmd->red_symbol)
+	{
+		i = 0;
+		while (cmd->red_symbol[i])
+		{
+			free(cmd->red_symbol[i]);
+			i++;
+		}
+		free(cmd->red_symbol);
+	}
+	free(cmd);
+}
+
 
 int	execution(t_list *tabel)
 {
@@ -65,7 +104,7 @@ void	main_loop(void)
 			execution(new_tabel);
 			free(input);
 			ft_lstclear(&tokens, free_token);
-			ft_lstclear(&tabel, free_token);
+			ft_lstclear(&tabel, free_tabel);
 		}
 	}
 	printf("exit\n");

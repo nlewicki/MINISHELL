@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 11:40:57 by mhummel           #+#    #+#             */
-/*   Updated: 2024/04/04 10:49:36 by mhummel          ###   ########.fr       */
+/*   Updated: 2024/10/21 12:05:40 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-size_t	ft_strlen(const char *s)
+size_t	ft_strlen_g(const char *s)
 {
 	size_t	i;
 
@@ -24,13 +24,13 @@ size_t	ft_strlen(const char *s)
 	return (i);
 }
 
-char	*ft_substr(char const *s, unsigned int start, size_t len)
+char	*ft_substr_g(char const *s, unsigned int start, size_t len)
 {
 	char	*substr;
 	size_t	i;
 	size_t	s_len;
 
-	s_len = ft_strlen(s);
+	s_len = ft_strlen_g(s);
 	i = 0;
 	if (start >= s_len)
 	{
@@ -53,7 +53,7 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	return (substr);
 }
 
-char	*ft_strchr(const char *s, int c)
+char	*ft_strchr_g(const char *s, int c)
 {
 	int	i;
 
@@ -69,7 +69,7 @@ char	*ft_strchr(const char *s, int c)
 	return (NULL);
 }
 
-char	*ft_strdup(const char *s1)
+char	*ft_strdup_g(const char *s1)
 {
 	size_t	len;
 	size_t	i;
@@ -91,7 +91,7 @@ char	*ft_strdup(const char *s1)
 	return (dup);
 }
 
-void	*ft_memcpy(void *dst, const void *src, size_t n)
+void	*ft_memcpy_g(void *dst, const void *src, size_t n)
 {
 	char		*d;
 	const char	*s = (const char *)src;

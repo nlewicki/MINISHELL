@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 11:40:54 by mhummel           #+#    #+#             */
-/*   Updated: 2024/04/09 13:22:41 by mhummel          ###   ########.fr       */
+/*   Updated: 2024/10/21 12:06:15 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ char	*append_buffer(char *acc, const char *buff, ssize_t n)
 
 	acc_len = 0;
 	if (acc != NULL)
-		acc_len = ft_strlen(acc);
+		acc_len = ft_strlen_g(acc);
 	new_len = acc_len + n;
 	new_str = malloc(new_len + 1);
 	if (new_str == NULL)
@@ -39,10 +39,10 @@ char	*append_buffer(char *acc, const char *buff, ssize_t n)
 	}
 	if (acc != NULL)
 	{
-		ft_memcpy(new_str, acc, acc_len);
+		ft_memcpy_g(new_str, acc, acc_len);
 		free(acc);
 	}
-	ft_memcpy(new_str + acc_len, buff, n);
+	ft_memcpy_g(new_str + acc_len, buff, n);
 	new_str[new_len] = '\0';
 	return (new_str);
 }
@@ -54,17 +54,17 @@ char	*extract_line(char **buffer)
 	char	*n_ptr;
 	size_t	line_len;
 
-	n_ptr = ft_strchr(*buffer, '\n');
+	n_ptr = ft_strchr_g(*buffer, '\n');
 	if (!n_ptr)
-		line_len = ft_strlen(*buffer);
+		line_len = ft_strlen_g(*buffer);
 	else
 		line_len = n_ptr - *buffer + 1;
-	line = ft_substr(*buffer, 0, line_len);
+	line = ft_substr_g(*buffer, 0, line_len);
 	if (!line)
 		return (clear_buffer(buffer), NULL);
 	if (n_ptr)
 	{
-		new_buffer = ft_strdup(n_ptr + 1);
+		new_buffer = ft_strdup_g(n_ptr + 1);
 		clear_buffer(buffer);
 		*buffer = new_buffer;
 	}
@@ -87,7 +87,7 @@ char	*read_txt(int fd, char **buffer)
 		*buffer = append_buffer(*buffer, temp, bytes_read);
 		if (!*buffer)
 			return (NULL);
-		if (ft_strchr(temp, '\n'))
+		if (ft_strchr_g(temp, '\n'))
 			break ;
 		bytes_read = read(fd, temp, BUFFER_SIZE);
 	}
