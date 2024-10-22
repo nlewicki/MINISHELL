@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_external.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 10:45:17 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/10/21 13:44:23 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/10/22 11:39:27 by mhummel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,31 +59,6 @@ static char	*find_command_path(const char *command)
 	if (!path_env)
 		return (NULL);
 	return (search_in_path(command, path_env));
-}
-
-void	ft_errorcode_exit(char *command, char *path)
-{
-	ft_putstr_fd(command, 2);
-	if (ft_strcmp(command, ".") == 0)
-	{
-		ft_putendl_fd(": filename argument required", 2);
-		ft_putendl_fd(".: usage: . filename [arguments]", STDERR_FILENO);
-		free(path);
-		exit(2);
-	}
-	if (ft_strcmp(path, command) == 0 && !(ft_strncmp(command, "./",
-				2) == 0 || ft_strncmp(command, "/", 1) == 0
-			|| ft_strncmp(command, "../", 3) == 0))
-		ft_putendl_fd(": command not found", 2);
-	else
-	{
-		ft_putstr_fd(": ", 2);
-		ft_putendl_fd(strerror(errno), 2);
-	}
-	free(path);
-	if (errno == EACCES || errno == EISDIR)
-		exit(126);
-	exit(127);
 }
 
 static void	execute_child_process(char *command_path, char **args)

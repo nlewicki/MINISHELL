@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fake_globals.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 10:09:25 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/10/21 13:30:17 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/10/22 11:38:51 by mhummel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,9 @@ char	***env_vars(void)
 	return (&env);
 }
 
-int *is_expanded(void)
+int	*is_expanded(void)
 {
-	static int expanded = 0;
+	static int	expanded = 0;
 
 	return (&expanded);
 }

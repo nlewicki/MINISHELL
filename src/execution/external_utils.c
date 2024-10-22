@@ -3,14 +3,39 @@
 /*                                                        :::      ::::::::   */
 /*   external_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 11:10:53 by mhummel           #+#    #+#             */
-/*   Updated: 2024/10/18 14:45:59 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/10/22 11:39:33 by mhummel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	ft_errorcode_exit(char *command, char *path)
+{
+	ft_putstr_fd(command, 2);
+	if (ft_strcmp(command, ".") == 0)
+	{
+		ft_putendl_fd(": filename argument required", 2);
+		ft_putendl_fd(".: usage: . filename [arguments]", STDERR_FILENO);
+		free(path);
+		exit(2);
+	}
+	if (ft_strcmp(path, command) == 0 && !(ft_strncmp(command, "./", 2) == 0
+			|| ft_strncmp(command, "/", 1) == 0 || ft_strncmp(command, "../",
+				3) == 0))
+		ft_putendl_fd(": command not found", 2);
+	else
+	{
+		ft_putstr_fd(": ", 2);
+		ft_putendl_fd(strerror(errno), 2);
+	}
+	free(path);
+	if (errno == EACCES || errno == EISDIR)
+		exit(126);
+	exit(127);
+}
 
 int	handle_command_not_found(char **args)
 {

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 09:08:07 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/10/22 12:38:59 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/10/22 12:44:35 by mhummel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -201,6 +201,7 @@ int					ft_trim_len(char *input);
 // execute_external_utils
 int					handle_command_not_found(char **args);
 int					handle_parent_process(pid_t pid, char *command_path);
+void				ft_errorcode_exit(char *command, char *path);
 // builtins
 // cd
 int					ft_cd(char *argv[], int argc);
