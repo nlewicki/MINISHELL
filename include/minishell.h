@@ -112,13 +112,11 @@ size_t				count_lines(t_list *tokens);
 void				process_command(t_info *info);
 t_list				*free_info_return_table(t_info *info);
 t_list				*create_tabel(t_list *tokens);
-
 // create_tabel2.c
 t_command			*init_cmd(void);
 int					is_redirection_tabel(t_token *current_token);
 void				reset_info(t_info *info);
 void				count_words_redirections(t_list **tokens, t_info *info);
-
 // create_tabel3.c
 t_command			*allocate_cmd(t_command *new_cmd, t_list *token_position,
 						t_info *info);
@@ -133,20 +131,16 @@ char				*get_our_env(const char *name);
 void				remove_empty_arg(t_command *row, size_t *i);
 void				handle_expansion(t_command *cmd);
 t_list				*expansion(t_list *tabel);
-
 // expand2.c
 size_t				get_result_len(char *result);
 char				*copy_until_dollar(char **result, char *start, char *end);
 char				*get_var_name(char **end);
 char				*append_var_value(char **result, char *var_value);
 char				*handle_dollar(char **result, char **start, char **end);
-
 // expand_env.c
 char				*expand_env_variables(char *src);
-
 // expand_process_arg.c
 void				process_arg(t_command *cmd, size_t *i);
-
 // expand_quotes.c
 void				remove_quotes(t_command *cmd);
 
@@ -155,7 +149,6 @@ void				trim_str(t_trim *trim, char *input);
 char				*trim_whitespace(char *input);
 void				*check_syntax(char *input);
 t_list				*parse_input(char *input);
-
 // parsing_handler.c
 void				handle_non_specials(t_trim *trim, char *input);
 void				handle_operator(t_trim *trim, char *input);
@@ -169,7 +162,6 @@ void				fill_struct(t_token *token, char *content);
 // split_quotes.c
 char				**split_space_quotes(const char *input);
 void				free_token_array(char **tokens);
-
 // split_quotes2.c
 size_t				count_tokens(const char *str);
 char				*extract_token(const char *str, size_t *pos);
@@ -179,16 +171,12 @@ char				*handle_syntax_errors(const char *input);
 
 // trim_len.c
 int					ft_trim_len(char *input);
-
 // trim_len2.c
 bool				is_special_char(char c);
 
 //
-//
 //				BUILT-IN COMMANDS
 //
-//
-
 // cd.c
 int					ft_cd(char *argv[], int argc);
 
@@ -205,14 +193,12 @@ int					ft_export(char **args, int arg_count);
 int					ft_export_args(char *arg);
 int					mark_for_export(const char *name);
 int					print_sorted_env(void);
-
 // export_utils.c
 int					is_valid_identifier(const char *str);
 char				**copy_env(char **envp, int count);
 int					count_env_vars(char **envp);
 void				bubble_sort_env(char **envp, int count);
 int					compare_env(const void *a, const void *b);
-
 // export_utils2.c
 int					set_export_error(char *name, char *value);
 int					add_or_update_env(char *name, char *value);
@@ -227,11 +213,8 @@ int					pwd(void);
 int					ft_unset(char *argv[], int argc);
 
 //
-//
 //				EXECUTION
 //
-//
-
 // execute_command.c
 int					execute_command(t_list *tabel);
 void				exec_builtin(t_command *cmd, int builtin);
@@ -239,7 +222,6 @@ int					is_builtin(t_command *cmd);
 
 // execute_external.c
 int					execute_external_command(char **args);
-
 // execute_external_utils.c
 int					handle_command_not_found(char **args);
 int					handle_parent_process(pid_t pid, char *command_path);
@@ -247,7 +229,6 @@ void				ft_errorcode_exit(char *command, char *path);
 
 // pipes.c
 int					execute_piped_commands(t_list *command_list);
-
 // pipes_utils.c
 void				close_pipes(int pipe_fds[][2], int num_pipes);
 int					fork_and_execute(int pipe_fds[][2], t_list *current, int i,
@@ -261,7 +242,6 @@ int					redirect_input(char *file);
 int					redirect_output(char *file, int append);
 int					handle_heredoc(char *delimiter);
 int					handle_redirections(t_list *command_list);
-
 // redirection_utils.c
 void				restore_std_fds(int orig_stdin, int orig_stdout);
 int					is_redirection(char *symbol);
@@ -272,11 +252,6 @@ int					apply_redirections(t_command *cmd);
 // ft_exit.c
 int					ft_exit(char *args[]);
 
-//
-//
-//				UTILITY FUNCTIONS
-//
-//
 // fake_globals.c
 int					*exit_status(void);
 char				***env_vars(void);
@@ -290,6 +265,10 @@ void				handle_history(char *input);
 void				sigint_handler(int sig);
 void				handle_signals(void);
 
+//
+//				MAIN
+//
+//
 // utils.c
 void				free_tabel(void *content);
 
