@@ -6,7 +6,7 @@
 /*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 09:45:16 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/10/21 12:51:06 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/10/22 11:33:18 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,25 +42,6 @@ t_command	*init_cmd(void)
 	return (new_cmd);
 }
 
-t_info	*init_info(void)
-{
-	t_info	*info;
-
-	info = malloc(sizeof(t_info));
-	if (!info)
-		return (NULL);
-	info->nbr_words = 0;
-	info->nbr_reds = 0;
-	info->nbr_filenames = 0;
-	return (info);
-}
-
-void	reset_info(t_info *info)
-{
-	info->nbr_words = 0;
-	info->nbr_reds = 0;
-	info->nbr_filenames = 0;
-}
 
 int	is_redirection_tabel(t_token *current_token)
 {
@@ -138,7 +119,8 @@ t_command	*fill_cmd(t_command *cmd, t_list *position)
 	return (cmd);
 }
 
-t_command	*allocate_cmd(t_command *new_cmd, t_list *token_position, t_info *info)
+t_command	*allocate_cmd(t_command *new_cmd, t_list *token_position,
+		t_info *info)
 {
 	new_cmd->args = malloc(sizeof(char *) * (info->nbr_words + 1));
 	if (!new_cmd->args)
@@ -160,9 +142,29 @@ t_command	*allocate_cmd(t_command *new_cmd, t_list *token_position, t_info *info
 	return (new_cmd);
 }
 
+t_info	*init_info(void)
+{
+	t_info	*info;
+
+	info = malloc(sizeof(t_info));
+	if (!info)
+		return (NULL);
+	info->nbr_words = 0;
+	info->nbr_reds = 0;
+	info->nbr_filenames = 0;
+	return (info);
+}
+
+void	reset_info(t_info *info)
+{
+	info->nbr_words = 0;
+	info->nbr_reds = 0;
+	info->nbr_filenames = 0;
+}
+
 t_list	*create_tabel(t_list *tokens)
 {
-	t_list		*table = NULL;
+	t_list		*table;
 	size_t		blocks;
 	t_list		*tmp;
 	t_list		*tmp2;
@@ -170,13 +172,11 @@ t_list	*create_tabel(t_list *tokens)
 	t_list		*new_node;
 	t_info		*info;
 
+	table = NULL;
 	info = init_info();
 	if (!info)
 		return (NULL);
-
 	blocks = count_lines(tokens);
-	// printf("BLOCKS: %zu\n", blocks);
-
 	tmp = tokens;
 	while (blocks > 0 && tmp != NULL)
 	{
@@ -186,21 +186,15 @@ t_list	*create_tabel(t_list *tokens)
 		new_node = ft_lstnew((void *)new_cmd);
 		tmp2 = tmp;
 		count_words_redirections(&tmp, info);
-		// printf("nbr of words: %zu\n", info->nbr_words);
-		// printf("nbr of reds: %zu\n", info->nbr_reds);
-		// printf("nbr of filenames: %zu\n", info->nbr_filenames);
 		new_cmd = allocate_cmd(new_cmd, tmp2, info);
-
 		ft_lstadd_back(&table, new_node);
 		if (tmp == NULL)
 		{
 			blocks--;
-			// printf("[%zu]\n", blocks);
 			break ;
 		}
 		tmp = tmp->next;
 		blocks--;
-		// printf("[%zu]\n", blocks);
 	}
 	free(info);
 	return (table);
