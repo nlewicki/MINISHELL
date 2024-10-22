@@ -6,16 +6,11 @@
 /*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 11:22:47 by mhummel           #+#    #+#             */
-/*   Updated: 2024/10/22 12:20:49 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/10/22 12:37:24 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-static bool	is_special_char(char c)
-{
-	return (c == '|' || c == '<' || c == '>');
-}
 
 static void	handle_whitespace(t_trim *trim_info, char *str)
 {

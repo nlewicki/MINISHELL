@@ -23,6 +23,7 @@ CFILES =	src/main.c \
 			src/parsing/parsing.c \
 			src/parsing/parsing_handler.c \
 			src/parsing/split_quotes.c \
+			src/parsing/split_quotes2.c \
 			src/parsing/process_token.c \
 			src/parsing/create_linked_list.c \
 			src/parsing/create_tabel.c \
@@ -30,6 +31,7 @@ CFILES =	src/main.c \
 			src/parsing/create_tabel3.c \
 			src/parsing/syntax_errors.c \
 			src/parsing/trim_len.c \
+			src/parsing/trim_len2.c \
 			src/parsing/expand.c \
 			src/parsing/expand2.c \
 			src/parsing/expand_env.c \

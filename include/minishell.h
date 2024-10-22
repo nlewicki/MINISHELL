@@ -6,7 +6,7 @@
 /*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 09:08:07 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/10/22 12:20:08 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/10/22 12:38:59 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,6 +149,25 @@ void	trim_str(t_trim *trim, char *input);
 char	*trim_whitespace(char *input);
 void	*check_syntax(char *input);
 t_list	*parse_input(char *input);
+
+//process_token
+bool	command_exists(const char *command);
+void	fill_struct(t_token *token, char *content);
+
+//split_quotes
+char	**split_space_quotes(const char *input);
+void	free_token_array(char **tokens);
+//split_quotes2
+size_t	count_tokens(const char *str);
+char	*extract_token(const char *str, size_t *pos);
+
+//syntax_errors
+char	*handle_syntax_errors(const char *input);
+
+//trim_len
+int	ft_trim_len(char *input);
+//trim_len2
+bool	is_special_char(char c);
 
 
 void	process_arg(t_command *cmd, size_t *i);
