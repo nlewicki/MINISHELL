@@ -3,14 +3,31 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_handler.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 13:06:42 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/10/17 13:44:23 by mhummel          ###   ########.fr       */
+/*   Updated: 2024/10/22 12:18:06 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	handle_non_specials(t_trim *trim, char *input)
+{
+	if (ft_isspace(input[trim->i]))
+	{
+		if (!trim->is_space && trim->j > 0)
+		{
+			trim->result[trim->j++] = ' ';
+			trim->is_space = true;
+		}
+	}
+	else
+	{
+		trim->result[trim->j++] = input[trim->i];
+		trim->is_space = false;
+	}
+}
 
 void	handle_operator(t_trim *trim, char *input)
 {

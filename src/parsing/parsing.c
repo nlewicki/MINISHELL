@@ -6,13 +6,13 @@
 /*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 10:23:02 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/10/21 12:41:14 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/10/22 12:19:28 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-bool	isspecials(char c)
+static bool	isspecials(char c)
 {
 	char	*specials;
 
@@ -40,19 +40,8 @@ void	trim_str(t_trim *trim, char *input)
 			if (trim->error)
 				break ;
 		}
-		else if (ft_isspace(input[trim->i]))
-		{
-			if (!trim->is_space && trim->j > 0)
-			{
-				trim->result[trim->j++] = ' ';
-				trim->is_space = true;
-			}
-		}
 		else
-		{
-			trim->result[trim->j++] = input[trim->i];
-			trim->is_space = false;
-		}
+			handle_non_specials(trim, input);
 		trim->i++;
 	}
 	trim->result[trim->j] = '\0';
@@ -66,15 +55,12 @@ char	*trim_whitespace(char *input)
 	if (!input)
 		return (NULL);
 	trim.len = ft_trim_len(input);
-	// printf("\ntrim_len: [%zu]\n\n", trim.len);
 	trim.result = ft_calloc(sizeof(char), trim.len + 1);
 	if (!trim.result)
 		return (NULL);
 	trim_str(&trim, input);
 	if (trim.error == true)
 		return (free(trim.result), NULL);
-	// printf("trimmed: [%s]			len: [%zu]\n", trim.result,
-			// ft_strlen(trim.result));
 	free(input);
 	return (trim.result);
 }
@@ -100,7 +86,6 @@ t_list	*parse_input(char *input)
 	t_list	*list;
 
 	list = NULL;
-	// printf("input:   [%s]\n", input);
 	new = trim_whitespace(input);
 	if (!new)
 		return (NULL);
@@ -110,9 +95,6 @@ t_list	*parse_input(char *input)
 	free(new);
 	if (!tokens)
 		return (NULL);
-	// printf("\n");
-	// for (size_t i = 0; tokens[i]; i++)      // debugg
-	// 	printf("token: [%s]\n", tokens[i]); // debugg
 	if (create_linked_list(tokens, &list))
 	{
 		free_token_array(tokens);

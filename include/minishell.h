@@ -6,7 +6,7 @@
 /*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 09:08:07 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/10/22 12:09:33 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/10/22 12:20:08 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,6 +139,16 @@ char	*get_var_name(char **end);
 char	*append_var_value(char **result, char *var_value);
 char	*handle_dollar(char **result, char **start, char **end);
 
+//parsing_handler
+void	handle_non_specials(t_trim *trim, char *input);
+void	handle_operator(t_trim *trim, char *input);
+void	handle_quotes(t_trim *trim, char *input);
+void	handle_specials(t_trim *trim, char *input);
+//parsing
+void	trim_str(t_trim *trim, char *input);
+char	*trim_whitespace(char *input);
+void	*check_syntax(char *input);
+t_list	*parse_input(char *input);
 
 
 void	process_arg(t_command *cmd, size_t *i);
@@ -149,7 +159,7 @@ char				*handle_dollar(char **result, char **start, char **end);
 char				*copy_until_dollar(char **result, char *start, char *end);
 void				remove_quotes(t_command *cmd);
 t_list				*expansion(t_list *tabel);
-bool				isspecials(char c);
+// bool				isspecials(char c);
 int					ft_exit(char *args[]);
 int					execute_command(t_list *tabel);
 void				handle_operator(t_trim *trim, char *input);

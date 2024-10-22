@@ -6,7 +6,7 @@
 /*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 11:22:47 by mhummel           #+#    #+#             */
-/*   Updated: 2024/10/17 12:47:36 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/10/22 12:20:49 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static void	handle_whitespace(t_trim *trim_info, char *str)
 		trim_info->i++;
 }
 
-static void	handle_quotes(t_trim *trim_info, char *str)
+static void	handle_quotes_len(t_trim *trim_info, char *str)
 {
 	char	quote_char;
 
@@ -73,7 +73,7 @@ int	ft_trim_len(char *input)
 		if (isspace(input[trim_info.i]))
 			handle_whitespace(&trim_info, input);
 		else if (input[trim_info.i] == '\'' || input[trim_info.i] == '\"')
-			handle_quotes(&trim_info, input);
+			handle_quotes_len(&trim_info, input);
 		else if ((input[trim_info.i] == '<' && input[trim_info.i + 1] == '<')
 			|| (input[trim_info.i] == '>' && input[trim_info.i + 1] == '>'))
 			handle_double_redirection(&trim_info, input);
