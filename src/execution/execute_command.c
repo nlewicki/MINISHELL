@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_command.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 09:59:19 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/10/21 13:26:42 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/10/22 11:38:38 by mhummel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,8 @@ int	is_builtin(t_command *cmd)
 
 void	exec_builtin(t_command *cmd, int builtin)
 {
-	int		argc;
-	int		result;
+	int	argc;
+	int	result;
 
 	result = 0;
 	argc = nbr_of_args(cmd->args);
@@ -77,13 +77,9 @@ int	execute_command(t_list *tabel)
 	tmp = tabel;
 	builtin = is_builtin((t_command *)tmp->content);
 	if (builtin)
-	{
-		// write(1, "builtin\n", 8);
 		exec_builtin((t_command *)tmp->content, builtin);
-	}
 	else
 	{
-		// write(1, "not a builtin\n", 14);
 		result = execute_external_command(((t_command *)tmp->content)->args);
 		*exit_status() = result;
 	}

@@ -3,14 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   create_tabel.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 09:45:16 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/10/22 11:33:18 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/10/22 11:36:36 by mhummel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	reset_info(t_info *info);
 
 size_t	count_lines(t_list *tokens)
 {

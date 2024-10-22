@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 10:16:29 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/10/21 10:29:07 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/10/22 11:41:25 by mhummel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,10 @@ int	redirect_output(char *file, int append)
 	int	flags;
 
 	flags = O_WRONLY | O_CREAT;
-	flags |= (append) ? O_APPEND : O_TRUNC; // grrrrrrrrrr
+	if (append)
+		flags = flags | O_APPEND;
+	else
+		flags = flags | O_TRUNC;
 	fd = open(file, flags, 0644);
 	if (fd < 0)
 	{
