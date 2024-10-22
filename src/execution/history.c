@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   history.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nicolewicki <nicolewicki@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 12:38:54 by mhummel           #+#    #+#             */
-/*   Updated: 2024/10/22 13:36:55 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/10/22 14:12:27 by nicolewicki      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	clear_shell_history(void)
 {
-	rl_clear_history();
+	// rl_clear_history();
 }
 
 void	handle_history(char *input)
