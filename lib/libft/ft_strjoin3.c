@@ -6,7 +6,7 @@
 /*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 11:08:02 by mhummel           #+#    #+#             */
-/*   Updated: 2024/10/18 11:08:12 by mhummel          ###   ########.fr       */
+/*   Updated: 2024/10/22 13:01:10 by mhummel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,10 @@
 
 char	*ft_strjoin3(const char *s1, const char *s2, const char *s3)
 {
-	char *result;
-	size_t len1, len2, len3;
+	char	*result;
+	size_t	len1;
+	size_t	len2;
+	size_t	len3;
 
 	if (!s1 || !s2 || !s3)
 		return (NULL);

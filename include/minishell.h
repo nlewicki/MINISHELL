@@ -6,7 +6,7 @@
 /*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 09:08:07 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/10/22 12:44:35 by mhummel          ###   ########.fr       */
+/*   Updated: 2024/10/22 13:02:16 by mhummel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,80 +97,83 @@ typedef struct s_command
 	char			**red_symbol;
 }					t_command;
 
-
 //----- parsing -----
 // create_linked_list
-void	free_token(void *content);
-int	create_linked_list(char **tokens, t_list **list);
+void				free_token(void *content);
+int					create_linked_list(char **tokens, t_list **list);
 
-//create_tabel
-t_info	*init_info(void);
-size_t	count_lines(t_list *tokens);
-void	process_command(t_info *info);
-t_list	*free_info_return_table(t_info *info);
-t_list	*create_tabel(t_list *tokens);
-//create_tabel2
-t_command	*init_cmd(void);
-int	is_redirection_tabel(t_token *current_token);
-void	reset_info(t_info *info);
-void	count_words_redirections(t_list **tokens, t_info *info);
-//create_tabel3
-t_command	*allocate_cmd(t_command *new_cmd, t_list *token_position,
-		t_info *info);
-void	process_redirection(t_command *cmd, t_list **tmp, size_t *j);;
-void	process_argument(t_command *cmd, t_token *current_token, size_t *i);
-t_command	*fill_cmd(t_command *cmd, t_list *position);
+// create_tabel
+t_info				*init_info(void);
+size_t				count_lines(t_list *tokens);
+void				process_command(t_info *info);
+t_list				*free_info_return_table(t_info *info);
+t_list				*create_tabel(t_list *tokens);
+// create_tabel2
+t_command			*init_cmd(void);
+int					is_redirection_tabel(t_token *current_token);
+void				reset_info(t_info *info);
+void				count_words_redirections(t_list **tokens, t_info *info);
+// create_tabel3
+t_command			*allocate_cmd(t_command *new_cmd, t_list *token_position,
+						t_info *info);
+void				process_redirection(t_command *cmd, t_list **tmp,
+						size_t *j);
+;
+void				process_argument(t_command *cmd, t_token *current_token,
+						size_t *i);
+t_command			*fill_cmd(t_command *cmd, t_list *position);
 
-//expand_env
-char	*expand_env_variables(char *src);
-//expand_process_arg
-void	process_arg(t_command *cmd, size_t *i);
-//expand_quotes
-void	remove_quotes(t_command *cmd);
-//expand
-char	*get_our_env(const char *name);
-void	remove_empty_arg(t_command *row, size_t *i);;
-void	handle_expansion(t_command *cmd);
-t_list	*expansion(t_list *tabel);
-//expand2
-size_t	get_result_len(char *result);
-char	*copy_until_dollar(char **result, char *start, char *end);;
-char	*get_var_name(char **end);
-char	*append_var_value(char **result, char *var_value);
-char	*handle_dollar(char **result, char **start, char **end);
+// expand_env
+char				*expand_env_variables(char *src);
+// expand_process_arg
+void				process_arg(t_command *cmd, size_t *i);
+// expand_quotes
+void				remove_quotes(t_command *cmd);
+// expand
+char				*get_our_env(const char *name);
+void				remove_empty_arg(t_command *row, size_t *i);
+;
+void				handle_expansion(t_command *cmd);
+t_list				*expansion(t_list *tabel);
+// expand2
+size_t				get_result_len(char *result);
+char				*copy_until_dollar(char **result, char *start, char *end);
+;
+char				*get_var_name(char **end);
+char				*append_var_value(char **result, char *var_value);
+char				*handle_dollar(char **result, char **start, char **end);
 
-//parsing_handler
-void	handle_non_specials(t_trim *trim, char *input);
-void	handle_operator(t_trim *trim, char *input);
-void	handle_quotes(t_trim *trim, char *input);
-void	handle_specials(t_trim *trim, char *input);
-//parsing
-void	trim_str(t_trim *trim, char *input);
-char	*trim_whitespace(char *input);
-void	*check_syntax(char *input);
-t_list	*parse_input(char *input);
+// parsing_handler
+void				handle_non_specials(t_trim *trim, char *input);
+void				handle_operator(t_trim *trim, char *input);
+void				handle_quotes(t_trim *trim, char *input);
+void				handle_specials(t_trim *trim, char *input);
+// parsing
+void				trim_str(t_trim *trim, char *input);
+char				*trim_whitespace(char *input);
+void				*check_syntax(char *input);
+t_list				*parse_input(char *input);
 
-//process_token
-bool	command_exists(const char *command);
-void	fill_struct(t_token *token, char *content);
+// process_token
+bool				command_exists(const char *command);
+void				fill_struct(t_token *token, char *content);
 
-//split_quotes
-char	**split_space_quotes(const char *input);
-void	free_token_array(char **tokens);
-//split_quotes2
-size_t	count_tokens(const char *str);
-char	*extract_token(const char *str, size_t *pos);
+// split_quotes
+char				**split_space_quotes(const char *input);
+void				free_token_array(char **tokens);
+// split_quotes2
+size_t				count_tokens(const char *str);
+char				*extract_token(const char *str, size_t *pos);
 
-//syntax_errors
-char	*handle_syntax_errors(const char *input);
+// syntax_errors
+char				*handle_syntax_errors(const char *input);
 
-//trim_len
-int	ft_trim_len(char *input);
-//trim_len2
-bool	is_special_char(char c);
+// trim_len
+int					ft_trim_len(char *input);
+// trim_len2
+bool				is_special_char(char c);
 
-
-void	process_arg(t_command *cmd, size_t *i);
+void				process_arg(t_command *cmd, size_t *i);
 
 int					*is_expanded(void);
 char				*expand_env_variables(char *src);
@@ -195,8 +198,6 @@ int					ft_exit(char *args[]);
 void				handle_shlvl(void);
 char				*expand_env_variables(char *src);
 int					ft_trim_len(char *input);
-
-
 
 // execute_external_utils
 int					handle_command_not_found(char **args);
@@ -273,7 +274,7 @@ void				sigint_handler(int sig);
 void				handle_signals(void);
 // utils
 int					strcasecmp_custom(const char *s1, const char *s2);
-
+void				free_tabel(void *content);
 // main
 int					execution(t_list *tabel);
 int					exec_new_shell(char **argv);

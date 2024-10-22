@@ -3,55 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 11:20:30 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/10/21 15:14:13 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/10/22 13:05:19 by mhummel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int		g_signal = 0;
-
-void free_tabel(void *content)
-{
-	t_command *cmd = (t_command *)content;
-	size_t i;
-
-	if (cmd->args)
-	{
-		i = 0;
-		while (cmd->args[i])
-		{
-			free(cmd->args[i]);
-			i++;
-		}
-		free(cmd->args);
-	}
-	if (cmd->filename)
-	{
-		i = 0;
-		while (cmd->filename[i])
-		{
-			free(cmd->filename[i]);
-			i++;
-		}
-		free(cmd->filename);
-	}
-	if (cmd->red_symbol)
-	{
-		i = 0;
-		while (cmd->red_symbol[i])
-		{
-			free(cmd->red_symbol[i]);
-			i++;
-		}
-		free(cmd->red_symbol);
-	}
-	free(cmd);
-}
-
+int			g_signal = 0;
 
 int	execution(t_list *tabel)
 {
@@ -74,12 +35,26 @@ int	execution(t_list *tabel)
 	return (result);
 }
 
-void	main_loop(void)
+static void	process_command_main(char *input)
 {
-	char	*input;
 	t_list	*tokens;
 	t_list	*tabel;
 	t_list	*new_tabel;
+
+	handle_history(input);
+	tokens = parse_input(input);
+	if (tokens == NULL)
+		return ;
+	tabel = create_tabel(tokens);
+	new_tabel = expansion(tabel);
+	execution(new_tabel);
+	ft_lstclear(&tokens, free_token);
+	ft_lstclear(&tabel, free_tabel);
+}
+
+void	main_loop(void)
+{
+	char	*input;
 
 	while (1)
 	{
@@ -87,53 +62,29 @@ void	main_loop(void)
 		input = readline("minishell> ");
 		if (!input)
 			break ;
-		else if (input[0] != '\0')
-		{
-			handle_history(input);
-			tokens = parse_input(input);
-			if (tokens == NULL)
-			{
-				free(input);
-				continue ;
-			}
-			// print_token_list(tokens);
-			tabel = create_tabel(tokens);
-			// print_tabel(tabel);
-			new_tabel = expansion(tabel);
-			// print_tabel(new_tabel);
-			execution(new_tabel);
-			free(input);
-			ft_lstclear(&tokens, free_token);
-			ft_lstclear(&tabel, free_tabel);
-		}
+		if (input[0] != '\0')
+			process_command_main(input);
+		free(input);
 	}
 	printf("exit\n");
 }
 
-void check_l(void)
+void	check_l(void)
 {
 	system("leaks minishell");
 }
 
 int	main(int argc, char **argv, char **envp)
 {
-	// atexit(check_l);
 	(void)argc;
 	(void)argv;
 	if (*env_vars() == NULL)
 		*env_vars() = copy_envp(envp);
 	if (!env_vars())
 		return (perror("Failed to copy envp"), 1);
-
-	// debugg
-	// char **env = *env_vars();
-	// for (int i = 0; env[i]; i++)
-	// 	printf("env[%d]: %s\n", i, env[i]);
-	// printf("\nPATH: %s\n", get_our_env("PATH"));
 	*exit_status() = 0;
 	*is_expanded() = 0;
 	handle_shlvl();
 	handle_signals();
 	main_loop();
-	// return (*exit_status());
 }
