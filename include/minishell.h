@@ -96,7 +96,11 @@ typedef struct s_command
 	char			**red_symbol;
 }					t_command;
 
-// Parsing
+//
+//
+//				PARSING
+//
+//
 
 // create_linked_list.c
 void				free_token(void *content);
@@ -179,7 +183,11 @@ int					ft_trim_len(char *input);
 // trim_len2.c
 bool				is_special_char(char c);
 
-// Built-in Commands
+//
+//
+//				BUILT-IN COMMANDS
+//
+//
 
 // cd.c
 int					ft_cd(char *argv[], int argc);
@@ -218,7 +226,11 @@ int					pwd(void);
 // unset.c
 int					ft_unset(char *argv[], int argc);
 
-// Execution
+//
+//
+//				EXECUTION
+//
+//
 
 // execute_command.c
 int					execute_command(t_list *tabel);
@@ -260,8 +272,11 @@ int					apply_redirections(t_command *cmd);
 // ft_exit.c
 int					ft_exit(char *args[]);
 
-// Utility Functions
-
+//
+//
+//				UTILITY FUNCTIONS
+//
+//
 // fake_globals.c
 int					*exit_status(void);
 char				***env_vars(void);
