@@ -6,7 +6,7 @@
 /*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 09:50:19 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/10/18 10:16:51 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/10/22 12:07:35 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,8 @@ static void	handle_double_quotes(char *str, int *i)
 		end++;
 	if (str[end] == '\"')
 	{
-		shift_string(str + start, 0, 1); // Remove opening "
-		shift_string(str + end - 1, 0, 1); // Remove closing "
+		shift_string(str + start, 0, 1);
+		shift_string(str + end - 1, 0, 1);
 		*i = end - 2;
 	}
 	else
@@ -61,7 +61,7 @@ static void	handle_single_quotes(char *str, int *i)
 		*i = end;
 }
 
-void	strip_quotes(char *str)
+static void	strip_quotes(char *str)
 {
 	int	i;
 

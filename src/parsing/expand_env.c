@@ -6,7 +6,7 @@
 /*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 10:05:50 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/10/18 14:12:02 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/10/22 12:01:37 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ char	*expand_env_variables(char *src)
 		{
 			if (!expand_variable(&result, &start, &end))
 				return (NULL);
-			continue;
+			continue ;
 		}
 		end++;
 	}

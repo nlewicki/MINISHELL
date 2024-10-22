@@ -6,7 +6,7 @@
 /*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 10:08:44 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/10/21 15:02:30 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/10/22 12:02:22 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,6 @@ char	*handle_dollar(char **result, char **start, char **end)
 	char	*var_name;
 	char	*var_value;
 	char	tmp;
-
 
 	(*end)++;
 	if (**end == '?')

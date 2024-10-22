@@ -6,7 +6,7 @@
 /*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 09:08:07 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/10/22 11:59:58 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/10/22 12:09:33 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,6 +121,27 @@ void	process_redirection(t_command *cmd, t_list **tmp, size_t *j);;
 void	process_argument(t_command *cmd, t_token *current_token, size_t *i);
 t_command	*fill_cmd(t_command *cmd, t_list *position);
 
+//expand_env
+char	*expand_env_variables(char *src);
+//expand_process_arg
+void	process_arg(t_command *cmd, size_t *i);
+//expand_quotes
+void	remove_quotes(t_command *cmd);
+//expand
+char	*get_our_env(const char *name);
+void	remove_empty_arg(t_command *row, size_t *i);;
+void	handle_expansion(t_command *cmd);
+t_list	*expansion(t_list *tabel);
+//expand2
+size_t	get_result_len(char *result);
+char	*copy_until_dollar(char **result, char *start, char *end);;
+char	*get_var_name(char **end);
+char	*append_var_value(char **result, char *var_value);
+char	*handle_dollar(char **result, char **start, char **end);
+
+
+
+void	process_arg(t_command *cmd, size_t *i);
 
 int					*is_expanded(void);
 char				*expand_env_variables(char *src);
@@ -221,7 +242,6 @@ int					apply_redirections(t_command *cmd);
 void				sigint_handler(int sig);
 void				handle_signals(void);
 // utils
-void				strip_quotes(char *str);
 int					strcasecmp_custom(const char *s1, const char *s2);
 
 // main
