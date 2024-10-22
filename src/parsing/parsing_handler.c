@@ -6,7 +6,7 @@
 /*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 13:06:42 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/10/22 12:18:06 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/10/22 13:36:50 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,16 +78,5 @@ void	handle_specials(t_trim *trim, char *input)
 	{
 		handle_operator(trim, input);
 		trim->is_space = true;
-	}
-}
-
-void	handle_history(char *input)
-{
-	if (g_signal == 0)
-	{
-		if (ft_strlen(input) > 0)
-			add_history(input);
-		else
-			free(input);
 	}
 }

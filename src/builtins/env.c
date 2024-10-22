@@ -6,7 +6,7 @@
 /*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 11:01:10 by mhummel           #+#    #+#             */
-/*   Updated: 2024/10/21 14:43:10 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/10/22 13:23:57 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ char	**copy_envp(char **envp)
 	i = 0;
 	while (envp[i])
 	{
-		new_envp[i] = strdup(envp[i]);
+		new_envp[i] = ft_strdup(envp[i]);
 		if (!new_envp[i])
 		{
 			while (i--)

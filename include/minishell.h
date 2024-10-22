@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 09:08:07 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/10/22 13:02:16 by mhummel          ###   ########.fr       */
+/*   Updated: 2024/10/22 13:37:52 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,7 @@
 # include <sys/wait.h>
 # include <unistd.h>
 
-# define MAX_ARGS 100
-# define MAX_REDIRECTIONS 10
+# define MAX_ARGS 1024
 
 extern int			g_signal;
 
@@ -173,20 +172,54 @@ int					ft_trim_len(char *input);
 // trim_len2
 bool				is_special_char(char c);
 
-void				process_arg(t_command *cmd, size_t *i);
+//---- builtins ----
+// cd
+int			ft_cd(char *argv[], int argc);
 
+// echo
+int	ft_echo(char *argv[], int argc);
+
+// env
+int		env(void);
+char	**copy_envp(char **envp);
+void	free_env(char **my_envp);
+
+// export_utils
+int	is_valid_identifier(const char *str);
+char	**copy_env(char **envp, int count);
+int	count_env_vars(char **envp);
+void	bubble_sort_env(char **envp, int count);
+int	compare_env(const void *a, const void *b);
+// export_utils2
+int	set_export_error(char *name, char *value);
+int	add_or_update_env(char *name, char *value);
+char	*create_new_var(char *new_var, const char *name, char *value);
+int	add_new_env_var(const char *name, char *value, int i);
+// export
+int	ft_export(char **args, int arg_count);
+int ft_export_args(char *arg);
+int	mark_for_export(const char *name);
+int	print_sorted_env(void);
+
+// pwd
+int	pwd(void);
+
+// unset
+int	ft_unset(char *argv[], int argc);
+
+
+
+
+// --- execution ---
 int					*is_expanded(void);
 char				*expand_env_variables(char *src);
 char				*handle_dollar(char **result, char **start, char **end);
 char				*copy_until_dollar(char **result, char *start, char *end);
 void				remove_quotes(t_command *cmd);
-t_list				*expansion(t_list *tabel);
-// bool				isspecials(char c);
 int					ft_exit(char *args[]);
 int					execute_command(t_list *tabel);
 void				handle_operator(t_trim *trim, char *input);
 void				handle_specials(t_trim *trim, char *input);
-void				handle_history(char *input);
 void				fill_struct(t_token *token, char *content);
 int					create_linked_list(char **tokens, t_list **list);
 void				print_token_list(t_list *list);
@@ -203,47 +236,13 @@ int					ft_trim_len(char *input);
 int					handle_command_not_found(char **args);
 int					handle_parent_process(pid_t pid, char *command_path);
 void				ft_errorcode_exit(char *command, char *path);
-// builtins
-// cd
-int					ft_cd(char *argv[], int argc);
-// echo
-int					ft_echo(char *argv[], int argc);
-// env
-int					env(void);
-void				set_env_vars(char **envp);
-char				**copy_envp(char **envp);
-void				free_env(char **my_envp);
-// export
-int					print_sorted_env(void);
-int					mark_for_export(const char *name);
-int					ft_export_args(char *arg);
-int					ft_export(char **args, int arg_count);
-// export_utils
-int					compare_env(const void *a, const void *b);
-void				bubble_sort_env(char **envp, int count);
-int					count_env_vars(char **envp);
-char				**copy_env(char **envp, int count);
-int					is_valid_identifier(const char *str);
-// export_utils2
-int					add_new_env_var(const char *name, char *value, int i);
-char				*create_new_var(char *new_var, const char *name,
-						char *value);
-int					add_or_update_env(char *name, char *value);
-int					set_export_error(char *name, char *value);
-// pwd
-int					pwd(void);
-// unset
-int					ft_unset(char *argv[], int argc);
-// expand
-char				*get_our_env(const char *var_name);
-size_t				calculate_expanded_length(const char *src,
-						int in_single_quotes);
 
 // fake globals
 int					*exit_status(void);
 char				***env_vars(void);
 // history
 void				clear_shell_history(void);
+void	handle_history(char *input);
 // path
 char				*search_path(const char *file);
 int					execute_external_command(char **args);
@@ -281,12 +280,6 @@ int					exec_new_shell(char **argv);
 void				main_loop(void);
 void				handle_shlvl(void);
 t_list				*parse_input(char *input);
-void				handle_history(char *input);
 
-// split quotes
-void				free_token_array(char **tokens);
-char				**split_space_quotes(const char *input);
-// syntax errors
-char				*handle_syntax_errors(const char *input);
 
 #endif
