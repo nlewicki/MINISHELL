@@ -26,6 +26,8 @@ CFILES =	src/main.c \
 			src/parsing/process_token.c \
 			src/parsing/create_linked_list.c \
 			src/parsing/create_tabel.c \
+			src/parsing/create_tabel2.c \
+			src/parsing/create_tabel3.c \
 			src/parsing/print_tabel.c \
 			src/parsing/print_list.c \
 			src/parsing/syntax_errors.c \

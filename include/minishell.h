@@ -6,7 +6,7 @@
 /*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 09:08:07 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/10/21 13:30:29 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/10/22 11:59:58 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <ctype.h>
 # include <errno.h>
 # include <fcntl.h>
+# include <limits.h>
 # include <readline/history.h>
 # include <readline/readline.h>
 # include <signal.h>
@@ -25,10 +26,9 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <string.h>
-# include <unistd.h>
-# include <limits.h>
 # include <sys/stat.h>
 # include <sys/wait.h>
+# include <unistd.h>
 
 # define MAX_ARGS 100
 # define MAX_REDIRECTIONS 10
@@ -45,14 +45,18 @@ typedef enum s_builtin_type
 	EXPORT,
 	UNSET,
 	ECHO
-}				t_builtin_type;
+}					t_builtin_type;
 
 typedef struct s_info
 {
-	size_t	nbr_words;
-	size_t	nbr_reds;
-	size_t	nbr_filenames;
-}	t_info;
+	int				nbr_words;
+	int				nbr_reds;
+	int				nbr_filenames;
+	size_t			blocks;
+	t_list			*table;
+	t_list			*tmp;
+	t_list			*tmp2;
+}					t_info;
 
 typedef struct s_redirection
 {
@@ -93,7 +97,32 @@ typedef struct s_command
 	char			**red_symbol;
 }					t_command;
 
-int *is_expanded(void);
+
+//----- parsing -----
+// create_linked_list
+void	free_token(void *content);
+int	create_linked_list(char **tokens, t_list **list);
+
+//create_tabel
+t_info	*init_info(void);
+size_t	count_lines(t_list *tokens);
+void	process_command(t_info *info);
+t_list	*free_info_return_table(t_info *info);
+t_list	*create_tabel(t_list *tokens);
+//create_tabel2
+t_command	*init_cmd(void);
+int	is_redirection_tabel(t_token *current_token);
+void	reset_info(t_info *info);
+void	count_words_redirections(t_list **tokens, t_info *info);
+//create_tabel3
+t_command	*allocate_cmd(t_command *new_cmd, t_list *token_position,
+		t_info *info);
+void	process_redirection(t_command *cmd, t_list **tmp, size_t *j);;
+void	process_argument(t_command *cmd, t_token *current_token, size_t *i);
+t_command	*fill_cmd(t_command *cmd, t_list *position);
+
+
+int					*is_expanded(void);
 char				*expand_env_variables(char *src);
 char				*handle_dollar(char **result, char **start, char **end);
 char				*copy_until_dollar(char **result, char *start, char *end);
@@ -117,9 +146,11 @@ void				handle_shlvl(void);
 char				*expand_env_variables(char *src);
 int					ft_trim_len(char *input);
 
+
+
 // execute_external_utils
-int	handle_command_not_found(char **args);
-int	handle_parent_process(pid_t pid, char *command_path);
+int					handle_command_not_found(char **args);
+int					handle_parent_process(pid_t pid, char *command_path);
 // builtins
 // cd
 int					ft_cd(char *argv[], int argc);
@@ -173,7 +204,8 @@ void				close_pipes(int pipe_fds[][2], int num_pipes);
 int					fork_and_execute(int pipe_fds[][2], t_list *current, int i,
 						int num_commands);
 int					wait_for_children(void);
-int					setup_child_pipes(int pipe_fds[][2], int i, int num_commands);
+int					setup_child_pipes(int pipe_fds[][2], int i,
+						int num_commands);
 // redirection
 int					redirect_input(char *file);
 int					redirect_output(char *file, int append);
