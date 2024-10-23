@@ -6,7 +6,7 @@
 /*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 11:22:47 by mhummel           #+#    #+#             */
-/*   Updated: 2024/10/22 12:37:24 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/10/23 12:32:06 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static void	handle_whitespace(t_trim *trim_info, char *str)
 {
 	trim_info->len++;
-	while (str[trim_info->i] != '\0' && isspace(str[trim_info->i]))
+	while (str[trim_info->i] != '\0' && ft_isspace(str[trim_info->i]))
 		trim_info->i++;
 }
 
@@ -37,22 +37,22 @@ static void	handle_quotes_len(t_trim *trim_info, char *str)
 
 static void	handle_special_char(t_trim *trim_info, char *str)
 {
-	if (trim_info->i > 0 && !isspace(str[trim_info->i - 1])
+	if (trim_info->i > 0 && !ft_isspace(str[trim_info->i - 1])
 		&& !is_special_char(str[trim_info->i - 1]))
 		trim_info->len++;
 	trim_info->len++;
-	if (str[trim_info->i + 1] != '\0' && !isspace(str[trim_info->i + 1]))
+	if (str[trim_info->i + 1] != '\0' && !ft_isspace(str[trim_info->i + 1]))
 		trim_info->len++;
 	trim_info->i++;
 }
 
 static void	handle_double_redirection(t_trim *trim_info, char *str)
 {
-	if (trim_info->i > 0 && !isspace(str[trim_info->i - 1])
+	if (trim_info->i > 0 && !ft_isspace(str[trim_info->i - 1])
 		&& !is_special_char(str[trim_info->i - 1]))
 		trim_info->len++;
 	trim_info->len += 2;
-	if (str[trim_info->i + 2] != '\0' && !isspace(str[trim_info->i + 2]))
+	if (str[trim_info->i + 2] != '\0' && !ft_isspace(str[trim_info->i + 2]))
 		trim_info->len++;
 	trim_info->i += 2;
 }
