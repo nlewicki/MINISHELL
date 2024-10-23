@@ -6,7 +6,7 @@
 /*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 11:20:30 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/10/23 13:49:11 by mhummel          ###   ########.fr       */
+/*   Updated: 2024/10/23 14:21:11 by mhummel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,14 +45,8 @@ void	main_loop(void)
 	printf("exit\n");
 }
 
-void	check_l(void)
-{
-	system("leaks minishell");
-}
-
 int	main(int argc, char **argv, char **envp)
 {
-	// atexit(check_l);
 	(void)argc;
 	(void)argv;
 	if (*env_vars() == NULL)
