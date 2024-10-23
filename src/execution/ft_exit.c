@@ -6,11 +6,18 @@
 /*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 10:38:59 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/10/21 14:46:50 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/10/23 11:17:25 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static void	calculate_exit(int *exit_code, char *args[])
+{
+	*exit_code = ft_atoi(args[1]);
+	*exit_code = *exit_code % 256;
+	*exit_status() = *exit_code;
+}
 
 int	ft_exit(char *args[])
 {
@@ -23,17 +30,17 @@ int	ft_exit(char *args[])
 		{
 			ft_putendl_fd("exit: numeric argument required", 2);
 			*exit_status() = 255;
-			exit(*exit_status());
+			return (255);
 		}
 		if (args[2])
 		{
 			ft_putendl_fd("exit: too many arguments", 2);
 			*exit_status() = 1;
-			exit(*exit_status());
+			return (1);
 		}
-		exit_code = ft_atoi(args[1]);
-		exit_code = exit_code % 256;
-		*exit_status() = exit_code;
+		else
+			calculate_exit(&exit_code, args);
+		printf("%d", exit_code);
 	}
 	exit_code = *exit_status();
 	free_env(*env_vars());

@@ -83,3 +83,10 @@ cat
 This is a test.
 Second line of test.
 EOF
+
+exit should not work with wrong input!!
+
+signal cntrl C should be only new line
+
+in cat cntrl \ should do nothing?
+
