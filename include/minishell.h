@@ -109,11 +109,13 @@ size_t				count_lines(t_list *tokens);
 void				process_command(t_info *info);
 t_list				*free_info_return_table(t_info *info);
 t_list				*create_tabel(t_list *tokens);
+
 // create_tabel2.c
 t_command			*init_cmd(void);
 int					is_redirection_tabel(t_token *current_token);
 void				reset_info(t_info *info);
 void				count_words_redirections(t_list **tokens, t_info *info);
+
 // create_tabel3.c
 t_command			*allocate_cmd(t_command *new_cmd, t_list *token_position,
 						t_info *info);
@@ -125,15 +127,19 @@ t_command			*fill_cmd(t_command *cmd, t_list *position);
 
 // expand_env.c
 char				*expand_env_variables(char *src);
+
 // expand_process_arg.c
 void				process_arg(t_command *cmd, size_t *i);
+
 // expand_quotes.c
 void				remove_quotes(t_command *cmd);
+
 // expand.c
 char				*get_our_env(const char *name);
 void				remove_empty_arg(t_command *row, size_t *i);
 void				handle_expansion(t_command *cmd);
 t_list				*expansion(t_list *tabel);
+
 // expand2.c
 size_t				get_result_len(char *result);
 char				*copy_until_dollar(char **result, char *start, char *end);
@@ -146,6 +152,7 @@ void				handle_non_specials(t_trim *trim, char *input);
 void				handle_operator(t_trim *trim, char *input);
 void				handle_quotes(t_trim *trim, char *input);
 void				handle_specials(t_trim *trim, char *input);
+
 // parsing.c
 void				trim_str(t_trim *trim, char *input);
 char				*trim_whitespace(char *input);
@@ -168,6 +175,7 @@ char				*handle_syntax_errors(const char *input);
 
 // trim_len.c
 int					ft_trim_len(char *input);
+
 // trim_len2.c
 bool				is_special_char(char c);
 
@@ -220,6 +228,7 @@ int					execute_command(t_list *tabel);
 
 // execute_external.c
 int					execute_external_command(char **args);
+
 // execute_external_utils.c
 int					handle_command_not_found(char **args);
 int					handle_parent_process(pid_t pid, char *command_path);
@@ -256,11 +265,14 @@ int					is_redirection(char *symbol);
 void				print_redirection_error(char *filename, char *error_msg);
 int					apply_single_redirection(char *symbol, char *filename);
 int					apply_redirections(t_command *cmd);
+
 // redirection.c
 int					redirect_input(char *file);
 int					redirect_output(char *file, int append);
-int					handle_heredoc(char *delimiter);
 int					handle_redirections(t_list *command_list);
+
+// heredoc.c
+int					handle_heredoc(char *delimiter);
 
 // signal.c
 void				sigint_handler(int sig);
@@ -269,9 +281,11 @@ void				handle_signals(void);
 //
 //				MAIN
 //
+
 // main.c
 void				main_loop(void);
 void				handle_shlvl(void);
+
 // utils.c
 int					execution(t_list *tabel);
 void				free_tabel(void *content);
