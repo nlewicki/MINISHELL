@@ -126,6 +126,12 @@ void				process_argument(t_command *cmd, t_token *current_token,
 						size_t *i);
 t_command			*fill_cmd(t_command *cmd, t_list *position);
 
+// expand_env.c
+char				*expand_env_variables(char *src);
+// expand_process_arg.c
+void				process_arg(t_command *cmd, size_t *i);
+// expand_quotes.c
+void				remove_quotes(t_command *cmd);
 // expand.c
 char				*get_our_env(const char *name);
 void				remove_empty_arg(t_command *row, size_t *i);
@@ -137,31 +143,25 @@ char				*copy_until_dollar(char **result, char *start, char *end);
 char				*get_var_name(char **end);
 char				*append_var_value(char **result, char *var_value);
 char				*handle_dollar(char **result, char **start, char **end);
-// expand_env.c
-char				*expand_env_variables(char *src);
-// expand_process_arg.c
-void				process_arg(t_command *cmd, size_t *i);
-// expand_quotes.c
-void				remove_quotes(t_command *cmd);
 
-// parsing.c
-void				trim_str(t_trim *trim, char *input);
-char				*trim_whitespace(char *input);
-void				*check_syntax(char *input);
-t_list				*parse_input(char *input);
 // parsing_handler.c
 void				handle_non_specials(t_trim *trim, char *input);
 void				handle_operator(t_trim *trim, char *input);
 void				handle_quotes(t_trim *trim, char *input);
 void				handle_specials(t_trim *trim, char *input);
+// parsing.c
+void				trim_str(t_trim *trim, char *input);
+char				*trim_whitespace(char *input);
+void				*check_syntax(char *input);
+t_list				*parse_input(char *input);
 
 // process_token.c
 bool				command_exists(const char *command);
 void				fill_struct(t_token *token, char *content);
 
 // split_quotes.c
-char				**split_space_quotes(const char *input);
 void				free_token_array(char **tokens);
+char				**split_space_quotes(const char *input);
 // split_quotes2.c
 size_t				count_tokens(const char *str);
 char				*extract_token(const char *str, size_t *pos);
@@ -269,12 +269,12 @@ void				handle_signals(void);
 //				MAIN
 //
 //
-// utils.c
-void				free_tabel(void *content);
-
 // main.c
-int					execution(t_list *tabel);
 void				main_loop(void);
 void				handle_shlvl(void);
+// utils.c
+int					execution(t_list *tabel);
+void				free_tabel(void *content);
+
 
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nicolewicki <nicolewicki@student.42.fr>    +#+  +:+       +#+        */
+/*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 13:20:45 by mhummel           #+#    #+#             */
-/*   Updated: 2024/10/22 14:12:39 by nicolewicki      ###   ########.fr       */
+/*   Updated: 2024/10/23 09:41:33 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,9 @@ void	sigint_handler(int sig)
 	if (g_signal == 0)
 	{
 		write(1, "\n", 1);
-		// rl_replace_line("", 0);
-		// rl_on_new_line();
-		// rl_redisplay();
+		rl_replace_line("", 0);
+		rl_on_new_line();
+		rl_redisplay();
 		*exit_status() = 1;
 	}
 }
