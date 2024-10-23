@@ -6,7 +6,7 @@
 /*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 11:31:51 by mhummel           #+#    #+#             */
-/*   Updated: 2024/10/23 14:01:18 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/10/23 14:25:18 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	ft_cd(char *argv[], int argc)
 		path = home;
 	}
 	else if (argc > 2)
-		return (write(2, "cd: too many arguments\n", 24), 1);
+		return (0);
 	else
 		path = argv[1];
 	if (!path)
