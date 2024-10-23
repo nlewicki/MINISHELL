@@ -68,4 +68,18 @@ echo hallo > test.txt | cat test.txt
 echo hallo > test.txt | cat < test.txt
 
 
-$TEST does segfault
+redirection tests:
+
+cat << EOF
+$USER
+EOF
+
+cat << 'EOF'
+$USER
+EOF
+
+<<EOF
+cat
+This is a test.
+Second line of test.
+EOF

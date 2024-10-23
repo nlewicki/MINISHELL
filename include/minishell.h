@@ -97,11 +97,8 @@ typedef struct s_command
 }					t_command;
 
 //
-//
 //				PARSING
 //
-//
-
 // create_linked_list.c
 void				free_token(void *content);
 int					create_linked_list(char **tokens, t_list **list);
@@ -271,7 +268,6 @@ void				handle_signals(void);
 
 //
 //				MAIN
-//
 //
 // main.c
 void				main_loop(void);
