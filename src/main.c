@@ -3,16 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 11:20:30 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/10/23 13:57:56 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/10/23 14:49:01 by mhummel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-int			g_signal = 0;
 
 static void	process_input(char *input)
 {
@@ -37,7 +35,6 @@ void	main_loop(void)
 
 	while (1)
 	{
-		g_signal = 0;
 		input = readline("minishell> ");
 		if (!input)
 			break ;
@@ -48,14 +45,8 @@ void	main_loop(void)
 	printf("exit\n");
 }
 
-void	check_l(void)
-{
-	system("leaks minishell");
-}
-
 int	main(int argc, char **argv, char **envp)
 {
-	// atexit(check_l);
 	(void)argc;
 	(void)argv;
 	if (*env_vars() == NULL)

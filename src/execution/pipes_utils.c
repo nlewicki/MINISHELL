@@ -6,7 +6,7 @@
 /*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 11:56:42 by mhummel           #+#    #+#             */
-/*   Updated: 2024/10/18 12:51:03 by mhummel          ###   ########.fr       */
+/*   Updated: 2024/10/23 14:39:02 by mhummel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,16 @@ int	fork_and_execute(int pipe_fds[][2], t_list *current, int i,
 int	wait_for_children(void)
 {
 	int	status;
+	int	pid;
+	int	last_status;
 
-	while (wait(&status) > 0)
-		;
-	return (WEXITSTATUS(status));
+	last_status = 0;
+	while ((pid = wait(&status)) > 0)
+	{
+		if (WIFEXITED(status))
+			last_status = WEXITSTATUS(status);
+		else if (WIFSIGNALED(status))
+			last_status = 128 + WTERMSIG(status);
+	}
+	return (last_status);
 }

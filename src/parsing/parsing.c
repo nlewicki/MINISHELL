@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 10:23:02 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/10/22 12:19:28 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/10/23 14:00:10 by mhummel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ char	*trim_whitespace(char *input)
 		return (NULL);
 	trim_str(&trim, input);
 	if (trim.error == true)
-		return (free(trim.result), NULL);
+		return (free(trim.result), free(input), NULL);
 	free(input);
 	return (trim.result);
 }
