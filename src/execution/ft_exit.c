@@ -6,7 +6,7 @@
 /*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 10:38:59 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/10/23 11:17:25 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/10/23 11:42:09 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ int	ft_exit(char *args[])
 		}
 		else
 			calculate_exit(&exit_code, args);
-		printf("%d", exit_code);
 	}
 	exit_code = *exit_status();
 	free_env(*env_vars());

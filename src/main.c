@@ -6,7 +6,7 @@
 /*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 11:20:30 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/10/23 09:53:48 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/10/23 11:38:55 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ void	check_l(void)
 
 int	main(int argc, char **argv, char **envp)
 {
+	// atexit(check_l);
 	(void)argc;
 	(void)argv;
 	if (*env_vars() == NULL)
