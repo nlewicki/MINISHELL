@@ -6,7 +6,7 @@
 /*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 10:16:29 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/10/22 11:41:25 by mhummel          ###   ########.fr       */
+/*   Updated: 2024/10/23 11:04:26 by mhummel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,34 +54,6 @@ int	redirect_output(char *file, int append)
 		return (1);
 	}
 	close(fd);
-	return (0);
-}
-
-int	handle_heredoc(char *delimiter)
-{
-	char	*line;
-	int		pipe_fd[2];
-
-	if (pipe(pipe_fd) == -1)
-		return (1);
-	while (1)
-	{
-		line = readline("> ");
-		if (!line || ft_strcmp(line, delimiter) == 0)
-		{
-			free(line);
-			break ;
-		}
-		ft_putendl_fd(line, pipe_fd[1]);
-		free(line);
-	}
-	close(pipe_fd[1]);
-	if (dup2(pipe_fd[0], STDIN_FILENO) == -1)
-	{
-		close(pipe_fd[0]);
-		return (1);
-	}
-	close(pipe_fd[0]);
 	return (0);
 }
 

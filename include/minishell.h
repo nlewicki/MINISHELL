@@ -269,8 +269,10 @@ int					apply_redirections(t_command *cmd);
 // redirection.c
 int					redirect_input(char *file);
 int					redirect_output(char *file, int append);
-int					handle_heredoc(char *delimiter);
 int					handle_redirections(t_list *command_list);
+
+// heredoc.c
+int					handle_heredoc(char *delimiter);
 
 // signal.c
 void				sigint_handler(int sig);

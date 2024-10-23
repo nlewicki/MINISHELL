@@ -66,20 +66,3 @@ check_quotes() -> 1. ausere geschlossene double quotes entfernen. single quotes 
 
 echo hallo > test.txt | cat test.txt
 echo hallo > test.txt | cat < test.txt
-
-
-redirection tests:
-
-cat << EOF
-$USER
-EOF
-
-cat << 'EOF'
-$USER
-EOF
-
-<<EOF
-cat
-This is a test.
-Second line of test.
-EOF

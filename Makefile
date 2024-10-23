@@ -17,6 +17,7 @@ CFILES =	src/main.c \
 			src/execution/pipes_utils.c \
 			src/execution/redirection.c \
 			src/execution/redirection_utils.c \
+			src/execution/heredoc.c \
 			src/execution/execute_command.c \
 			src/execution/ft_exit.c \
 			src/execution/handle_shlvl.c \

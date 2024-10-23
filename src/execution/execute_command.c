@@ -6,7 +6,7 @@
 /*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 09:59:19 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/10/22 11:38:38 by mhummel          ###   ########.fr       */
+/*   Updated: 2024/10/23 11:32:12 by mhummel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,13 +75,16 @@ int	execute_command(t_list *tabel)
 	int		result;
 
 	tmp = tabel;
-	builtin = is_builtin((t_command *)tmp->content);
-	if (builtin)
-		exec_builtin((t_command *)tmp->content, builtin);
-	else
+	if (tmp && ((t_command *)tmp->content)->args && ((t_command *)tmp->content)->args[0])
 	{
-		result = execute_external_command(((t_command *)tmp->content)->args);
-		*exit_status() = result;
+		builtin = is_builtin((t_command *)tmp->content);
+		if (builtin)
+			exec_builtin((t_command *)tmp->content, builtin);
+		else
+		{
+			result = execute_external_command(((t_command *)tmp->content)->args);
+			*exit_status() = result;
+		}
 	}
 	return (0);
 }
