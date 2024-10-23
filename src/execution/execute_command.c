@@ -6,7 +6,7 @@
 /*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 09:59:19 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/10/23 12:20:51 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/10/23 12:38:40 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,7 @@ int	execute_command(t_list *tabel)
 		else
 		{
 			res = execute_external_command(((t_command *)tmp->content)->args);
+			*is_expanded() = 0;
 			*exit_status() = res;
 		}
 	}
