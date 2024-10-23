@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 12:37:27 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/10/22 12:09:00 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/10/23 12:40:58 by mhummel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,7 @@ char	*get_our_env(const char *name)
 	{
 		if (ft_strncmp(envp[i], name, ft_strlen(name)) == 0
 			&& envp[i][ft_strlen(name)] == '=')
-		{
 			return (envp[i] + ft_strlen(name) + 1);
-		}
 		i++;
 	}
 	return (NULL);

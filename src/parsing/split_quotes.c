@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split_quotes.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 11:12:34 by mhummel           #+#    #+#             */
-/*   Updated: 2024/10/22 12:34:36 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/10/23 12:42:21 by mhummel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,9 +69,6 @@ char	**split_space_quotes(const char *input)
 	if (!result)
 		return (NULL);
 	if (!fill_result(result, input))
-	{
-		free_token_array(result);
-		return (NULL);
-	}
+		return (free_token_array(result), NULL);
 	return (result);
 }

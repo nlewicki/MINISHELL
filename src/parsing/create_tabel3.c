@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_tabel3.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 11:50:55 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/10/22 11:56:14 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/10/23 12:41:31 by mhummel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,7 @@ t_command	*allocate_cmd(t_command *new_cmd, t_list *token_position,
 		return (NULL);
 	new_cmd->filename = malloc(sizeof(char *) * (info->nbr_filenames + 1));
 	if (!new_cmd->filename)
-	{
-		free(new_cmd->args);
-		return (NULL);
-	}
+		return (free(new_cmd->args), NULL);
 	new_cmd->red_symbol = malloc(sizeof(char *) * (info->nbr_reds + 1));
 	if (!new_cmd->red_symbol)
 	{

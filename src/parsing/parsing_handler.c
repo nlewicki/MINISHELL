@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_handler.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 13:06:42 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/10/22 13:36:50 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/10/23 12:41:50 by mhummel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,9 +56,7 @@ void	handle_quotes(t_trim *trim, char *input)
 	while ((input[trim->i] != '\0') && (input[trim->i] != quote))
 		trim->result[trim->j++] = input[trim->i++];
 	if (input[trim->i] == quote)
-	{
 		trim->result[trim->j++] = input[trim->i];
-	}
 	else
 	{
 		trim->error = true;
