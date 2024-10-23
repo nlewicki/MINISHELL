@@ -6,7 +6,7 @@
 /*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/13 09:47:35 by mhummel           #+#    #+#             */
-/*   Updated: 2024/10/18 12:50:19 by mhummel          ###   ########.fr       */
+/*   Updated: 2024/10/23 14:39:47 by mhummel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ int	execute_piped_commands(t_list *command_list)
 	int		num_commands;
 	int		i;
 	t_list	*current;
+	int		last_status;
 
 	num_commands = ft_lstsize(command_list);
 	if (create_pipes(pipe_fds, num_commands - 1))
@@ -62,5 +63,7 @@ int	execute_piped_commands(t_list *command_list)
 		i++;
 	}
 	close_pipes(pipe_fds, num_commands - 1);
-	return (wait_for_children());
+	last_status = wait_for_children();
+	*exit_status() = last_status;
+	return (last_status);
 }
