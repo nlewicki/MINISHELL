@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 10:08:44 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/10/23 14:38:45 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/10/23 14:59:59 by mhummel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ char	*copy_until_dollar(char **result, char *start, char *end)
 
 	len = get_result_len(*result);
 	copy_len = end - start;
-	new_result = ft_realloc(*result, len + copy_len + 1);
+	new_result = ft_realloc(*result, len + 1, len + copy_len + 1);
 	if (new_result == NULL)
 		return (NULL);
 	*result = new_result;
@@ -58,7 +58,7 @@ char	*append_var_value(char **result, char *var_value)
 	if (var_value == NULL)
 		return (*result);
 	len = get_result_len(*result);
-	new_result = ft_realloc(*result, len + ft_strlen(var_value) + 1);
+	new_result = ft_realloc(*result, len + 1, len + ft_strlen(var_value) + 1);
 	if (new_result == NULL)
 		return (NULL);
 	*result = new_result;

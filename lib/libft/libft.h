@@ -6,7 +6,7 @@
 /*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 13:13:20 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/10/23 12:34:31 by mhummel          ###   ########.fr       */
+/*   Updated: 2024/10/23 14:57:44 by mhummel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ size_t	ft_strcpy(char *dst, const char *src);
 char	*ft_strtok_r(char *str, const char *delim, char **saveptr);
 size_t	ft_strspn(const char *str, const char *accept);
 size_t	ft_strcspn(const char *str, const char *reject);
-void	*ft_realloc(void *ptr, size_t size);
+void	*ft_realloc(void *ptr, size_t old_size, size_t new_size);
 void	ft_err(char *s1, char *s2, char *s3);
 char	*ft_strjoin3(const char *s1, const char *s2, const char *s3);
 char	*ft_strerror(int errnum);

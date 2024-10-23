@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_utils2.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 11:18:45 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/10/21 09:29:27 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/10/23 14:59:12 by mhummel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	add_new_env_var(const char *name, char *value, int i)
 
 	envp = *env_vars();
 	new_var = NULL;
-	new_envp = ft_realloc(envp, (i + 2) * sizeof(char *));
+	new_envp = ft_realloc(envp, (i + 1) * sizeof(char *), (i + 2) * sizeof(char *));
 	if (!new_envp)
 		return (1);
 	if (value && *value)
