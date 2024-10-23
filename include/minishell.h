@@ -188,11 +188,6 @@ int					env(void);
 char				**copy_envp(char **envp);
 void				free_env(char **my_envp);
 
-// export.c
-int					ft_export(char **args, int arg_count);
-int					ft_export_args(char *arg);
-int					mark_for_export(const char *name);
-int					print_sorted_env(void);
 // export_utils.c
 int					is_valid_identifier(const char *str);
 char				**copy_env(char **envp, int count);
@@ -205,6 +200,11 @@ int					add_or_update_env(char *name, char *value);
 char				*create_new_var(char *new_var, const char *name,
 						char *value);
 int					add_new_env_var(const char *name, char *value, int i);
+// export.c
+int					ft_export(char **args, int arg_count);
+int					ft_export_args(char *arg);
+int					mark_for_export(const char *name);
+int					print_sorted_env(void);
 
 // pwd.c
 int					pwd(void);
@@ -216,9 +216,10 @@ int					ft_unset(char *argv[], int argc);
 //				EXECUTION
 //
 // execute_command.c
-int					execute_command(t_list *tabel);
-void				exec_builtin(t_command *cmd, int builtin);
+size_t				nbr_of_args(char **str);
 int					is_builtin(t_command *cmd);
+void				exec_builtin(t_command *cmd, int builtin);
+int					execute_command(t_list *tabel);
 
 // execute_external.c
 int					execute_external_command(char **args);
@@ -227,39 +228,42 @@ int					handle_command_not_found(char **args);
 int					handle_parent_process(pid_t pid, char *command_path);
 void				ft_errorcode_exit(char *command, char *path);
 
-// pipes.c
-int					execute_piped_commands(t_list *command_list);
+// fake_globals.c
+int					*exit_status(void);
+char				***env_vars(void);
+int					*is_expanded(void);
+
+// ft_exit.c
+int					ft_exit(char *args[]);
+
+// handle_shlvl.c
+void				handle_shlvl(void);
+
+// history.c
+void				clear_shell_history(void);
+void				handle_history(char *input);
+
 // pipes_utils.c
-void				close_pipes(int pipe_fds[][2], int num_pipes);
 int					fork_and_execute(int pipe_fds[][2], t_list *current, int i,
 						int num_commands);
 int					wait_for_children(void);
 int					setup_child_pipes(int pipe_fds[][2], int i,
 						int num_commands);
+// pipes.c
+int					execute_piped_commands(t_list *command_list);
+void				close_pipes(int pipe_fds[][2], int num_pipes);
 
-// redirection.c
-int					redirect_input(char *file);
-int					redirect_output(char *file, int append);
-int					handle_heredoc(char *delimiter);
-int					handle_redirections(t_list *command_list);
 // redirection_utils.c
 void				restore_std_fds(int orig_stdin, int orig_stdout);
 int					is_redirection(char *symbol);
 void				print_redirection_error(char *filename, char *error_msg);
 int					apply_single_redirection(char *symbol, char *filename);
 int					apply_redirections(t_command *cmd);
-
-// ft_exit.c
-int					ft_exit(char *args[]);
-
-// fake_globals.c
-int					*exit_status(void);
-char				***env_vars(void);
-int					*is_expanded(void);
-
-// history.c
-void				clear_shell_history(void);
-void				handle_history(char *input);
+// redirection.c
+int					redirect_input(char *file);
+int					redirect_output(char *file, int append);
+int					handle_heredoc(char *delimiter);
+int					handle_redirections(t_list *command_list);
 
 // signal.c
 void				sigint_handler(int sig);
