@@ -6,7 +6,7 @@
 /*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 11:10:53 by mhummel           #+#    #+#             */
-/*   Updated: 2024/10/22 11:39:33 by mhummel          ###   ########.fr       */
+/*   Updated: 2024/10/23 12:35:47 by mhummel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	ft_errorcode_exit(char *command, char *path)
 	else
 	{
 		ft_putstr_fd(": ", 2);
-		ft_putendl_fd(strerror(errno), 2);
+		ft_putendl_fd(ft_strerror(errno), 2);
 	}
 	free(path);
 	if (errno == EACCES || errno == EISDIR)

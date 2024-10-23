@@ -6,7 +6,7 @@
 /*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 10:45:17 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/10/22 11:39:27 by mhummel          ###   ########.fr       */
+/*   Updated: 2024/10/23 12:28:44 by mhummel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,7 @@ static char	*search_in_path(const char *command, char *path_env)
 	{
 		result = check_dir_for_command(dir, command);
 		if (result)
-		{
-			free(path_copy);
-			return (result);
-		}
+			return (free(path_copy), result);
 		dir = ft_strtok(NULL, ":");
 	}
 	free(path_copy);
@@ -64,9 +61,7 @@ static char	*find_command_path(const char *command)
 static void	execute_child_process(char *command_path, char **args)
 {
 	if (*is_expanded() == 1)
-	{
 		exit(0);
-	}
 	execve(command_path, args, *env_vars());
 	*exit_status() = 126;
 	ft_errorcode_exit(args[0], command_path);

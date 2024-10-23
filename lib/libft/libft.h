@@ -6,7 +6,7 @@
 /*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 13:13:20 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/10/18 11:08:26 by mhummel          ###   ########.fr       */
+/*   Updated: 2024/10/23 12:34:31 by mhummel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <strings.h>
 # include <ctype.h>
 # include <stdbool.h>
+# include <errno.h>
 
 int		ft_atoi(const char *str);
 long	ft_atol(const char *str);
@@ -65,6 +66,7 @@ size_t	ft_strcspn(const char *str, const char *reject);
 void	*ft_realloc(void *ptr, size_t size);
 void	ft_err(char *s1, char *s2, char *s3);
 char	*ft_strjoin3(const char *s1, const char *s2, const char *s3);
+char	*ft_strerror(int errnum);
 
 typedef struct s_list
 {
