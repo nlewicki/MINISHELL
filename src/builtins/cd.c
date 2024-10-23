@@ -6,7 +6,7 @@
 /*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 11:31:51 by mhummel           #+#    #+#             */
-/*   Updated: 2024/10/21 10:01:51 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/10/23 14:01:18 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ int	ft_cd(char *argv[], int argc)
 {
 	char	*path;
 	char	*home;
-	char	*expanded_path;
 
 	if (argc == 1 || (argc == 2 && ft_strcmp(argv[1], "~") == 0))
 	{
@@ -42,17 +41,14 @@ int	ft_cd(char *argv[], int argc)
 		path = home;
 	}
 	else if (argc > 2)
-		return (0);
+		return (write(2, "cd: too many arguments\n", 24), 1);
 	else
 		path = argv[1];
-	expanded_path = expand_env_variables(path);
-	if (!expanded_path)
+	if (!path)
 		return (write(2, "cd: expansion failed\n", 21), 1);
 	if (chdir(path) != 0)
 	{
-		free(expanded_path);
 		return (*exit_status() = 1, perror("cd"), 1);
 	}
-	free(expanded_path);
 	return (0);
 }
