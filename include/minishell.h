@@ -32,8 +32,6 @@
 
 # define MAX_ARGS 1024
 
-extern int			g_signal;
-
 typedef enum s_builtin_type
 {
 	NONE,
