@@ -6,11 +6,18 @@
 /*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 11:18:45 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/10/23 14:59:12 by mhummel          ###   ########.fr       */
+/*   Updated: 2024/10/23 15:11:36 by mhummel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static void	finish_env(char **new_envp, char *new_var, int i)
+{
+	new_envp[i] = new_var;
+	new_envp[i + 1] = NULL;
+	*env_vars() = new_envp;
+}
 
 int	add_new_env_var(const char *name, char *value, int i)
 {
@@ -20,7 +27,8 @@ int	add_new_env_var(const char *name, char *value, int i)
 
 	envp = *env_vars();
 	new_var = NULL;
-	new_envp = ft_realloc(envp, (i + 1) * sizeof(char *), (i + 2) * sizeof(char *));
+	new_envp = ft_realloc(envp, (i + 1) * sizeof(char *), (i + 2)
+			* sizeof(char *));
 	if (!new_envp)
 		return (1);
 	if (value && *value)
@@ -35,9 +43,7 @@ int	add_new_env_var(const char *name, char *value, int i)
 		if (!new_var)
 			return (1);
 	}
-	new_envp[i] = new_var;
-	new_envp[i + 1] = NULL;
-	*env_vars() = new_envp;
+	finish_env(new_envp, new_var, i);
 	return (0);
 }
 

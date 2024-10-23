@@ -6,7 +6,7 @@
 /*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 11:56:42 by mhummel           #+#    #+#             */
-/*   Updated: 2024/10/23 14:39:02 by mhummel          ###   ########.fr       */
+/*   Updated: 2024/10/23 15:09:18 by mhummel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,12 +64,14 @@ int	wait_for_children(void)
 	int	last_status;
 
 	last_status = 0;
-	while ((pid = wait(&status)) > 0)
+	pid = wait(&status);
+	while (pid > 0)
 	{
 		if (WIFEXITED(status))
 			last_status = WEXITSTATUS(status);
 		else if (WIFSIGNALED(status))
 			last_status = 128 + WTERMSIG(status);
+		pid = wait(&status);
 	}
 	return (last_status);
 }
