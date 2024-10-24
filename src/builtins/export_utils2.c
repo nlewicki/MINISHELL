@@ -6,7 +6,7 @@
 /*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 11:18:45 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/10/24 13:03:54 by mhummel          ###   ########.fr       */
+/*   Updated: 2024/10/24 13:51:53 by mhummel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	add_new_env_var(const char *name, char *value, int i)
 	}
 	else
 	{
-		new_var = create_new_var(new_var, name, "");
+		new_var = ft_strdup(name);
 		if (!new_var)
 			return (1);
 	}
