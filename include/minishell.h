@@ -124,7 +124,7 @@ void				process_argument(t_command *cmd, t_token *current_token,
 t_command			*fill_cmd(t_command *cmd, t_list *position);
 
 // expand_filename.c
-void	process_filename(t_command *cmd, size_t *i);
+void				process_filename(t_command *cmd, size_t *i);
 // expand_env.c
 char				*expand_env_variables(char *src);
 // expand_process_arg.c
@@ -192,8 +192,9 @@ void				free_env(char **my_envp);
 int					is_valid_identifier(const char *str);
 char				**copy_env(char **envp, int count);
 int					count_env_vars(char **envp);
-void				bubble_sort_env(char **envp, int count);
 int					compare_env(const void *a, const void *b);
+int					update_existing_var(char **envp, int i, const char *name,
+						char *value);
 // export_utils2.c
 int					set_export_error(char *name, char *value);
 int					add_or_update_env(char *name, char *value);
@@ -201,6 +202,7 @@ char				*create_new_var(char *new_var, const char *name,
 						char *value);
 int					add_new_env_var(const char *name, char *value, int i);
 // export.c
+void				bubble_sort_env(char **envp, int count);
 int					ft_export(char **args, int arg_count);
 int					ft_export_args(char *arg);
 int					mark_for_export(const char *name);

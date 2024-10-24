@@ -6,7 +6,7 @@
 /*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 11:18:45 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/10/24 13:51:53 by mhummel          ###   ########.fr       */
+/*   Updated: 2024/10/24 14:43:09 by mhummel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	add_new_env_var(const char *name, char *value, int i)
 			* sizeof(char *));
 	if (!new_envp)
 		return (1);
-	if (value && *value)
+	if (value)
 	{
 		new_var = create_new_var(new_var, name, value);
 		if (!new_var)
@@ -79,11 +79,8 @@ int	add_or_update_env(char *name, char *value)
 			&& (envp[i][ft_strlen(name)] == '='
 			|| envp[i][ft_strlen(name)] == '\0'))
 		{
-			new_var = create_new_var(NULL, name, value);
-			if (!new_var)
-				return (1);
-			free(envp[i]);
-			envp[i] = new_var;
+			if (value != NULL)
+				return (update_existing_var(envp, i, name, value));
 			return (0);
 		}
 		i++;
