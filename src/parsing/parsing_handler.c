@@ -6,7 +6,7 @@
 /*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 13:06:42 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/10/23 12:41:50 by mhummel          ###   ########.fr       */
+/*   Updated: 2024/10/24 15:56:01 by mhummel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,22 +29,43 @@ void	handle_non_specials(t_trim *trim, char *input)
 	}
 }
 
-void	handle_operator(t_trim *trim, char *input)
+static void	validate_operator(t_trim *trim, char *input, char op, int count)
 {
-	if (trim->j > 0 && (!ft_isspace(trim->result[trim->j - 1])))
-		trim->result[(trim->j)++] = ' ';
-	trim->result[(trim->j)++] = input[trim->i];
-	if ((input[trim->i] == '<' && input[trim->i + 1] == '<')
-		|| (input[trim->i] == '>' && input[trim->i + 1] == '>'))
+	if (count == 2 && (op == '<' || op == '>'))
 	{
-		trim->result[trim->j++] = input[trim->i + 1];
+		trim->result[trim->j++] = op;
+		trim->result[trim->j++] = op;
 		if (input[trim->i + 2] != '\0')
 			trim->result[trim->j++] = ' ';
 		trim->i++;
+	}
+	else
+	{
+		trim->result[trim->j++] = op;
+		if (input[trim->i + 1] != '\0')
+			trim->result[trim->j++] = ' ';
+	}
+}
+
+void	handle_operator(t_trim *trim, char *input)
+{
+	int		count;
+	char	op;
+
+	op = input[trim->i];
+	count = 1;
+	while (input[trim->i + count] == op)
+		count++;
+	if ((op == '<' || op == '>') && count > 2)
+	{
+		trim->error = true;
+		*exit_status() = 2;
+		ft_putendl_fd("syntax error near unexpected token `<'", STDERR_FILENO);
 		return ;
 	}
-	if (input[trim->i + 1] != '\0')
-		trim->result[trim->j++] = ' ';
+	if (trim->j > 0 && (!ft_isspace(trim->result[trim->j - 1])))
+		trim->result[(trim->j)++] = ' ';
+	validate_operator(trim, input, op, count);
 }
 
 void	handle_quotes(t_trim *trim, char *input)

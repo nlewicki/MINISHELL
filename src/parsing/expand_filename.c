@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   expand_filename.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 12:47:23 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/10/24 13:42:29 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/10/24 14:48:49 by mhummel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	handle_expanded_filename(t_command *cmd, size_t *i, char *expanded, char *temp)
+static void	handle_expanded_filename(t_command *cmd, size_t *i, char *expanded,
+		char *temp)
 {
 	if (*expanded == '\0')
 	{
