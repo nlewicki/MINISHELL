@@ -6,7 +6,7 @@
 /*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 13:20:45 by mhummel           #+#    #+#             */
-/*   Updated: 2024/10/24 16:40:38 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/10/24 16:51:21 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 void	sigint_handler(int sig)
 {
 	(void)sig;
+	write(1, "\n", 1);
 	rl_replace_line("", 0);
 	rl_on_new_line();
 	rl_redisplay();
@@ -25,7 +26,6 @@ void	heredoc_handler(int signum)
 {
 	(void)signum;
 	rl_done = 1;
-	write(1, "\n", 1);
 	rl_replace_line("", 0);
 	close(STDIN_FILENO);
 	*exit_status() = 1;
