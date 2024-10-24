@@ -6,7 +6,7 @@
 /*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 11:31:51 by mhummel           #+#    #+#             */
-/*   Updated: 2024/10/24 09:27:52 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/10/24 11:55:51 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,17 +35,38 @@ static int	update_pwd(void)
 	char	cwd[PATH_MAX];
 	char	*old_pwd;
 
+	if (getcwd(cwd, sizeof(cwd)) == NULL)
+		return (perror("cd: getcwd"), 1);
 	old_pwd = get_env_var("PWD");
-	if (old_pwd && add_or_update_env("OLDPWD", old_pwd) != 0)
-		return (ft_putendl_fd("cd: failed to update OLDPWD", 2), 1);
-	if (getcwd(cwd, sizeof(cwd)) != NULL)
+	if (old_pwd)
 	{
-		if (add_or_update_env("PWD", cwd) != 0)
-			return (ft_putendl_fd("cd: failed to update PWD", 2), 1);
+		if (add_or_update_env("OLDPWD", old_pwd) != 0)
+			return (ft_putendl_fd("cd: failed to update OLDPWD", 2), 1);
 	}
 	else
-		return (perror("cd: getcwd"), 1);
+	{
+		if (add_or_update_env("OLDPWD", cwd) != 0)
+			return (ft_putendl_fd("cd: failed to update OLDPWD", 2), 1);
+	}
+	if (add_or_update_env("PWD", cwd) != 0)
+		return (ft_putendl_fd("cd: failed to update PWD", 2), 1);
 	return (0);
+}
+
+static void	handle_no_exist(void)
+{
+	char	cwd[PATH_MAX];
+
+	if (!get_env_var("PWD"))
+	{
+		if (getcwd(cwd, sizeof(cwd)) != NULL)
+			add_or_update_env("PWD", cwd);
+	}
+	if (!get_env_var("OLDPWD"))
+	{
+		if (getcwd(cwd, sizeof(cwd)) != NULL)
+			add_or_update_env("OLDPWD", cwd);
+	}
 }
 
 static char	*get_cd_path(char *argv[], int argc)
@@ -69,6 +90,7 @@ static char	*get_cd_path(char *argv[], int argc)
 	}
 	else
 		path = argv[1];
+	handle_no_exist();
 	return (path);
 }
 

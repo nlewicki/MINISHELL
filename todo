@@ -1,6 +1,6 @@
 redirections file name checken -> expanden
 
-set OLDPWD
+set OLDPWD -> functioniert
 
 export a= -> leerer string
 
