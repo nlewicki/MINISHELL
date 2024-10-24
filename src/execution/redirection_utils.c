@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 13:33:15 by mhummel           #+#    #+#             */
-/*   Updated: 2024/10/24 09:42:51 by mhummel          ###   ########.fr       */
+/*   Updated: 2024/10/21 10:29:35 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,37 +33,29 @@ void	print_redirection_error(char *filename, char *error_msg)
 	ft_putendl_fd(error_msg, 2);
 }
 
-static int	handle_heredoc_redirection(t_command *cmd, int *heredoc_index)
+int	apply_single_redirection(char *symbol, char *filename)
 {
-	if (dup2(cmd->heredoc_fds[*heredoc_index], STDIN_FILENO) == -1)
-		return (1);
-	close(cmd->heredoc_fds[*heredoc_index]);
-	(*heredoc_index)++;
+	if (ft_strcmp(symbol, "<") == 0)
+		return (redirect_input(filename));
+	else if (ft_strcmp(symbol, ">") == 0)
+		return (redirect_output(filename, 0));
+	else if (ft_strcmp(symbol, ">>") == 0)
+		return (redirect_output(filename, 1));
+	else if (ft_strcmp(symbol, "<<") == 0)
+		return (handle_heredoc(filename));
 	return (0);
 }
 
 int	apply_redirections(t_command *cmd)
 {
 	int	i;
-	int	heredoc_index;
-	int	heredoc_count;
-	int	had_error;
 
-	heredoc_count = 0;
-	had_error = 0;
-	process_heredocs(cmd, &heredoc_count);
 	i = 0;
-	heredoc_index = 0;
 	while (cmd->red_symbol && cmd->red_symbol[i])
 	{
-		if (ft_strcmp(cmd->red_symbol[i], "<<") == 0)
-			had_error = handle_heredoc_redirection(cmd, &heredoc_index);
-		else if (ft_strcmp(cmd->red_symbol[i], "<") == 0)
-			had_error = redirect_input(cmd->filename[i]);
-		else if (redirect_output(cmd->filename[i], ft_strcmp(cmd->red_symbol[i],
-					">>") == 0))
-			had_error = 1;
+		if (apply_single_redirection(cmd->red_symbol[i], cmd->filename[i]))
+			return (1);
 		i++;
 	}
-	return (had_error);
+	return (0);
 }

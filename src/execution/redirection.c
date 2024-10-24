@@ -6,7 +6,7 @@
 /*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 10:16:29 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/10/24 09:42:56 by mhummel          ###   ########.fr       */
+/*   Updated: 2024/10/23 11:04:26 by mhummel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,34 +57,20 @@ int	redirect_output(char *file, int append)
 	return (0);
 }
 
-int	apply_single_redirection(char *symbol, char *filename)
-{
-	if (ft_strcmp(symbol, "<") == 0)
-		return (redirect_input(filename));
-	else if (ft_strcmp(symbol, ">") == 0)
-		return (redirect_output(filename, 0));
-	else if (ft_strcmp(symbol, ">>") == 0)
-		return (redirect_output(filename, 1));
-	return (0);
-}
-
 int	handle_redirections(t_list *command_list)
 {
 	t_list		*current;
 	t_command	*cmd;
 	int			orig_stdin;
 	int			orig_stdout;
-	int			had_error;
 
 	orig_stdin = dup(STDIN_FILENO);
 	orig_stdout = dup(STDOUT_FILENO);
 	current = command_list;
-	had_error = 0;
 	while (current)
 	{
 		cmd = (t_command *)current->content;
-		had_error = apply_redirections(cmd);
-		if (had_error && current->next == NULL)
+		if (apply_redirections(cmd))
 		{
 			restore_std_fds(orig_stdin, orig_stdout);
 			return (1);
