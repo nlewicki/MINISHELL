@@ -6,7 +6,7 @@
 /*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 11:03:52 by mhummel           #+#    #+#             */
-/*   Updated: 2024/10/24 11:11:44 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/10/24 16:39:50 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,14 +75,17 @@ int	handle_heredoc(char *delimiter)
 	free_delim = setup_heredoc_delimiter(&delimiter, &expand);
 	if (pipe(pipe_fd) == -1)
 		return (1);
+	ft_sigmode_heredoc();
 	if (read_heredoc_input(delimiter, pipe_fd, expand))
 	{
+		ft_sigmode_shell();
 		close(pipe_fd[1]);
 		close(pipe_fd[0]);
 		if (free_delim)
 			free(delimiter);
 		return (1);
 	}
+	ft_sigmode_shell();
 	if (free_delim)
 		free(delimiter);
 	close(pipe_fd[1]);

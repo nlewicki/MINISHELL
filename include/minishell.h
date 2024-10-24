@@ -28,6 +28,7 @@
 # include <string.h>
 # include <sys/stat.h>
 # include <sys/wait.h>
+# include <sys/ioctl.h>
 # include <unistd.h>
 
 # define MAX_ARGS 1024
@@ -267,6 +268,9 @@ int					handle_heredoc(char *delimiter);
 
 // signal.c
 void				sigint_handler(int sig);
+void				heredoc_handler(int signum);
+void				ft_sigmode_shell(void);
+void				ft_sigmode_heredoc(void);
 void				handle_signals(void);
 
 //
