@@ -1,0 +1,14 @@
+redirections file name checken -> expanden
+
+set OLDPWD
+
+export a= -> leerer string
+
+export TEST="cho hallo"
+e$TEST -> haallo
+-> parsing ganz neu
+
+
+
+exit a error msg aber trztd exit
+-> fixed

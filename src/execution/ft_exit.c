@@ -6,7 +6,7 @@
 /*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 10:38:59 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/10/23 11:42:09 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/10/24 11:38:18 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,15 +28,16 @@ int	ft_exit(char *args[])
 	{
 		if (!ft_atoi(args[1]) || ft_strlen(args[1]) == 0)
 		{
+			ft_putendl_fd("exit", 2);
 			ft_putendl_fd("exit: numeric argument required", 2);
 			*exit_status() = 255;
-			return (255);
+			exit(*exit_status());
 		}
 		if (args[2])
 		{
+			ft_putendl_fd("exit", 2);
 			ft_putendl_fd("exit: too many arguments", 2);
-			*exit_status() = 1;
-			return (1);
+			return (*exit_status() = 1, 1);
 		}
 		else
 			calculate_exit(&exit_code, args);
