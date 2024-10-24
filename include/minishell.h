@@ -31,6 +31,7 @@
 # include <unistd.h>
 
 # define MAX_ARGS 1024
+# define MAX_HEREDOCS 128
 
 typedef enum s_builtin_type
 {
@@ -92,6 +93,7 @@ typedef struct s_command
 	char			**args;
 	char			**filename;
 	char			**red_symbol;
+	int				heredoc_fds[MAX_HEREDOCS];
 }					t_command;
 
 //
@@ -255,13 +257,13 @@ void				restore_std_fds(int orig_stdin, int orig_stdout);
 int					is_redirection(char *symbol);
 void				print_redirection_error(char *filename, char *error_msg);
 int					apply_single_redirection(char *symbol, char *filename);
-int					apply_redirections(t_command *cmd);
 // redirection.c
 int					redirect_input(char *file);
 int					redirect_output(char *file, int append);
 int					handle_redirections(t_list *command_list);
+int					apply_redirections(t_command *cmd);
 // heredoc.c
-int					handle_heredoc(char *delimiter);
+void				process_heredocs(t_command *cmd, int *heredoc_count);
 
 // signal.c
 void				sigint_handler(int sig);

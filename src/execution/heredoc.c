@@ -6,7 +6,7 @@
 /*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 11:03:52 by mhummel           #+#    #+#             */
-/*   Updated: 2024/10/23 11:35:39 by mhummel          ###   ########.fr       */
+/*   Updated: 2024/10/24 09:43:48 by mhummel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,29 +64,45 @@ static int	read_heredoc_input(char *delimiter, int *pipe_fd, bool expand)
 	}
 }
 
-int	handle_heredoc(char *delimiter)
+static void	handle_single_heredoc(t_command *cmd, int pipe_fds[2], int *count,
+		char *filename)
 {
-	int		pipe_fd[2];
 	bool	expand;
 	bool	free_delim;
+	char	*delimiter;
 
-	if (!delimiter)
-		return (1);
+	delimiter = filename;
 	free_delim = setup_heredoc_delimiter(&delimiter, &expand);
-	if (pipe(pipe_fd) == -1)
-		return (1);
-	if (read_heredoc_input(delimiter, pipe_fd, expand))
+	if (read_heredoc_input(delimiter, pipe_fds, expand))
 	{
-		close(pipe_fd[1]);
-		close(pipe_fd[0]);
 		if (free_delim)
 			free(delimiter);
-		return (1);
+		close(pipe_fds[0]);
+		close(pipe_fds[1]);
+		return ;
 	}
 	if (free_delim)
 		free(delimiter);
-	close(pipe_fd[1]);
-	if (dup2(pipe_fd[0], STDIN_FILENO) == -1)
-		return (close(pipe_fd[0]), 1);
-	return (close(pipe_fd[0]), 0);
+	close(pipe_fds[1]);
+	cmd->heredoc_fds[*count] = pipe_fds[0];
+	(*count)++;
+}
+
+void	process_heredocs(t_command *cmd, int *heredoc_count)
+{
+	int	i;
+	int	pipe_fds[2];
+
+	i = 0;
+	while (cmd->red_symbol && cmd->red_symbol[i])
+	{
+		if (ft_strcmp(cmd->red_symbol[i], "<<") == 0)
+		{
+			if (pipe(pipe_fds) == -1)
+				return ;
+			handle_single_heredoc(cmd, pipe_fds, heredoc_count,
+				cmd->filename[i]);
+		}
+		i++;
+	}
 }
