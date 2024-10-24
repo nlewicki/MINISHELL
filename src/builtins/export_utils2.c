@@ -6,7 +6,7 @@
 /*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 11:18:45 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/10/24 14:43:09 by mhummel          ###   ########.fr       */
+/*   Updated: 2024/10/24 17:21:37 by mhummel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,11 +68,9 @@ int	add_or_update_env(char *name, char *value)
 {
 	char	**envp;
 	int		i;
-	char	*new_var;
 
 	envp = *env_vars();
 	i = 0;
-	new_var = NULL;
 	while (envp && envp[i])
 	{
 		if (ft_strncmp(envp[i], name, ft_strlen(name)) == 0

@@ -6,7 +6,7 @@
 /*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 11:22:47 by mhummel           #+#    #+#             */
-/*   Updated: 2024/10/24 09:00:05 by mhummel          ###   ########.fr       */
+/*   Updated: 2024/10/24 17:27:21 by mhummel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,11 @@ static void	handle_quotes_len(t_trim *trim_info, char *str)
 		trim_info->i++;
 		trim_info->len++;
 	}
-	trim_info->i++;
-	trim_info->len++;
+	if (str[trim_info->i] == quote_char)
+	{
+		trim_info->i++;
+		trim_info->len++;
+	}
 }
 
 static void	handle_special_char(t_trim *trim_info, char *str)
