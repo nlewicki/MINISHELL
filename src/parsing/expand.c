@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 12:37:27 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/10/23 12:40:58 by mhummel          ###   ########.fr       */
+/*   Updated: 2024/10/24 12:47:12 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,13 @@ void	handle_expansion(t_command *cmd)
 	{
 		if (ft_strchr(cmd->args[i], '$') != NULL)
 			process_arg(cmd, &i);
+		i++;
+	}
+	i = 0;
+	while (cmd->filename[i])
+	{
+		if (ft_strchr(cmd->filename[i], '$') != NULL)
+			process_filename(cmd, &i);
 		i++;
 	}
 }

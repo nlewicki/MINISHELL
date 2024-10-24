@@ -6,7 +6,7 @@
 /*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 09:50:19 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/10/22 12:07:35 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/10/24 13:10:35 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,12 @@ void	remove_quotes(t_command *cmd)
 	while (cmd->args[i])
 	{
 		strip_quotes(cmd->args[i]);
+		i++;
+	}
+	i = 0;
+	while (cmd->filename[i])
+	{
+		strip_quotes(cmd->filename[i]);
 		i++;
 	}
 }

@@ -38,6 +38,7 @@ CFILES =	src/main.c \
 			src/parsing/expand_env.c \
 			src/parsing/expand_quotes.c \
 			src/parsing/expand_process_arg.c \
+			src/parsing/expand_filename.c \
 
 
 

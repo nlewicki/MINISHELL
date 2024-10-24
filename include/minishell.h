@@ -123,6 +123,8 @@ void				process_argument(t_command *cmd, t_token *current_token,
 						size_t *i);
 t_command			*fill_cmd(t_command *cmd, t_list *position);
 
+// expand_filename.c
+void	process_filename(t_command *cmd, size_t *i);
 // expand_env.c
 char				*expand_env_variables(char *src);
 // expand_process_arg.c
