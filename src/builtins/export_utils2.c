@@ -6,7 +6,7 @@
 /*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 11:18:45 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/10/23 15:11:36 by mhummel          ###   ########.fr       */
+/*   Updated: 2024/10/24 13:03:54 by mhummel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,15 +52,15 @@ char	*create_new_var(char *new_var, const char *name, char *value)
 	size_t	len;
 
 	len = ft_strlen(name) + ft_strlen(value) + 2;
+	if (value)
+		len += ft_strlen(value);
 	new_var = malloc(len);
 	if (!new_var)
 		return (NULL);
 	ft_strcpy(new_var, name);
-	if (value && *value)
-	{
-		ft_strlcat(new_var, "=", len);
+	ft_strlcat(new_var, "=", len);
+	if (value)
 		ft_strlcat(new_var, value, len);
-	}
 	return (new_var);
 }
 
