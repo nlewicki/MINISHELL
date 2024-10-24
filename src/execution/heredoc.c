@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 11:03:52 by mhummel           #+#    #+#             */
-/*   Updated: 2024/10/23 11:35:39 by mhummel          ###   ########.fr       */
+/*   Updated: 2024/10/24 11:11:44 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,5 @@ int	handle_heredoc(char *delimiter)
 	if (free_delim)
 		free(delimiter);
 	close(pipe_fd[1]);
-	if (dup2(pipe_fd[0], STDIN_FILENO) == -1)
-		return (close(pipe_fd[0]), 1);
-	return (close(pipe_fd[0]), 0);
+	return (pipe_fd[0]);
 }

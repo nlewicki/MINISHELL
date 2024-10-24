@@ -6,7 +6,7 @@
 /*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 13:33:15 by mhummel           #+#    #+#             */
-/*   Updated: 2024/10/21 10:29:35 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/10/24 11:12:00 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,36 +26,45 @@ int	is_redirection(char *symbol)
 		|| ft_strcmp(symbol, ">>") == 0 || ft_strcmp(symbol, "<<") == 0);
 }
 
-void	print_redirection_error(char *filename, char *error_msg)
+static int	handle_heredoc_redirection(t_command *cmd, int *last_heredoc_fd,
+		int i)
 {
-	ft_putstr_fd(filename, 2);
-	ft_putstr_fd(": ", 2);
-	ft_putendl_fd(error_msg, 2);
+	if (*last_heredoc_fd != -1)
+		close(*last_heredoc_fd);
+	*last_heredoc_fd = handle_heredoc(cmd->filename[i]);
+	if (*last_heredoc_fd == -1)
+		return (1);
+	return (0);
 }
 
-int	apply_single_redirection(char *symbol, char *filename)
+static int	finalize_heredoc(int last_heredoc_fd)
 {
-	if (ft_strcmp(symbol, "<") == 0)
-		return (redirect_input(filename));
-	else if (ft_strcmp(symbol, ">") == 0)
-		return (redirect_output(filename, 0));
-	else if (ft_strcmp(symbol, ">>") == 0)
-		return (redirect_output(filename, 1));
-	else if (ft_strcmp(symbol, "<<") == 0)
-		return (handle_heredoc(filename));
+	if (last_heredoc_fd != -1)
+	{
+		if (dup2(last_heredoc_fd, STDIN_FILENO) == -1)
+			return (close(last_heredoc_fd), 1);
+		close(last_heredoc_fd);
+	}
 	return (0);
 }
 
 int	apply_redirections(t_command *cmd)
 {
 	int	i;
+	int	last_heredoc_fd;
 
 	i = 0;
+	last_heredoc_fd = -1;
 	while (cmd->red_symbol && cmd->red_symbol[i])
 	{
-		if (apply_single_redirection(cmd->red_symbol[i], cmd->filename[i]))
+		if (ft_strcmp(cmd->red_symbol[i], "<<") == 0)
+		{
+			if (handle_heredoc_redirection(cmd, &last_heredoc_fd, i))
+				return (1);
+		}
+		else if (apply_single_redirection(cmd->red_symbol[i], cmd->filename[i]))
 			return (1);
 		i++;
 	}
-	return (0);
+	return (finalize_heredoc(last_heredoc_fd));
 }

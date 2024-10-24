@@ -253,10 +253,10 @@ void				close_pipes(int pipe_fds[][2], int num_pipes);
 // redirection_utils.c
 void				restore_std_fds(int orig_stdin, int orig_stdout);
 int					is_redirection(char *symbol);
-void				print_redirection_error(char *filename, char *error_msg);
-int					apply_single_redirection(char *symbol, char *filename);
 int					apply_redirections(t_command *cmd);
 // redirection.c
+void				print_redirection_error(char *filename, char *error_msg);
+int					apply_single_redirection(char *symbol, char *filename);
 int					redirect_input(char *file);
 int					redirect_output(char *file, int append);
 int					handle_redirections(t_list *command_list);

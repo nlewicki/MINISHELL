@@ -3,14 +3,32 @@
 /*                                                        :::      ::::::::   */
 /*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 10:16:29 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/10/23 11:04:26 by mhummel          ###   ########.fr       */
+/*   Updated: 2024/10/24 11:12:05 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	print_redirection_error(char *filename, char *error_msg)
+{
+	ft_putstr_fd(filename, 2);
+	ft_putstr_fd(": ", 2);
+	ft_putendl_fd(error_msg, 2);
+}
+
+int	apply_single_redirection(char *symbol, char *filename)
+{
+	if (ft_strcmp(symbol, "<") == 0)
+		return (redirect_input(filename));
+	else if (ft_strcmp(symbol, ">") == 0)
+		return (redirect_output(filename, 0));
+	else if (ft_strcmp(symbol, ">>") == 0)
+		return (redirect_output(filename, 1));
+	return (0);
+}
 
 int	redirect_input(char *file)
 {
