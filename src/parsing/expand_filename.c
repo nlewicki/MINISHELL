@@ -6,7 +6,7 @@
 /*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 12:47:23 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/10/24 14:29:57 by mhummel          ###   ########.fr       */
+/*   Updated: 2024/10/24 14:48:49 by mhummel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	process_filename(t_command *cmd, size_t *i)
 	if (temp == NULL)
 		return ;
 	expanded = expand_env_variables(temp);
-	free(temp);
 	if (expanded != NULL)
 		handle_expanded_filename(cmd, i, expanded, temp);
+	free(temp);
 }
