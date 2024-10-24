@@ -270,10 +270,12 @@ int					handle_heredoc(char *delimiter);
 
 // signal.c
 void				sigint_handler(int sig);
-void				heredoc_handler(int signum);
+void				set_sighandler(int signum, void (*handler)(int));
 void				ft_sigmode_shell(void);
-void				ft_sigmode_heredoc(void);
 void				handle_signals(void);
+// signal2.c
+void				ft_sigmode_heredoc(void);
+void				heredoc_handler(int signum);
 
 //
 //				MAIN

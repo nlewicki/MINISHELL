@@ -10,6 +10,7 @@ CFILES =	src/main.c \
 			src/builtins/export_utils2.c \
 			src/execution/fake_globals.c \
 			src/execution/signal.c \
+			src/execution/signal2.c \
 			src/execution/history.c \
 			src/execution/execute_external.c \
 			src/execution/external_utils.c \
