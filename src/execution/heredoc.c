@@ -6,7 +6,7 @@
 /*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 11:03:52 by mhummel           #+#    #+#             */
-/*   Updated: 2024/10/24 16:39:50 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/10/28 14:54:52 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,10 +50,17 @@ static int	read_heredoc_input(char *delimiter, int *pipe_fd, bool expand)
 {
 	char	*line;
 
+	g_interrupt = 0;
 	while (1)
 	{
 		line = readline("> ");
-		if (!line || ft_strcmp(line, delimiter) == 0)
+		if (!line || g_interrupt)
+		{
+			if (g_interrupt)
+				return (1);
+			break ;
+		}
+		if (ft_strcmp(line, delimiter) == 0)
 		{
 			free(line);
 			return (0);
@@ -62,6 +69,7 @@ static int	read_heredoc_input(char *delimiter, int *pipe_fd, bool expand)
 			return (free(line), 1);
 		free(line);
 	}
+	return (0);
 }
 
 int	handle_heredoc(char *delimiter)
@@ -83,11 +91,12 @@ int	handle_heredoc(char *delimiter)
 		close(pipe_fd[0]);
 		if (free_delim)
 			free(delimiter);
+		if (g_interrupt)
+			*exit_status() = 130;
 		return (1);
 	}
 	ft_sigmode_shell();
 	if (free_delim)
 		free(delimiter);
-	close(pipe_fd[1]);
-	return (pipe_fd[0]);
+	return (close(pipe_fd[1]), pipe_fd[0]);
 }

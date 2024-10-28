@@ -33,6 +33,8 @@
 
 # define MAX_ARGS 1024
 
+extern int			g_interrupt;
+
 typedef enum s_builtin_type
 {
 	NONE,
