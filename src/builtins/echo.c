@@ -6,7 +6,7 @@
 /*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 11:02:29 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/10/22 13:21:01 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/10/28 15:48:08 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,12 @@ int	ft_echo(char *argv[], int argc)
 	int		i;
 	bool	n_flag;
 
+	if (argv[0][4] != '\0')
+	{
+		printf("%s", argv[0] + 5);
+		if (argv[1] != NULL)
+			printf(" ");
+	}
 	i = 1;
 	n_flag = is_flag(argv, argc, &i);
 	while (i < argc)

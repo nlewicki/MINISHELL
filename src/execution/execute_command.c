@@ -6,7 +6,7 @@
 /*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 09:59:19 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/10/23 12:38:40 by nlewicki         ###   ########.fr       */
+/*   Updated: 2024/10/28 15:47:52 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,12 @@ size_t	nbr_of_args(char **str)
 
 int	is_builtin(t_command *cmd)
 {
-	if (ft_strcmp(cmd->args[0], "echo") == 0)
+	if (ft_strncmp(cmd->args[0], "echo", 4) == 0)
+	{
+		if (cmd->args[0][4] != ' ' && cmd->args[0][4] != '\0')
+			return (NONE);
 		return (ECHO);
+	}
 	else if (ft_strcmp(cmd->args[0], "cd") == 0)
 		return (CD);
 	else if (ft_strcmp(cmd->args[0], "pwd") == 0)
