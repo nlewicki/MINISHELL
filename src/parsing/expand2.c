@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mhummel <mhummel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nlewicki <nlewicki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 10:08:44 by nlewicki          #+#    #+#             */
-/*   Updated: 2024/10/23 14:59:59 by mhummel          ###   ########.fr       */
+/*   Updated: 2024/10/28 14:51:25 by nlewicki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,9 @@ char	*handle_dollar(char **result, char **start, char **end)
 	if (**end == '?')
 	{
 		var_value = ft_itoa(*exit_status());
+		if (append_var_value(result, var_value) == NULL)
+			return (free(var_value), NULL);
+		free(var_value);
 		(*end)++;
 	}
 	else
@@ -85,11 +88,9 @@ char	*handle_dollar(char **result, char **start, char **end)
 		**end = '\0';
 		var_value = get_our_env(var_name);
 		**end = tmp;
+		if (append_var_value(result, var_value) == NULL)
+			return (NULL);
 	}
-	if (append_var_value(result, var_value) == NULL)
-		return (NULL);
-	if (**end == '?')
-		free(var_value);
 	*start = *end;
 	return (*result);
 }
